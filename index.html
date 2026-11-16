@@ -1,0 +1,2275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="data:," />
+    <title>Day Brief War Cove Doctoring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        color-scheme: dark;
+        --bg:#060b18; --surface:#0b1526; --surface-2:#0e1c33;
+        --text:#dbeafe; --dim:#7d8aa5; --border:#1d3355;
+        --accent:#22d3ee; --accent-ink:#06202b;
+        --warn:#f59e0b; --danger:#fb7185;
+        --holo-green:#2bff88; --holo-green-hi:#8dffbe;
+        --holo-green-glow:rgba(0,230,118,.45); --holo-green-dim:rgba(0,200,83,.28);
+        --enity-orb:#38bdf8; --enity-orb-glow:rgba(56,189,248,.55);
+      }
+      html,body{ margin:0; }
+      body{ background:var(--bg); color:var(--text);
+        font-family:Archivo, system-ui, sans-serif; line-height:1.45;
+        min-height:100vh; padding:30px 18px 34px; }
+      .mono{ font-family:"IBM Plex Mono", ui-monospace, monospace; }
+      .fd{ font-family:Archivo, system-ui, sans-serif; }
+
+      /* ===== War Cove hologram frame — the board's own green border ===== */
+      @keyframes wcPulse{ 0%,100%{opacity:1;} 50%{opacity:.78;} }
+      .wc-frame{ position:fixed; inset:0; z-index:80; pointer-events:none;
+        border:3px solid var(--holo-green);
+        box-shadow:inset 0 0 22px var(--holo-green-glow), inset 0 0 60px rgba(0,230,118,.12), 0 0 14px var(--holo-green-glow); }
+      .wc-frame::after{ content:""; position:absolute; inset:5px; border:1px solid var(--holo-green-dim); }
+      .wc-corner{ position:absolute; width:26px; height:26px; border:0 solid var(--holo-green-hi); filter:drop-shadow(0 0 5px var(--holo-green-glow)); }
+      .wc-corner.tl{ top:8px; left:8px; border-top-width:3px; border-left-width:3px; }
+      .wc-corner.tr{ top:8px; right:8px; border-top-width:3px; border-right-width:3px; }
+      .wc-corner.bl{ bottom:8px; left:8px; border-bottom-width:3px; border-left-width:3px; }
+      .wc-corner.br{ bottom:8px; right:8px; border-bottom-width:3px; border-right-width:3px; }
+      .wc-frame-top{ position:absolute; top:10px; left:50%; transform:translateX(-50%);
+        display:flex; align-items:center; gap:12px; background:var(--bg); padding:4px 16px; white-space:nowrap; max-width:calc(100% - 24px); }
+      .wc-frame-top svg{ width:19px; height:19px; flex:none; stroke:var(--holo-green); fill:none; stroke-width:1.7; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 0 4px var(--holo-green-glow)); }
+      .wc-frame-top svg .orb-core{ fill:var(--enity-orb); stroke:none; }
+      .wc-frame-top .wc-ltc{ font-family:"Segoe Script","Brush Script MT",cursive; font-weight:600; font-size:16px; color:var(--holo-green); text-shadow:0 0 6px var(--holo-green-glow),0 0 14px var(--holo-green-glow); }
+      .wc-edge{ position:absolute; display:flex; align-items:center; }
+      .wc-edge-tl{ top:1px; left:48px; gap:clamp(16px,3.2vw,38px); }
+      .wc-edge-tr{ top:1px; right:48px; gap:clamp(16px,3.2vw,38px); }
+      .wc-edge-bottom{ bottom:1px; left:48px; right:48px; justify-content:space-between; }
+      .wc-edge-left{ left:1px; top:104px; bottom:72px; flex-direction:column; justify-content:space-between; }
+      .wc-edge-right{ right:1px; top:104px; bottom:72px; flex-direction:column; justify-content:space-between; }
+      .wc-sym{ display:flex; align-items:center; justify-content:center; width:25px; height:25px; flex:none; border-radius:50%;
+        background:radial-gradient(circle at 34% 30%, rgba(43,255,136,.34), var(--bg) 68%);
+        border:1.5px solid var(--holo-green-hi);
+        box-shadow:0 0 14px var(--holo-green-glow), 0 0 30px rgba(0,230,118,.28), inset 0 0 7px rgba(43,255,136,.5), 2px 3px 6px rgba(0,0,0,.45); }
+      .wc-sym svg{ width:14px; height:14px; flex:none; stroke:var(--holo-green-hi); fill:none; stroke-width:2; stroke-linejoin:round; stroke-linecap:round;
+        filter:drop-shadow(0 0 3px var(--holo-green-hi)) drop-shadow(0 0 8px var(--holo-green-glow)) drop-shadow(1px 2px 1px rgba(0,0,0,.55)); }
+      .wc-sym-orb{ border-color:var(--enity-orb); background:radial-gradient(circle at 34% 30%, rgba(56,189,248,.4), var(--bg) 68%);
+        box-shadow:0 0 14px var(--enity-orb-glow), 0 0 30px rgba(56,189,248,.3), inset 0 0 7px rgba(56,189,248,.55), 2px 3px 6px rgba(0,0,0,.45); }
+      .wc-sym-orb svg{ stroke:var(--enity-orb); }
+      .wc-sym-orb svg .orb-core{ fill:var(--enity-orb); stroke:none; }
+      .wc-sym .wc-ltc-sym{ font-family:"Segoe Script","Brush Script MT",cursive; font-weight:700; font-size:14px; line-height:1; color:var(--holo-green-hi);
+        text-shadow:0 0 5px var(--holo-green-hi),0 0 13px var(--holo-green-glow),1px 2px 2px rgba(0,0,0,.55); }
+      .wc-rod{ position:absolute; left:14px; right:14px; height:13px; border-radius:999px;
+        background:repeating-linear-gradient(90deg, rgba(141,255,190,.12) 0 2px, transparent 2px 7px),
+          linear-gradient(180deg, rgba(141,255,190,.85) 0%, rgba(43,255,136,.55) 34%, rgba(0,200,83,.40) 62%, rgba(0,140,55,.55) 88%, rgba(43,255,136,.62) 100%);
+        border:1px solid var(--holo-green-hi); animation:wcPulse 3.2s ease-in-out infinite;
+        box-shadow:0 0 16px var(--holo-green-glow), 0 0 34px rgba(0,230,118,.25), inset 0 2px 3px rgba(255,255,255,.5), inset 0 -3px 5px rgba(0,60,25,.55); }
+      .wc-rod-top{ top:3px; } .wc-rod-bottom{ bottom:3px; }
+      .wc-finial{ position:absolute; top:50%; transform:translateY(-50%); width:21px; height:21px; border-radius:50%;
+        background:radial-gradient(circle at 36% 32%, rgba(141,255,190,.95), rgba(43,255,136,.78) 58%, rgba(0,140,55,.8));
+        border:1.5px solid var(--holo-green-hi);
+        box-shadow:0 0 12px var(--holo-green-glow), 0 0 24px rgba(0,230,118,.3), inset 0 2px 3px rgba(255,255,255,.55), 2px 3px 6px rgba(0,0,0,.45); }
+      .wc-finial.l{ left:-7px; } .wc-finial.r{ right:-7px; }
+      .wc-rod-glyphs{ position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 48px; }
+      .wc-rod-glyphs svg{ width:10px; height:10px; flex:none; stroke:rgba(0,60,25,.78); fill:none; stroke-width:2; stroke-linejoin:round; stroke-linecap:round; filter:drop-shadow(0 1px 0 rgba(190,255,215,.65)); }
+      .wc-rod-glyphs svg .orb-core{ fill:rgba(0,60,25,.78); stroke:none; }
+      .wc-rod-glyphs .wc-rod-ltc{ font-family:"Segoe Script","Brush Script MT",cursive; font-weight:700; font-size:9.5px; line-height:1; color:rgba(0,60,25,.78); text-shadow:0 1px 0 rgba(190,255,215,.65); }
+      @media (max-width:980px){ .wc-edge-tl .wc-sym:nth-child(n+3), .wc-edge-tr .wc-sym:nth-child(n+3){ display:none; } .wc-edge-tl{ left:34px; } .wc-edge-tr{ right:34px; } }
+      @media (max-width:560px){
+        .wc-sym{ width:19px; height:19px; border-width:1.2px; } .wc-sym svg{ width:10.5px; height:10.5px; } .wc-sym .wc-ltc-sym{ font-size:10.5px; }
+        .wc-edge-bottom{ left:32px; right:32px; } .wc-edge-left,.wc-edge-right{ top:158px; bottom:56px; }
+        .wc-rod{ left:10px; right:10px; height:11px; } .wc-rod-top{ top:2px; } .wc-rod-bottom{ bottom:2px; }
+        .wc-finial{ width:17px; height:17px; } .wc-finial.l{ left:-5px; } .wc-finial.r{ right:-5px; }
+        .wc-edge-tl .wc-sym:nth-child(n+2), .wc-edge-tr .wc-sym:nth-child(n+2){ display:none; }
+        .wc-edge-left{ left:0; } .wc-edge-right{ right:0; }
+        .wc-edge-left .wc-sym, .wc-edge-right .wc-sym{ width:15px; height:15px; }
+        .wc-edge-left .wc-sym svg, .wc-edge-right .wc-sym svg{ width:9px; height:9px; }
+        .wc-rod-glyphs{ padding:0 34px; } .wc-rod-glyphs svg{ width:8px; height:8px; }
+      }
+
+      /* ===== Header / deck ===== */
+      .shell{ max-width:1152px; margin:0 auto; }
+      header.deck{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:6px 4px 12px; }
+      header.deck .brand{ margin-right:auto; }
+      header.deck .brand .kick-line{ font-size:11px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:rgba(103,232,249,.75); margin:0; }
+      header.deck .brand .sub{ font-size:12px; color:var(--dim); margin:2px 0 0; }
+      .pillgroup{ display:flex; border:1px solid var(--border); background:var(--surface); border-radius:999px; padding:4px; gap:2px; }
+      .pillgroup button{ font:inherit; font-size:13px; font-weight:700; border:none; background:transparent; color:var(--dim);
+        border-radius:999px; padding:6px 14px; cursor:pointer; }
+      .pillgroup button[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); }
+      .kick-pill{ display:flex; align-items:center; gap:8px; font:inherit; font-size:15px; font-weight:900;
+        border:1px solid var(--border); background:var(--surface); color:var(--text); border-radius:999px; padding:10px 18px; min-height:48px; text-decoration:none; }
+      .clock-chip{ display:flex; align-items:center; gap:8px; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.4);
+        border-radius:999px; padding:6px 14px; font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:#cffafe; }
+      .clock-chip .live-dot{ width:8px; height:8px; border-radius:50%; background:#34d399; animation:wcPulse 1.8s infinite; }
+      .clock-chip button{ font:inherit; font-size:12px; font-weight:600; background:transparent; border:1px solid rgba(103,232,249,.4);
+        color:#cffafe; border-radius:999px; padding:2px 10px; cursor:pointer; min-height:1.9rem; }
+
+      /* ===== Stage layout ===== */
+      .stage{ display:grid; grid-template-columns:250px minmax(0,1fr) 300px; gap:14px; align-items:start; }
+      @media (max-width:1100px){ .stage{ grid-template-columns:230px minmax(0,1fr); } .side{ grid-column:1 / -1; } }
+      @media (max-width:720px){ .stage{ grid-template-columns:minmax(0,1fr); } }
+      .tablet-frame{ border:1px solid #2a3a55; background:#0a1220; border-radius:22px; padding:8px; box-shadow:0 25px 50px rgba(0,0,0,.6); }
+      .tablet-inner{ background:#071022; border-radius:16px; padding:14px; }
+      body.view-holo .tablet-frame{ border-color:rgba(34,211,238,.5); border-radius:14px; background:rgba(7,16,34,.6);
+        box-shadow:0 0 42px rgba(34,211,238,.16), inset 0 0 60px rgba(34,211,238,.05); }
+      body.view-big .shell{ max-width:1920px; }
+      body.view-big{ padding:22px 12px 26px; }
+      body.view-big .stage{ grid-template-columns:212px minmax(0,1fr) 340px; }
+      @media (max-width:1100px){ body.view-big .stage{ grid-template-columns:212px minmax(0,1fr); } }
+      @media (max-width:720px){ body.view-big .stage{ grid-template-columns:minmax(0,1fr); } }
+      @media (min-width:1024px){
+        body.view-big{ height:100dvh; overflow:hidden; display:flex; flex-direction:column; }
+        body.view-big .shell{ flex:1; min-height:0; display:flex; flex-direction:column; width:100%; }
+        body.view-big .tablet-frame{ flex:1; min-height:0; }
+        body.view-big .tablet-inner{ height:100%; }
+        body.view-big .stage{ height:100%; align-items:stretch; }
+        body.view-big .screen-scroll, body.view-big .office-scroll, body.view-big .side{ overflow-y:auto; min-height:0; }
+        body.view-big .presenter-frame{ aspect-ratio:auto; flex:1; min-height:220px; }
+      }
+
+      /* ===== Presenter rail ===== */
+      .rail{ display:flex; flex-direction:column; gap:10px; min-width:0; }
+      .presenter-frame{ position:relative; overflow:hidden; border-radius:12px; background:#04101f; aspect-ratio:3/4;
+        filter:drop-shadow(0 0 22px rgba(34,211,238,.45)); }
+      .presenter-frame video, .presenter-frame img.pf-media, .presenter-frame .pf-media{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; }
+      .presenter-frame .pf-enity{ transition:transform .9s ease; transform-origin:50% 38%; }
+      .rail.attending .presenter-frame .pf-enity{ transform:scale(1.16); }
+      /* ===== The Enity — live blue-energy loop (moving treatment, never a still) ===== */
+      .enity-live{ overflow:hidden; background:
+          radial-gradient(ellipse 90% 55% at 50% 30%, rgba(56,189,248,.22), transparent 62%),
+          radial-gradient(ellipse 70% 40% at 50% 88%, rgba(34,211,238,.14), transparent 65%),
+          linear-gradient(175deg, #082544 0%, #04101f 58%, #020a18 100%); }
+      .enity-live[hidden]{ display:none !important; }
+      .enity-live svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+      .enity-live .e-ring{ transform-box:fill-box; transform-origin:center; animation:enitySpin 14s linear infinite; }
+      .enity-live .e-ring-rev{ transform-box:fill-box; transform-origin:center; animation:enitySpinRev 22s linear infinite; }
+      .enity-live .e-core{ transform-box:fill-box; transform-origin:center; animation:enityCore 2.6s ease-in-out infinite; }
+      .enity-live .e-halo{ transform-box:fill-box; transform-origin:center; animation:enityCore 4.2s ease-in-out infinite; }
+      .enity-live .e-hair{ stroke-dasharray:7 5; animation:enityFlow 3.4s linear infinite; }
+      .enity-live .e-hair-slow{ stroke-dasharray:5 7; animation:enityFlow 5.2s linear infinite reverse; }
+      .enity-live .e-body{ animation:enityBob 5.5s ease-in-out infinite; }
+      .enity-live .e-dot{ animation:enityRise 4.6s ease-in infinite; }
+      .enity-live .e-dot.d2{ animation-delay:1.4s; } .enity-live .e-dot.d3{ animation-delay:2.6s; } .enity-live .e-dot.d4{ animation-delay:3.5s; }
+      .enity-live .e-scan{ animation:enityScan 6.5s ease-in-out infinite; }
+      .enity-live .e-bar{ transform-box:fill-box; transform-origin:bottom; animation:enityBar 1.3s ease-in-out infinite; }
+      .enity-live .e-bar.b2{ animation-delay:.35s; } .enity-live .e-bar.b3{ animation-delay:.7s; }
+      @keyframes enitySpin{ from{ transform:rotate(0deg);} to{ transform:rotate(360deg);} }
+      @keyframes enitySpinRev{ from{ transform:rotate(360deg);} to{ transform:rotate(0deg);} }
+      @keyframes enityCore{ 0%,100%{ transform:scale(1); opacity:1;} 50%{ transform:scale(1.16); opacity:.86;} }
+      @keyframes enityFlow{ from{ stroke-dashoffset:0;} to{ stroke-dashoffset:-48;} }
+      @keyframes enityBob{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-5px);} }
+      @keyframes enityRise{ 0%{ transform:translateY(14px); opacity:0;} 22%{ opacity:.95;} 82%{ opacity:.7;} 100%{ transform:translateY(-52px); opacity:0;} }
+      @keyframes enityScan{ 0%,100%{ transform:translateY(-8px); opacity:.25;} 50%{ transform:translateY(46px); opacity:.6;} }
+      @keyframes enityBar{ 0%,100%{ transform:scaleY(.35);} 45%{ transform:scaleY(1);} 70%{ transform:scaleY(.55);} }
+      .enity-live-label{ position:absolute; left:8px; right:8px; bottom:8px; z-index:2; display:flex; align-items:center; justify-content:center; gap:6px;
+        font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600; letter-spacing:.14em; color:#a5f3fc;
+        background:rgba(2,10,24,.62); border:1px solid rgba(103,232,249,.35); border-radius:999px; padding:4px 8px; white-space:nowrap; }
+      .enity-live-label i{ width:6px; height:6px; flex:none; border-radius:50%; background:#38bdf8; box-shadow:0 0 8px rgba(56,189,248,.9); animation:wcPulse 1.6s infinite; }
+      .office .win .enity-live{ position:absolute; inset:0; }
+      .nameplate{ text-align:center; }
+      .nameplate .nm{ font-size:19px; font-weight:900; letter-spacing:.14em; color:#ecfeff; margin:0; }
+      .nameplate .rl{ font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:rgba(165,243,252,.65); margin:1px 0 0; }
+      .presenter-switch{ display:flex; gap:4px; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5); border-radius:999px; padding:4px; }
+      .presenter-switch button{ flex:1; font:inherit; font-size:11.5px; font-weight:900; text-transform:uppercase; letter-spacing:.05em;
+        border:none; border-radius:999px; padding:6px 8px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:30px; }
+      .presenter-switch button[aria-pressed="true"]{ background:#a5f3fc; color:#000; box-shadow:0 0 12px rgba(34,211,238,.6); }
+      .talk-btn{ position:relative; display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:999px; padding:10px 18px;
+        font:inherit; font-weight:900; font-size:14px; letter-spacing:.04em; color:#eafcff; cursor:pointer;
+        background:linear-gradient(135deg, rgba(34,211,238,.95), rgba(37,99,235,.9) 55%, rgba(14,116,233,.95));
+        border:1px solid rgba(165,243,252,.85);
+        box-shadow:0 0 18px rgba(34,211,238,.55), 0 0 42px rgba(34,211,238,.28), inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 6px rgba(3,44,66,.55);
+        text-shadow:0 1px 2px rgba(2,32,48,.6); }
+      .talk-orb{ width:13px; height:13px; flex:none; border-radius:50%;
+        background:radial-gradient(circle at 36% 32%, #e0f2fe, #38bdf8 45%, #0369a1 90%);
+        box-shadow:0 0 10px rgba(56,189,248,.9), 0 0 22px rgba(56,189,248,.5), inset 0 0 4px rgba(224,242,254,.9); }
+      .rail .live-note{ font-size:11.5px; color:rgba(207,250,254,.55); text-align:center; margin:0; }
+      .pedestal{ border:1px solid var(--border); background:var(--surface); border-radius:12px; padding:12px 14px; }
+      .pedestal h3{ margin:0 0 4px; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); }
+      .pedestal p{ margin:0; font-size:13px; color:var(--text); }
+      .pedestal .row{ display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-top:1px solid var(--border); font-size:13px; }
+      .pedestal .row:first-of-type{ border-top:none; }
+      .pedestal .row b{ font-weight:800; text-align:right; }
+
+      /* ===== Screens ===== */
+      .stack{ display:flex; flex-direction:column; gap:10px; min-width:0; min-height:0; }
+      .screen-switcher{ display:flex; width:100%; max-width:560px; gap:4px; align-self:center;
+        border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5); border-radius:999px; padding:4px; box-shadow:0 2px 10px rgba(0,0,0,.5); }
+      .screen-switcher button{ flex:1; font:inherit; font-size:11.5px; font-weight:900; text-transform:uppercase; letter-spacing:.05em;
+        border:none; border-radius:999px; padding:6px 10px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:30px; }
+      .screen-switcher button[aria-pressed="true"]{ background:#a5f3fc; color:#000; box-shadow:0 0 12px rgba(34,211,238,.6); }
+      .holo-board{ border-radius:12px; border:1px solid rgba(34,211,238,.45);
+        background:repeating-linear-gradient(to bottom, rgba(34,211,238,.035) 0 1px, transparent 1px 5px),
+          linear-gradient(160deg, rgba(14,42,74,.88), rgba(7,18,38,.94));
+        box-shadow:0 0 0 1px rgba(34,211,238,.12), 0 0 42px rgba(34,211,238,.16), inset 0 0 60px rgba(34,211,238,.05);
+        animation:holoFlicker 7s linear infinite; min-width:0; }
+      @keyframes holoFlicker{ 0%,100%{opacity:1;} 92%{opacity:1;} 93%{opacity:.9;} 94%{opacity:1;} 97%{opacity:.95;} 98%{opacity:1;} }
+      .screen{ display:none; flex-direction:column; min-height:520px; }
+      .screen.on{ display:flex; }
+      .screen-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;
+        border-bottom:1px solid rgba(103,232,249,.2); padding:12px 16px; }
+      .screen-head .t{ font-size:18px; font-weight:900; letter-spacing:.03em; color:#ecfeff; margin:0; }
+      .screen-head .s{ font-size:12px; color:rgba(165,243,252,.6); margin:1px 0 0; }
+      .chip{ border-radius:999px; padding:4px 12px; font-size:11.5px; font-weight:900; letter-spacing:.08em; }
+      .chip.live{ background:rgba(16,185,129,.2); color:#6ee7b7; }
+      .chip.cert{ background:rgba(245,158,11,.15); color:#fcd34d; }
+      .screen-scroll{ padding:12px 14px; overflow-y:auto; overflow-x:hidden; }
+      .screen-foot{ border-top:1px solid rgba(103,232,249,.2); padding:12px 16px; }
+
+      /* Day board timeline */
+      .tl{ position:relative; min-height:380px; }
+      .tl .hourline{ position:absolute; left:64px; right:0; border-top:1px solid rgba(103,232,249,.1); }
+      .tl .hourlab{ position:absolute; left:0; width:56px; text-align:right; font-size:11px; color:rgba(165,243,252,.5); }
+      .holo-card{ position:absolute; left:72px; right:4px; overflow:hidden; border-radius:8px; padding:6px 12px;
+        background:linear-gradient(155deg, rgba(21,52,92,.82), rgba(10,25,48,.9));
+        border:1px solid rgba(103,199,235,.35); box-shadow:0 0 18px rgba(34,211,238,.10), inset 0 1px 0 rgba(186,230,253,.12); }
+      .holo-card .ct{ font-size:14px; font-weight:700; color:#ecfeff; margin:0; }
+      .holo-card .cm{ font-size:12px; color:rgba(207,250,254,.65); margin:1px 0 0; }
+      .holo-card .cm .kind{ font-size:10.5px; font-weight:900; letter-spacing:.1em; color:rgba(103,232,249,.75); text-transform:uppercase; margin-right:8px; }
+      .holo-card .tm{ float:right; font-size:11px; font-weight:600; color:rgba(165,243,252,.75); }
+      .offclock h3{ font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(165,243,252,.6); margin:18px 0 8px; }
+      .offclock .grid2{ display:grid; gap:8px; }
+      @media (min-width:640px){ .offclock .grid2{ grid-template-columns:1fr 1fr; } }
+      .off-card{ position:static; border-radius:8px; padding:8px 12px;
+        background:linear-gradient(155deg, rgba(21,52,92,.82), rgba(10,25,48,.9));
+        border:1px solid rgba(103,199,235,.35); }
+      .off-card .ct{ font-size:14px; font-weight:700; color:#ecfeff; margin:0; }
+      .off-card .cm{ font-size:12px; color:rgba(207,250,254,.65); margin:1px 0 0; }
+
+      /* Game spots ticker */
+      .gamespots{ border-top:1px solid rgba(103,232,249,.2); padding:10px 16px 12px; }
+      .gamespots .gs-t{ font-size:11px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(165,243,252,.65); margin:0 0 6px; }
+      .ticker-mask{ overflow:hidden; }
+      .ticker-track{ display:flex; width:max-content; animation-name:tickerScroll; animation-timing-function:linear; animation-iteration-count:infinite; }
+      @keyframes tickerScroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+      .ticker-set{ display:flex; flex:none; align-items:center; }
+      .ticker-set span{ white-space:nowrap; font-size:13px; color:#cffafe; padding:2px 0; }
+      .ticker-set .sep{ color:var(--accent); padding:2px 14px; }
+      .neg{ color:#fda4af; font-weight:700; } .pos{ color:#6ee7b7; font-weight:700; }
+
+      /* Field Radar rows */
+      .coin-row{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 16px; border:1px solid rgba(103,232,249,.15);
+        background:rgba(34,211,238,.04); border-radius:12px; padding:12px 16px; margin-bottom:10px; list-style:none; }
+      ul.coins{ margin:0; padding:0; }
+      .coin-row .cname{ display:flex; align-items:center; gap:8px; width:92px; flex:none; font-size:18px; font-weight:900; color:#ecfeff; }
+      .coin-row .cdot{ width:10px; height:10px; border-radius:50%; flex:none; }
+      .coin-row .cprice{ font-size:20px; font-weight:900; color:#ecfeff; }
+      .coin-row .cspread{ font-size:13.5px; color:rgba(207,250,254,.75); }
+      .coin-row .carmy{ margin-left:auto; font-size:13px; font-weight:700; }
+      .boardbar{ height:6px; border-radius:999px; background:rgba(244,63,94,.25); overflow:hidden; margin-top:8px; }
+      .boardbar i{ display:block; height:100%; background:#34d399; border-radius:999px; }
+
+      /* Four Points window */
+      .fourpoints{ border:1px solid rgba(110,231,183,.4); background:rgba(4,20,11,.9); border-radius:12px;
+        box-shadow:0 0 24px rgba(16,185,129,.15); overflow:hidden; transition:box-shadow .4s ease; }
+      .fourpoints.flash{ box-shadow:0 0 0 2px #34d399, 0 0 34px rgba(16,185,129,.4); }
+      .fourpoints .fp-head{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 12px; border-bottom:1px solid rgba(110,231,183,.2); padding:10px 14px; }
+      .fourpoints .fp-head .t{ font-size:15px; font-weight:900; color:#ecfdf5; margin:0; }
+      .fourpoints .fp-head .s{ font-size:11.5px; color:rgba(209,250,229,.55); margin:0; flex-basis:100%; }
+      .fp-live{ display:flex; align-items:center; gap:6px; border-radius:999px; background:rgba(16,185,129,.2); color:#6ee7b7;
+        padding:2px 10px; font-size:10.5px; font-weight:900; letter-spacing:.1em; }
+      .fp-live i{ width:6px; height:6px; border-radius:50%; background:#34d399; animation:wcPulse 1.6s infinite; }
+      .fourpoints .fp-body{ max-height:228px; overflow-y:auto; padding:10px 12px; }
+      body.view-holo .fourpoints .fp-body{ max-height:120px; }
+      .fp-feed{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+      .fp-feed li{ border:1px solid rgba(110,231,183,.15); background:rgba(52,211,153,.03); border-radius:8px; padding:8px 12px; font-size:12.5px; color:rgba(209,250,229,.75); }
+      .fp-feed li:first-child{ border-color:rgba(110,231,183,.5); background:rgba(52,211,153,.10); }
+      .fp-feed li b{ color:#ecfdf5; }
+      .fp-feed .latest{ background:#34d399; color:#000; border-radius:4px; padding:1px 6px; font-size:10px; font-weight:900; letter-spacing:.08em; margin-left:6px; }
+
+      /* ===== Company Floor ===== */
+      .floor-scroll{ padding:14px; overflow-y:auto; }
+      .office{ border:1px solid rgba(103,199,235,.35); border-radius:12px; padding:12px; margin-bottom:12px;
+        background:linear-gradient(155deg, rgba(21,52,92,.82), rgba(10,25,48,.9)); box-shadow:0 0 18px rgba(34,211,238,.10); }
+      .office .off-flex{ display:flex; gap:14px; flex-wrap:wrap; }
+      .office .win{ position:relative; overflow:hidden; border-radius:8px; background:#04101f; flex:none; }
+      .office .win.tall{ width:150px; height:170px; }
+      .office .win.wide{ width:100%; max-width:340px; height:150px; }
+      .office .win video, .office .win img, .office .win .enity-live{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; }
+      .office .who{ flex:1; min-width:200px; }
+      .office .who .nm{ font-size:21px; font-weight:900; letter-spacing:.06em; color:#ecfeff; margin:0; }
+      .office .who .jb{ font-size:13px; font-weight:700; color:#cffafe; margin:0; }
+      .office .who .kd{ font-size:10.5px; letter-spacing:.1em; color:rgba(165,243,252,.55); text-transform:uppercase; margin:2px 0 0; }
+      .office .mon{ margin-top:10px; border:1px solid rgba(103,232,249,.5); background:rgba(8,47,73,.8); border-radius:8px;
+        padding:8px 10px; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#a5f3fc; }
+      .dept{ margin-top:18px; }
+      .dept h3{ font-size:13px; font-weight:900; letter-spacing:.1em; color:#ecfeff; margin:0; }
+      .dept .blurb{ font-size:12.5px; color:rgba(207,250,254,.6); margin:2px 0 10px; }
+      .dept-grid{ display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(215px, 1fr)); }
+      body.view-holo .dept-grid{ grid-template-columns:minmax(0,1fr); }
+      .desk-card{ border:1px solid rgba(103,199,235,.3); border-radius:10px; padding:10px;
+        background:linear-gradient(155deg, rgba(21,52,92,.75), rgba(10,25,48,.88)); }
+      .desk-card .top{ display:flex; gap:10px; }
+      .desk-win{ position:relative; width:84px; height:96px; flex:none; overflow:hidden; border-radius:6px; background:#04101f; }
+      .desk-win video, .desk-win img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; }
+      .desk-win .sweep{ position:absolute; top:0; bottom:0; left:0; width:34%; pointer-events:none;
+        background:linear-gradient(90deg, rgba(125,211,252,0), rgba(186,240,255,.5), rgba(125,211,252,0));
+        mix-blend-mode:screen; animation:castSweep 7s ease-in-out infinite; }
+      @keyframes castSweep{ 0%{ transform:translateX(-170%) skewX(-14deg); opacity:0; } 5%{ opacity:.6; } 16%{ transform:translateX(320%) skewX(-14deg); opacity:0; } 100%{ transform:translateX(320%) skewX(-14deg); opacity:0; } }
+      .rim-live{ animation:castRim 3.6s ease-in-out infinite; }
+      @keyframes castRim{ 0%,100%{ box-shadow:0 0 5px rgba(34,211,238,.25), inset 0 0 6px rgba(34,211,238,.12);} 50%{ box-shadow:0 0 16px rgba(34,211,238,.55), inset 0 0 12px rgba(34,211,238,.22);} }
+      .floor-alive{ animation:floorAlive 9s ease-in-out infinite; }
+      @keyframes floorAlive{ 0%,100%{ transform:scale(1.05) translate(0,0);} 25%{ transform:scale(1.09) translate(1.9%,-1.3%);} 55%{ transform:scale(1.06) translate(-1.7%,.7%);} 80%{ transform:scale(1.1) translate(.9%,-.7%);} }
+      .cast-rest{ animation:castRest 17s ease-in-out infinite; }
+      @keyframes castRest{ 0%,100%{ transform:scale(1.06) translateY(.2%); opacity:.88;} 50%{ transform:scale(1.06) translateY(-.35%); opacity:.94;} }
+      .desk-card .nm{ font-size:17px; font-weight:900; letter-spacing:.05em; color:#ecfeff; margin:0; line-height:1.15; }
+      .desk-card .jb{ font-size:12.5px; font-weight:700; color:#cffafe; margin:0; }
+      .desk-card .kd{ font-size:10px; letter-spacing:.08em; color:rgba(165,243,252,.5); text-transform:uppercase; margin:1px 0 0; }
+      .statuschip{ display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 9px; font-size:10.5px; font-weight:900; letter-spacing:.08em; margin-top:6px; }
+      .statuschip i{ width:7px; height:7px; border-radius:50%; }
+      .st-working{ background:rgba(16,185,129,.2); color:#6ee7b7; } .st-working i{ background:#34d399; animation:floorLamp 2.2s infinite; }
+      .st-connected{ background:rgba(14,165,233,.2); color:#7dd3fc; } .st-connected i{ background:#38bdf8; animation:floorLamp 2.2s infinite; }
+      .st-scheduled{ background:rgba(245,158,11,.15); color:#fcd34d; } .st-scheduled i{ background:#fbbf24; }
+      .st-quiet{ background:rgba(100,116,139,.3); color:#cbd5e1; } .st-quiet i{ background:#94a3b8; }
+      .st-down{ background:rgba(244,63,94,.2); color:#fda4af; } .st-down i{ background:#f43f5e; }
+      @keyframes floorLamp{ 0%,100%{ opacity:1; box-shadow:0 0 8px rgba(52,211,153,.9);} 50%{ opacity:.55; box-shadow:0 0 3px rgba(52,211,153,.5);} }
+      .monitor{ display:flex; flex-direction:column; gap:5px; border:1px solid rgba(103,232,249,.4);
+        background:repeating-linear-gradient(to bottom, rgba(34,211,238,.05) 0 1px, transparent 1px 4px),
+          linear-gradient(160deg, rgba(8,47,73,.85), rgba(2,10,24,.92));
+        border-radius:6px; padding:6px 8px 7px; margin-top:10px;
+        box-shadow:inset 0 0 16px rgba(34,211,238,.10); }
+      .monitor.off{ border-color:rgba(100,116,139,.3); background:rgba(2,6,23,.6); box-shadow:none; }
+      .monitor .mon-head{ display:flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace;
+        font-size:9px; font-weight:600; letter-spacing:.13em; color:#a5f3fc; white-space:nowrap; overflow:hidden; }
+      .monitor .mon-head i{ width:6px; height:6px; flex:none; border-radius:50%; background:#34d399;
+        box-shadow:0 0 7px rgba(52,211,153,.9); animation:wcPulse 1.8s infinite; }
+      .monitor.off .mon-head{ color:rgba(148,163,184,.75); }
+      .monitor.off .mon-head i{ background:#64748b; box-shadow:none; animation:none; }
+      .monitor .mon-bars{ display:flex; align-items:flex-end; gap:3px; height:22px; }
+      .monitor .mon-bars span{ width:5px; border-radius:2px; background:rgba(103,232,249,.9); transform-origin:bottom; }
+      .monitor.off .mon-bars span{ background:rgba(100,116,139,.5); }
+      .monitor .mon-bars span.work{ animation:floorWorkBar 1.15s ease-in-out infinite; }
+      .monitor .mon-read{ font-family:"IBM Plex Mono",monospace; font-size:9.5px; color:rgba(165,243,252,.8);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .monitor.off .mon-read{ color:rgba(148,163,184,.6); }
+      @keyframes floorWorkBar{ 0%,100%{ transform:scaleY(.3);} 35%{ transform:scaleY(1);} 70%{ transform:scaleY(.5);} }
+      .grade-box{ margin-top:8px; border:1px solid rgba(110,231,183,.25); background:rgba(52,211,153,.06); border-radius:6px; padding:4px 8px; }
+      .grade-box .gl{ font-size:9.5px; font-weight:900; letter-spacing:.12em; color:rgba(167,243,208,.6); text-transform:uppercase; }
+      .grade-box .gv{ font-size:11.5px; color:rgba(236,253,245,.9); margin:1px 0 0; }
+      .desk-card .last, .office .last{ font-size:12px; color:rgba(207,250,254,.6); margin:8px 0 0; line-height:1.4; }
+      .market-monitor{ margin-top:10px; border:2px solid rgba(110,231,183,.5); background:#02120a; border-radius:8px; padding:10px 12px; text-align:center; }
+      .market-monitor .mm-t{ font-size:10px; font-weight:900; letter-spacing:.16em; color:rgba(167,243,208,.6); margin:0; }
+      .market-monitor .mm-v{ font-size:19px; font-weight:900; letter-spacing:.08em; color:#fda4af; margin:2px 0 0; }
+      .market-monitor .mm-n{ font-size:11px; color:rgba(209,250,229,.55); margin:2px 0 0; }
+      .floor-about{ margin-top:18px; border:1px solid rgba(103,232,249,.2); border-radius:10px; padding:12px 14px; font-size:13px; color:rgba(207,250,254,.7); line-height:1.55; }
+      .floor-about b{ color:#ecfeff; }
+      .recipe-log{ margin-top:12px; border:1px solid rgba(110,231,183,.35); border-radius:10px; padding:12px 14px;
+        font-size:12.5px; color:rgba(209,250,229,.75); line-height:1.55; background:rgba(4,20,11,.45); }
+      .recipe-log h3{ font-size:12px; font-weight:900; letter-spacing:.12em; color:#ecfdf5; margin:0 0 6px; text-transform:uppercase; }
+      .recipe-log .rgrade{ display:inline-block; background:#34d399; color:#000; border-radius:4px; padding:1px 8px;
+        font-size:11px; font-weight:900; letter-spacing:.06em; margin-left:8px; vertical-align:1px; }
+      .recipe-log p{ margin:6px 0 0; }
+      .recipe-log b{ color:#ecfdf5; }
+      .recipe-log ol{ margin:6px 0 0; padding-left:18px; }
+      .recipe-log li{ margin:3px 0; }
+      .recipe-log .mono{ font-size:11.5px; color:#a7f3d0; }
+
+      /* ===== Owner's office + floor head format ===== */
+      .screen-head .chain{ font-size:12.5px; font-weight:700; color:rgba(165,243,252,.65); margin:3px 0 0; }
+      .screen-head .chain b{ color:#ecfeff; font-weight:900; }
+      .owner-office{ border:2px solid rgba(43,255,136,.55); border-radius:12px; padding:14px 16px; margin-bottom:12px;
+        background:linear-gradient(120deg, rgba(0,70,30,.38), rgba(21,52,92,.85) 48%, rgba(10,25,48,.94));
+        box-shadow:0 0 26px rgba(0,230,118,.18), inset 0 0 34px rgba(0,230,118,.06); }
+      .owner-office .oo-tag{ font-size:10.5px; font-weight:900; letter-spacing:.18em; color:var(--holo-green-hi); margin:0; text-transform:uppercase; }
+      .owner-office .nm{ font-size:27px; font-weight:900; letter-spacing:.06em; color:#ecfeff; margin:3px 0 0; line-height:1.1; }
+      .owner-office .nm .crown{ color:var(--holo-green); text-shadow:0 0 10px var(--holo-green-glow); }
+      .owner-office .jb{ font-size:13.5px; font-weight:700; color:#cffafe; margin:2px 0 0; }
+      .owner-office .last{ font-size:12.5px; color:rgba(207,250,254,.65); margin:7px 0 0; line-height:1.5; max-width:72ch; }
+      .owner-chain{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin-top:11px;
+        font-size:12px; font-weight:800; letter-spacing:.04em; color:rgba(207,250,254,.85); }
+      .owner-chain b{ color:#ecfeff; }
+      .owner-chain .arr{ color:var(--holo-green); font-weight:900; }
+      .office.leader{ border-color:rgba(165,243,252,.55);
+        background:linear-gradient(100deg, rgba(34,90,140,.5), rgba(10,25,48,.92));
+        box-shadow:0 0 30px rgba(34,211,238,.20), inset 0 1px 0 rgba(186,230,253,.14); }
+      .oscreen{ flex:1 1 210px; min-width:190px; max-width:290px; }
+      .oscreen .os-frame{ aspect-ratio:16/9; border:1px solid rgba(103,232,249,.5); border-radius:8px; overflow:hidden;
+        background:repeating-linear-gradient(to bottom, rgba(34,211,238,.05) 0 1px, transparent 1px 5px),
+          linear-gradient(155deg, rgba(8,47,73,.9), rgba(2,10,24,.95)); padding:9px 10px;
+        display:flex; flex-direction:column; gap:7px; box-shadow:inset 0 0 24px rgba(34,211,238,.08); }
+      .oscreen .os-t{ font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:600; letter-spacing:.14em; color:#a5f3fc; margin:0;
+        display:flex; align-items:center; gap:6px; }
+      .oscreen .os-t i{ width:6px; height:6px; flex:none; border-radius:50%; background:#34d399; box-shadow:0 0 7px rgba(52,211,153,.9); animation:wcPulse 1.8s infinite; }
+      .oscreen .os-row{ height:9px; border-radius:3px; background:linear-gradient(90deg, rgba(56,189,248,.75), rgba(56,189,248,.12)); transform-origin:left; animation:enityBar 1.6s ease-in-out infinite; }
+      .oscreen .os-row.r2{ width:72%; animation-delay:.4s; background:linear-gradient(90deg, rgba(43,255,136,.65), rgba(43,255,136,.10)); }
+      .oscreen .os-row.r3{ width:54%; animation-delay:.8s; }
+      .oscreen .os-cap{ font-size:10.5px; color:rgba(165,243,252,.55); margin:5px 0 0; line-height:1.4; }
+      .oscreen .os-read{ font-family:"IBM Plex Mono",monospace; font-size:9.5px; color:rgba(165,243,252,.85);
+        margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      @media (max-width:720px){ .oscreen{ max-width:none; flex-basis:100%; } .owner-office .nm{ font-size:23px; } }
+
+      /* ===== Owner's office — v81 form: header, TARGET CALLS window, the
+         little direction strip and the live price line inside that window,
+         then the company chain. Stacked, the way v81 carried it. ===== */
+      .target-window .tw-live-line{ margin-top:10px; border-top:1px solid rgba(251,191,36,.25); padding-top:9px;
+        font-size:12.5px; color:rgba(254,243,199,.75); line-height:1.55; }
+      .target-window .tw-live-line .tw-live-price{ font-size:19px; font-weight:900; color:#fffbeb; }
+      .target-window .tw-live-line .tw-live-price.held{ color:rgba(254,243,199,.55); }
+      .target-window .tw-dir-row{ margin:8px 0 0; }
+
+      /* ===== v77 reader offices + Owner's target window ===== */
+      .desk-card.span-all{ grid-column:1 / -1; }
+      .room-plate{ margin:10px 0 8px; border:1px solid rgba(103,232,249,.35); background:rgba(0,0,0,.4); border-radius:6px;
+        padding:6px 10px; text-align:center; font-size:13.5px; font-weight:900; letter-spacing:.18em; color:#ecfeff; }
+      .coin-grid{ display:grid; gap:8px; grid-template-columns:repeat(2, minmax(0,1fr)); }
+      @media (max-width:560px){ .coin-grid{ grid-template-columns:minmax(0,1fr); } }
+      .coin-win{ border:1px solid rgba(103,232,249,.35); background:rgba(4,18,28,.9); border-radius:8px; padding:8px 10px;
+        box-shadow:0 0 14px rgba(34,211,238,.10); }
+      .coin-win .cw-name{ font-size:11px; font-weight:900; letter-spacing:.12em; color:rgba(207,250,254,.85); margin:0; }
+      .coin-win .cw-name .ltc-mark{ color:#fbbf24; margin-left:2px; }
+      .coin-win .cw-big{ font-size:17px; font-weight:900; color:#ecfeff; margin:2px 0 0; line-height:1.2; }
+      .coin-win .cw-sub{ font-size:11px; color:rgba(165,243,252,.6); margin:2px 0 0; line-height:1.4; }
+      .scale-note{ font-size:12px; color:rgba(207,250,254,.65); margin:8px 0 0; line-height:1.5; }
+      .scale-note b{ color:#ecfeff; }
+      .temp-screen{ margin-top:10px; }
+      .temp-screen .ts-t{ font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.13em; color:#a5f3fc; margin:0 0 6px; }
+      .frame-ladder{ display:flex; flex-wrap:wrap; gap:6px; }
+      .frame-ladder .fl{ border:1px solid rgba(103,232,249,.4); background:rgba(8,47,73,.7); border-radius:6px; padding:5px 9px;
+        font-size:11.5px; font-weight:800; color:#cffafe; }
+      .frame-ladder .fl small{ display:block; font-size:10px; font-weight:600; color:rgba(165,243,252,.6); }
+      .target-window{ margin-top:12px; border:1px solid rgba(251,191,36,.35); background:rgba(0,0,0,.28); border-radius:10px; padding:12px 14px; }
+      .target-window .tw-head{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; }
+      .target-window .tw-title{ font-size:13.5px; font-weight:900; letter-spacing:.12em; color:#fef3c7; margin:0; }
+      .target-window .tw-doctrine{ font-size:11.5px; color:rgba(254,243,199,.6); margin:6px 0 0; line-height:1.55; }
+      .tw-row{ margin-top:10px; border:1px solid rgba(251,191,36,.3); background:rgba(251,191,36,.05); border-radius:8px; padding:10px 12px; }
+      .tw-row .tw-top{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; }
+      .tw-row .tw-coin{ font-size:16px; font-weight:900; letter-spacing:.05em; color:#fffbeb; }
+      .tw-row .tw-coin .ltc-mark{ color:#fbbf24; font-size:13px; margin-left:2px; }
+      .tw-row .tw-called{ font-size:11.5px; color:rgba(254,243,199,.6); }
+      .tw-open{ margin-left:auto; background:rgba(251,191,36,.2); color:#fde68a; border-radius:4px; padding:2px 8px;
+        font-size:10.5px; font-weight:900; letter-spacing:.1em; }
+      .tw-cells{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+      .tw-cell{ flex:1 1 150px; border:1px solid rgba(251,191,36,.3); background:rgba(0,0,0,.3); border-radius:6px; padding:7px 10px; }
+      .tw-cell .tc-l{ display:block; font-size:10px; font-weight:900; letter-spacing:.22em; color:#fcd34d; }
+      .tw-cell .tc-v{ display:block; font-size:17px; font-weight:900; color:#fffbeb; margin-top:2px; line-height:1.25; }
+      .tw-cell .tc-s{ display:block; font-size:10.5px; color:rgba(254,243,199,.6); margin-top:1px; line-height:1.4; }
+      .tw-desc{ font-size:12.5px; color:rgba(254,243,199,.75); margin:8px 0 0; line-height:1.55; }
+      .tw-desc b{ color:#fffbeb; }
+      .target-window .tw-note{ font-size:11px; color:rgba(254,243,199,.5); margin:8px 0 0; line-height:1.5; }
+      /* ===== v81: the Owner's little direction strip — LIVE-window size, never big ===== */
+      .dir-strip{ display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 10px;
+        font-size:10.5px; font-weight:900; letter-spacing:.1em; white-space:nowrap;
+        background:rgba(100,116,139,.22); color:rgba(203,213,225,.85); }
+      .dir-strip i{ width:6px; height:6px; flex:none; border-radius:50%; background:#94a3b8; }
+      .dir-strip.push-up{ background:rgba(16,185,129,.2); color:#6ee7b7; animation:dirFlash 1s ease-in-out infinite; }
+      .dir-strip.push-up i{ background:#34d399; box-shadow:0 0 7px rgba(52,211,153,.9); }
+      .dir-strip.push-down{ background:rgba(244,63,94,.2); color:#fda4af; animation:dirFlash 1s ease-in-out infinite; }
+      .dir-strip.push-down i{ background:#f43f5e; box-shadow:0 0 7px rgba(244,63,94,.9); }
+      .dir-strip.hold-up{ background:rgba(16,185,129,.2); color:#6ee7b7; }
+      .dir-strip.hold-up i{ background:#34d399; }
+      .dir-strip.hold-down{ background:rgba(244,63,94,.2); color:#fda4af; }
+      .dir-strip.hold-down i{ background:#f43f5e; }
+      @keyframes dirFlash{ 0%,100%{ opacity:1; } 50%{ opacity:.45; } }
+      @media (prefers-reduced-motion: reduce){ .dir-strip.push-up, .dir-strip.push-down{ animation:none; } }
+      .email-room p{ font-size:12.5px; color:rgba(207,250,254,.7); margin:6px 0 0; line-height:1.55; }
+      .email-room p b{ color:#ecfeff; }
+
+      /* ===== v81 repair: room locks, sideways offices, live reads ===== */
+      .lockmark{ position:absolute; top:8px; right:8px; z-index:3; display:inline-flex; align-items:center; gap:4px;
+        font-size:9.5px; font-weight:900; letter-spacing:.14em; color:#fde68a;
+        background:rgba(0,0,0,.55); border:1px solid rgba(251,191,36,.55); border-radius:999px; padding:2px 8px;
+        box-shadow:0 0 10px rgba(251,191,36,.18); white-space:nowrap; }
+      .office, .owner-office, .desk-card, .pot-card, .bc-card, .pq-card, .pedestal, .fourpoints, .newsroom, .off-card, .holo-card{ position:relative; }
+      .desk-card .side-flex{ display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; }
+      .desk-card .side-id{ flex:0 1 300px; min-width:min(260px,100%); }
+      .desk-card .side-room{ flex:1 1 320px; min-width:min(300px,100%); border-left:1px solid rgba(103,232,249,.18); padding-left:14px; }
+      @media (max-width:720px){ .desk-card .side-room{ border-left:none; padding-left:0; border-top:1px solid rgba(103,232,249,.18); padding-top:10px; } }
+      .read-stamp{ display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-family:"IBM Plex Mono",monospace;
+        font-size:10px; font-weight:600; letter-spacing:.1em; color:#a7f3d0; }
+      .read-stamp i{ width:6px; height:6px; flex:none; border-radius:50%; background:#34d399; box-shadow:0 0 7px rgba(52,211,153,.9); animation:wcPulse 1.8s infinite; }
+      .coin-win .cw-big.up{ color:#6ee7b7; } .coin-win .cw-big.down{ color:#fda4af; }
+      .coin-win.flash{ border-color:rgba(110,231,183,.65); }
+      .proof-screen{ margin-top:10px; border:1px solid rgba(103,232,249,.4); border-radius:8px; padding:9px 11px;
+        background:repeating-linear-gradient(to bottom, rgba(34,211,238,.05) 0 1px, transparent 1px 4px), linear-gradient(160deg, rgba(8,47,73,.85), rgba(2,10,24,.92)); }
+      .proof-screen .ps-t{ font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.13em; color:#a5f3fc; margin:0; }
+      .proof-screen .ps-r{ font-size:12.5px; color:rgba(207,250,254,.85); margin:5px 0 0; line-height:1.5; }
+      .proof-screen .ps-r b{ color:#ecfeff; }
+      .proof-screen a{ color:#6ee7b7; font-weight:700; }
+
+      /* ===== v81: Offices Directory (top of the day board) ===== */
+      .offices-dir{ margin-bottom:12px; border:1px solid rgba(103,232,249,.35); background:rgba(34,211,238,.06); border-radius:12px; padding:10px 12px; }
+      .offices-dir .od-t{ font-size:14px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:#ecfeff; margin:0; }
+      .offices-dir .od-grid{ display:grid; gap:8px; margin-top:8px; }
+      @media (min-width:640px){ .offices-dir .od-grid{ grid-template-columns:1fr 1fr; } .offices-dir .od-wide{ grid-column:1 / -1; } }
+      .offices-dir button{ font:inherit; text-align:left; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.3); border-radius:8px;
+        padding:10px 12px; cursor:pointer; color:var(--text); }
+      .offices-dir button:hover{ border-color:rgba(165,243,252,.6); background:rgba(34,211,238,.1); }
+      .offices-dir .od-nm{ display:block; font-size:15px; font-weight:900; letter-spacing:.04em; color:#ecfeff; }
+      .offices-dir .od-nm .arr{ color:var(--accent); }
+      .offices-dir .od-ln{ display:block; font-size:12.5px; color:rgba(207,250,254,.75); margin-top:2px; line-height:1.45; }
+
+      /* ===== v81: the three new offices (Treasury · Broadcast · Production) ===== */
+      .office-scroll{ padding:12px 14px; overflow-y:auto; flex:1; min-height:0; }
+      .pot-grid{ display:grid; gap:10px; }
+      @media (min-width:900px){ .pot-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+      .pot-card{ border:1px solid rgba(251,191,36,.35); background:linear-gradient(155deg, rgba(60,45,10,.45), rgba(10,25,48,.9)); border-radius:10px; padding:12px 14px; }
+      .pot-card .pt{ font-size:17px; font-weight:900; letter-spacing:.05em; color:#fef3c7; margin:0; }
+      .pot-card .pb{ font-size:12.5px; color:rgba(254,243,199,.65); margin:2px 0 0; line-height:1.5; }
+      .pot-card .prow{ display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-top:1px solid rgba(251,191,36,.2); font-size:13px; margin-top:8px; }
+      .pot-card .prow + .prow{ margin-top:0; }
+      .pot-card .prow b{ font-weight:800; text-align:right; color:#fffbeb; }
+      .bc-grid{ display:grid; gap:10px; }
+      @media (min-width:900px){ .bc-grid{ grid-template-columns:1fr 1fr; } }
+      .bc-card{ border:1px solid rgba(103,232,249,.25); background:rgba(34,211,238,.04); border-radius:10px; padding:12px 14px; }
+      .bc-card h3{ font-size:14px; font-weight:900; letter-spacing:.06em; color:#ecfeff; margin:0; }
+      .bc-card p, .bc-card li{ font-size:13px; color:rgba(207,250,254,.78); line-height:1.55; }
+      .bc-card ul{ margin:8px 0 0; padding:0; list-style:none; display:grid; gap:6px; }
+      .bc-check li button{ display:flex; width:100%; align-items:flex-start; gap:10px; font:inherit; font-size:13px; text-align:left;
+        border:1px solid rgba(103,232,249,.15); background:rgba(0,0,0,.25); color:rgba(207,250,254,.85); border-radius:8px; padding:8px 12px; cursor:pointer; min-height:40px; }
+      .bc-check li button[aria-checked="true"]{ border-color:rgba(110,231,183,.4); background:rgba(52,211,153,.1); color:#d1fae5; }
+      .bc-check .box{ font-weight:900; flex:none; }
+      .bc-src{ display:grid; gap:8px; margin-top:8px; }
+      @media (min-width:760px){ .bc-src{ grid-template-columns:1fr 1fr; } }
+      .bc-src li{ border:1px solid rgba(103,232,249,.15); background:rgba(0,0,0,.25); border-radius:8px; padding:8px 12px; }
+      .bc-src .sn{ font-size:13px; font-weight:800; color:#ecfeff; margin:0; }
+      .bc-src .sw{ font-size:12px; color:rgba(207,250,254,.6); margin:1px 0 0; }
+      .bc-src a{ display:inline-block; margin-top:3px; font-size:12.5px; font-weight:700; color:#6ee7b7; word-break:break-all; }
+      .bc-switch{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:12px; border:1px solid rgba(148,163,184,.3); background:rgba(0,0,0,.3); border-radius:8px; padding:10px 12px; }
+      .bc-switch .sw-track{ position:relative; width:44px; height:24px; flex:none; border-radius:999px; background:#475569; }
+      .bc-switch .sw-knob{ position:absolute; left:2px; top:2px; width:20px; height:20px; border-radius:50%; background:#cbd5e1; }
+      .bc-switch p{ flex:1 1 200px; font-size:12.5px; color:rgba(207,250,254,.78); margin:0; line-height:1.5; }
+      .pq-card{ border:1px solid rgba(103,232,249,.25); background:rgba(34,211,238,.04); border-radius:10px; padding:12px 14px; margin-bottom:10px; }
+      .pq-card .pq-top{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+      .pq-card .pq-t{ font-size:15px; font-weight:900; letter-spacing:.03em; color:#ecfeff; margin:0; }
+      .pq-tag{ border-radius:999px; padding:2px 10px; font-size:10.5px; font-weight:900; letter-spacing:.08em; background:rgba(34,211,238,.15); color:#a5f3fc; }
+      .pq-tag.hold{ background:rgba(245,158,11,.15); color:#fcd34d; }
+      .pq-tag.parked{ background:rgba(14,165,233,.2); color:#7dd3fc; }
+      .pq-card p{ font-size:13px; color:rgba(207,250,254,.78); margin:6px 0 0; line-height:1.55; }
+      .pq-card p b{ color:#ecfeff; }
+      .pq-card .pq-note{ font-size:12.5px; color:rgba(207,250,254,.55); }
+
+      /* ===== v81: War Cove Newsroom — matched headline + ad pairs ===== */
+      .newsroom{ margin-top:14px; border:1px solid var(--border); background:var(--surface); border-radius:16px; padding:16px; }
+      .newsroom .nr-head{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+      .newsroom .nr-head h2{ font-size:18px; font-weight:900; color:var(--text); margin:0; }
+      .nr-chip{ border-radius:999px; background:rgba(16,185,129,.15); color:#6ee7b7; padding:3px 10px; font-size:12px; font-weight:800; }
+      .newsroom .nr-sub{ font-size:13px; color:var(--dim); margin:6px 0 0; line-height:1.55; }
+      .nr-grid{ display:grid; gap:14px; margin-top:14px; align-items:start; }
+      @media (min-width:900px){ .nr-grid{ grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); } }
+      .nr-monitor{ overflow:hidden; border-radius:12px; border:1px solid rgba(0,0,0,.7); background:#000; box-shadow:0 10px 30px rgba(0,0,0,.45); }
+      .nr-mon-bar{ display:flex; align-items:center; justify-content:space-between; gap:8px; background:#0b0f14; padding:6px 12px; }
+      .nr-mon-bar .mb-t{ font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#a5f3fc; }
+      .nr-mon-bar .mb-n{ font-size:11px; font-weight:600; color:#94a3b8; white-space:nowrap; }
+      .nr-screen{ aspect-ratio:16/9; background:#000; }
+      .nr-screen video{ width:100%; height:100%; object-fit:cover; display:block; }
+      .nr-mon-foot{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; background:#0b0f14; padding:8px 12px; }
+      .nr-now{ font-size:12.5px; font-weight:600; color:#e2e8f0; min-width:0; }
+      .nr-btns{ display:flex; gap:6px; flex:none; }
+      .nr-btns button{ font:inherit; font-size:12px; font-weight:800; border:1px solid rgba(100,116,139,.7); background:transparent; color:#e2e8f0;
+        border-radius:6px; padding:4px 12px; cursor:pointer; min-height:32px; }
+      .nr-btns button.on{ background:#22d3ee; border-color:#22d3ee; color:#000; box-shadow:0 0 10px rgba(34,211,238,.5); }
+      .nr-print{ background:var(--surface-2); border-radius:12px; padding:14px 16px; }
+      .nr-print .np-t{ font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--dim); margin:0; }
+      .nr-print h3{ font-size:20px; font-weight:900; line-height:1.25; color:var(--text); margin:6px 0 0; }
+      .nr-print .np-d{ font-size:13.5px; color:var(--text); margin:6px 0 0; line-height:1.55; }
+      .nr-print .np-a{ font-size:12.5px; color:var(--dim); margin:8px 0 0; line-height:1.5; }
+      .nr-dots{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+      .nr-dots button{ width:14px; height:14px; min-height:14px; border-radius:50%; border:none; background:rgba(100,116,139,.5); cursor:pointer; padding:0; }
+      .nr-dots button[aria-pressed="true"]{ background:#22d3ee; }
+      .screen-switcher{ flex-wrap:wrap; max-width:760px; }
+
+      .side{ display:flex; flex-direction:column; gap:14px; min-width:0; }
+      footer.board-foot{ max-width:1152px; margin:16px auto 0; padding:0 4px; font-size:12px; color:var(--dim);
+        font-family:"IBM Plex Mono",monospace; display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between; }
+      body.view-big footer.board-foot{ max-width:1920px; }
+
+      @media (prefers-reduced-motion: reduce){
+        .holo-board, .wc-rod, .fp-live i, .statuschip i, .monitor .mon-bars span.work, .monitor .mon-head i, .desk-win .sweep,
+        .rim-live, .floor-alive, .cast-rest, .ticker-track, .clock-chip .live-dot,
+        .enity-live .e-ring, .enity-live .e-ring-rev, .enity-live .e-core, .enity-live .e-halo,
+        .enity-live .e-hair, .enity-live .e-hair-slow, .enity-live .e-body, .enity-live .e-dot,
+        .enity-live .e-scan, .enity-live .e-bar, .enity-live-label i,
+        .oscreen .os-row, .oscreen .os-t i{ animation:none !important; }
+        .desk-win .sweep{ opacity:0; }
+      }
+    </style>
+  </head>
+  <body class="view-tablet">
+    <!-- War Cove hologram frame — the Day Brief's own border -->
+    <div class="wc-frame" aria-hidden="true">
+      <span class="wc-corner tl"></span><span class="wc-corner tr"></span>
+      <span class="wc-corner bl"></span><span class="wc-corner br"></span>
+      <div class="wc-rod wc-rod-top"><span class="wc-finial l"></span><span class="wc-finial r"></span>
+        <span class="wc-rod-glyphs" data-glyphs="crown,orb,ltc,diamond,wolf"></span></div>
+      <div class="wc-rod wc-rod-bottom"><span class="wc-finial l"></span><span class="wc-finial r"></span>
+        <span class="wc-rod-glyphs" data-glyphs="wolf,diamond,ltc,orb,crown"></span></div>
+      <div class="wc-frame-top" data-glyphs="crown,wolf,ltc,diamond,orb"></div>
+      <div class="wc-edge wc-edge-tl" data-syms="crown,diamond,ltc,orb"></div>
+      <div class="wc-edge wc-edge-tr" data-syms="orb,diamond,wolf,crown"></div>
+      <div class="wc-edge wc-edge-left" data-syms="wolf,diamond,ltc,crown,orb,wolf,diamond,ltc"></div>
+      <div class="wc-edge wc-edge-right" data-syms="ltc,diamond,wolf,crown,orb,ltc,diamond,wolf"></div>
+      <div class="wc-edge wc-edge-bottom" data-syms="crown,wolf,diamond,orb,ltc,wolf,crown,diamond"></div>
+    </div>
+
+    <div class="shell">
+      <header class="deck">
+        <div class="brand">
+          <p class="kick-line">Day Brief War Cove Doctoring</p>
+          <p class="sub">Run by The Enity · your own calendar — every piece on it is yours · New York time</p>
+        </div>
+        <div class="pillgroup" role="group" aria-label="Choose view">
+          <button type="button" id="view-tablet" aria-pressed="true">Tablet view</button>
+          <button type="button" id="view-holo" aria-pressed="false">Desk hologram</button>
+          <button type="button" id="view-big" aria-pressed="false">Big Screen</button>
+        </div>
+        <a class="kick-pill" href="https://kick.com/longshotwolf" target="_blank" rel="noopener">📺 KICK · 225 followers</a>
+        <div class="clock-chip" role="status" aria-label="Board clock and refresh">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span id="nyc-clock">--:--:--</span><span>NYC</span>
+          <span aria-hidden="true">·</span><span>REFRESH <span id="countdown">20</span>s</span>
+          <button type="button" id="btn-refresh">Refresh now</button>
+        </div>
+      </header>
+
+      <div class="tablet-frame">
+        <div class="tablet-inner">
+          <div class="stage">
+
+            <!-- Presenter rail -->
+            <div class="rail" id="rail">
+              <div class="presenter-frame" id="presenter-frame">
+                <video id="pf-sheity" class="pf-media" src="assets/a000.mp4" poster="assets/a001.webp" autoplay muted loop playsinline preload="auto" aria-label="Sheity, President, at her front desk — her real motion footage"></video>
+                <video id="pf-enity" class="pf-media pf-enity" src="assets/a002.mp4" poster="assets/a003.webp" autoplay muted loop playsinline preload="auto" style="object-position:center" aria-label="The Enity, CEO — her real motion picture: blue-energy form with long flowing light hair and a glowing core, at her desk with hologram screens behind her" hidden></video>
+              </div>
+              <div class="nameplate">
+                <p class="nm" id="presenter-name">SHEITY</p>
+                <p class="rl" id="presenter-role">President · Front Desk</p>
+              </div>
+              <div class="presenter-switch" role="group" aria-label="Switch who stands at the board — Sheity or The Enity">
+                <button type="button" id="pres-sheity" aria-pressed="true">Sheity</button>
+                <button type="button" id="pres-enity" aria-pressed="false">The Enity</button>
+              </div>
+              <button type="button" class="talk-btn" id="talk-btn"><span class="talk-orb" aria-hidden="true"></span><span id="talk-label">Talk to Sheity</span></button>
+              <p class="live-note" id="live-note">Her approved loop holds the frame — the live stream opens while she presents.</p>
+
+              <div class="pedestal">
+                <h3>Day Brief War Cove Doctoring — The House</h3>
+                <div class="row"><span>Owner</span><b>The Warlord</b></div>
+                <div class="row"><span>CEO</span><b>The Enity</b></div>
+                <div class="row"><span>President</span><b>Sheity</b></div>
+                <div class="row"><span>Research Mgr</span><b>Verity</b></div>
+                <div class="row"><span>Kick</span><b>225 followers</b></div>
+                <div class="row"><span>Top of the books</span><b>henrywiko · 107,574</b></div>
+              </div>
+            </div>
+
+            <!-- Screens -->
+            <div class="stack">
+              <div class="screen-switcher" role="group" aria-label="Switch the main screen — day board, field radar, the company floor, treasury, broadcast, or production queue">
+                <button type="button" id="scr-board" aria-pressed="true">Day Board</button>
+                <button type="button" id="scr-radar" aria-pressed="false">📡 Field Radar</button>
+                <button type="button" id="scr-company" aria-pressed="false">🏢 The Company</button>
+                <button type="button" id="scr-treasury" aria-pressed="false">💰 Treasury</button>
+                <button type="button" id="scr-broadcast" aria-pressed="false">📺 Broadcast</button>
+                <button type="button" id="scr-production" aria-pressed="false">🎬 Production</button>
+              </div>
+
+              <!-- DAY BOARD -->
+              <div class="holo-board">
+                <section class="screen on" id="screen-board" aria-label="Day board screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">Friday, November 13, 2026</p>
+                      <p class="s">The day as it landed in the house — New York time</p>
+                    </div>
+                    <span class="chip live">● BOARD LIVE</span>
+                  </div>
+                  <div class="screen-scroll" data-scroller>
+                    <!-- THE OFFICES DIRECTORY — the first thing on the day board (v81) -->
+                    <section class="offices-dir" aria-label="The offices — every office on this board, one tap away">
+                      <p class="od-t">🏢 The offices — tap one to walk in</p>
+                      <div class="od-grid">
+                        <button type="button" class="od-wide" data-open-screen="company" aria-label="Open the Company Floor — every bot office, the reader offices among them">
+                          <span class="od-nm">🏢 THE COMPANY FLOOR — EVERY BOT OFFICE <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Sable reads the six hour spread · Sierra reads the three minute · Mina reads THE ONE MINUTE · under her, the six new readers — Hera the ONE HOUR · Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH · Terra &amp; Vega watch the temps · Tessa fires the trade alerts · the whole crew at their desks</span>
+                        </button>
+                        <button type="button" data-open-screen="treasury" aria-label="Open the Treasury office — the three money pots, kept separate">
+                          <span class="od-nm">💰 TREASURY <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">The three money pots, kept separate — Replicate · Simli · Luma</span>
+                        </button>
+                        <button type="button" data-open-screen="broadcast" aria-label="Open the Broadcast office — the whole stream day in one place">
+                          <span class="od-nm">📺 BROADCAST <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">The whole stream day — go-live checklist · Bella &amp; Stella · KickBot · the seats</span>
+                        </button>
+                        <button type="button" data-open-screen="production" aria-label="Open the Production Queue office — the work still in flight">
+                          <span class="od-nm">🎬 PRODUCTION QUEUE <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Ads and clips still in flight — stage · lane · credit needed · your approval</span>
+                        </button>
+                        <button type="button" data-open-screen="radar" aria-label="Open the Field Radar screen">
+                          <span class="od-nm">📡 FIELD RADAR <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">The live field read — the Big 3, one clean line per coin</span>
+                        </button>
+                      </div>
+                    </section>
+                    <div class="tl" aria-label="The day on the timeline">
+                      <div class="hourline" style="top:8%"></div><span class="hourlab" style="top:calc(8% - 7px)">9:00 AM</span>
+                      <div class="hourline" style="top:34%"></div><span class="hourlab" style="top:calc(34% - 7px)">12:00 PM</span>
+                      <div class="hourline" style="top:60%"></div><span class="hourlab" style="top:calc(60% - 7px)">3:00 PM</span>
+                      <div class="hourline" style="top:86%"></div><span class="hourlab" style="top:calc(86% - 7px)">6:00 PM</span>
+
+                      <article class="holo-card" style="top:2%; min-height:64px">
+                        <span class="tm">9:30 AM</span>
+                        <p class="ct">📈 Stock market open — announced</p>
+                        <p class="cm"><span class="kind">The Bell</span>Bella posted on the 2nd of three checks — the three-check rule held.</p>
+                      </article>
+                      <article class="holo-card" style="top:27%; min-height:64px">
+                        <span class="tm">On the day</span>
+                        <p class="ct">🔵 Simli connected — Sheity's live lane verified</p>
+                        <p class="cm"><span class="kind">Live Face</span>Real-time face renders from one photo; the stream opens only while she presents.</p>
+                      </article>
+                      <article class="holo-card" style="top:52%; min-height:64px">
+                        <span class="tm">On the day</span>
+                        <p class="ct">🎞 Luma connected direct on the new platform</p>
+                        <p class="cm"><span class="kind">Generation</span>Key verified live — the restyle lane fires the moment the Luma balance is funded.</p>
+                      </article>
+                      <article class="holo-card" style="top:77%; min-height:64px">
+                        <span class="tm">4:00 PM</span>
+                        <p class="ct">🔔 Stock market close — Stella on the bell</p>
+                        <p class="cm"><span class="kind">The Bell</span>Three checks from the bell; Bella &amp; Stella's monitor flips the moment it rings.</p>
+                      </article>
+                    </div>
+
+                    <div class="offclock">
+                      <h3>Off the clock</h3>
+                      <div class="grid2">
+                        <article class="off-card">
+                          <p class="ct">🎯 Four Points window + Big Screen built</p>
+                          <p class="cm">The always-on Four Points box and the full big-screen floor landed on this board today.</p>
+                        </article>
+                        <article class="off-card">
+                          <p class="ct">🏆 Paper game — top of the books</p>
+                          <p class="cm">henrywiko leads the board at 107,574 sats.</p>
+                        </article>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="gamespots">
+                    <p class="gs-t">Open positions — riding the field</p>
+                    <div class="ticker-mask">
+                      <div class="ticker-track" id="game-ticker">
+                        <div class="ticker-set">
+                          <span><b>CryptoWarLord369</b> · LONG · LTC · 50x · entry on the Nov 12 read · <span class="neg">≈ −1,600 sats</span></span><span class="sep" aria-hidden="true">◆</span>
+                          <span><b>Rain_p</b> · LONG · LTC · down <span class="neg">≈ 2,600–2,800 sats</span> on the Nov 12 books read</span><span class="sep" aria-hidden="true">◆</span>
+                          <span><b>henrywiko</b> · TOP OF THE BOOKS · <span class="pos">107,574 sats</span></span><span class="sep" aria-hidden="true">◆</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- FIELD RADAR -->
+                <section class="screen" id="screen-radar" aria-label="Field Radar screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">📡 FIELD RADAR</p>
+                      <p class="s">The Big 3 — LTC · BTC · ETH — read off the house tape by the shared candle engine</p>
+                    </div>
+                    <span class="chip cert">LAST CERTIFIED READ · #737 · 9:07 PM ET</span>
+                  </div>
+                  <div class="screen-scroll" data-scroller>
+                    <ul class="coins">
+                      <li class="coin-row">
+                        <span class="cname"><span class="cdot" style="background:#34d399; box-shadow:0 0 8px rgba(52,211,153,.8)"></span>LTC <span aria-hidden="true" style="color:#fbbf24; font-size:13px">Ł</span></span>
+                        <span class="cprice">$49.21</span>
+                        <span class="cspread">6H spread held — same anchor gap</span>
+                        <span class="carmy" style="color:#6ee7b7">Green Army · showing signs of slowing</span>
+                      </li>
+                      <li class="coin-row">
+                        <span class="cname"><span class="cdot" style="background:#f43f5e; box-shadow:0 0 8px rgba(244,63,94,.8)"></span>BTC</span>
+                        <span class="cprice">$68,216.60</span>
+                        <span class="cspread">6H spread held — same anchor gap</span>
+                        <span class="carmy" style="color:#fda4af">Red · pushing strong</span>
+                      </li>
+                      <li class="coin-row">
+                        <span class="cname"><span class="cdot" style="background:#f43f5e; box-shadow:0 0 8px rgba(244,63,94,.8)"></span>ETH</span>
+                        <span class="cprice">$1,925.20</span>
+                        <span class="cspread">6H spread held — same anchor gap</span>
+                        <span class="carmy" style="color:#fda4af">Red · pushing strong</span>
+                      </li>
+                    </ul>
+                    <p style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:6px 2px 0">
+                      Read #737, locked 9:07 PM NYC, shown with its time. This screen only reads the field:
+                      it never trades, never touches the game, never moves a piece.
+                    </p>
+                  </div>
+                  <div class="screen-foot">
+                    <div style="display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px">
+                      <span style="font-size:15px; font-weight:900; color:#fda4af">RED HOLDS THE FIELD</span>
+                      <span style="font-size:15px; font-weight:700; color:#ecfeff">bulls progress 39%</span>
+                      <span style="margin-left:auto; font-size:11.5px; color:rgba(165,243,252,.55)">board as of 8:53 PM ET · certified</span>
+                    </div>
+                    <div class="boardbar" role="img" aria-label="Bulls progress 39 percent"><i style="width:39%"></i></div>
+                  </div>
+                </section>
+
+                <!-- COMPANY FLOOR -->
+                <section class="screen" id="screen-company" aria-label="Company floor screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">🏢 THE COMPANY FLOOR</p>
+                      <p class="s">One company, six departments — watch them work</p>
+                      <p class="chain">Owner: <b>THE WARLORD</b> · CEO: <b>THE ENITY</b> · President: <b>SHEITY</b></p>
+                    </div>
+                    <span class="chip live" id="floor-chip">● FLOOR READ · <span id="floor-time">9:07 PM</span> NYC</span>
+                  </div>
+                  <div class="floor-scroll screen-scroll" data-scroller>
+                    <!-- The Owner's office — the head of the floor. The Warlord
+                         holds no crew desk: his office sits over the whole
+                         floor, and the chain under him reads from here. -->
+                    <div class="owner-office" aria-label="The Owner's office — The Warlord">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <p class="oo-tag">👑 The Owner's Office</p>
+                      <p class="nm"><span class="crown" aria-hidden="true">♛</span> THE WARLORD</p>
+                      <p class="jb">Owner — the LTC KING · the whole company is his</p>
+                      <p class="last">The top of the company — his calls stand here, in his own window. He holds no desk on the floor — his name sits over all of it, and nothing moves except on his word.</p>
+                      <div class="target-window" aria-label="Target calls — the Warlord's target window">
+                        <div class="tw-head">
+                          <p class="tw-title">🎯 TARGET CALLS</p>
+                          <span class="fp-live"><i></i>LIVE</span>
+                          <span class="tw-called" id="tw-read"></span>
+                        </div>
+                        <p class="tw-doctrine">Every call carries a time frame of ONE WEEK and a 20% range over and under the number — the number is the center of the range: reaching within 20% short of it, or past it, inside the week is the hit. A call that misses its week gets researched by the house, and the reason is written into its description.</p>
+                        <div class="tw-row">
+                          <div class="tw-top">
+                            <span class="tw-coin">LTC<span class="ltc-mark" aria-hidden="true">Ł</span></span>
+                            <span class="tw-called">called Nov 15, 2026 · 1:29 AM NYC</span>
+                            <span class="tw-open" id="tw-state">OPEN — WATCHING</span>
+                          </div>
+                          <div class="tw-cells">
+                            <div class="tw-cell"><span class="tc-l">TARGET</span><span class="tc-v">$49.50</span></div>
+                            <div class="tw-cell"><span class="tc-l">TIME FRAME — ONE WEEK</span><span class="tc-v">ends Nov 22, 2026 · 1:29 AM NYC</span></div>
+                            <div class="tw-cell"><span class="tc-l">RANGE — 20%</span><span class="tc-v">hits from $48.56</span><span class="tc-s">the under edge of its 20% range — $48.56, computed from the exact price at the call · at/past the target counts too</span></div>
+                          </div>
+                          <p class="tw-desc">Litecoin (LTC) — the Warlord called a target of <b>$49.50</b> on Nov 15, 2026 at 1:29 AM NYC. His words: “new target 49.50”. The call stands open, watching — it hits the moment price reaches $48.56 — the under edge of its 20% range — or past the target, inside its week, and the window flashes green: TARGET HIT. If the week closes without a hit, the house researches the miss and the reason is written into this window.</p>
+                        </div>
+                        <p class="tw-live-line">LIVE PRICE — LTC <span class="ltc-mark" aria-hidden="true">Ł</span>: <span class="tw-live-price held" id="tw-live-price">READING…</span><br />
+                        <span id="tw-live-src">Reading the live feed now — re-checked every 20 seconds.</span><br />
+                        <span id="tw-live-dist">The hit line for the $49.50 call is $48.56.</span></p>
+                        <p class="tw-dir-row"><span class="dir-strip" data-dir="owner"><i></i><span class="dir-txt">LTC DIRECTION · NO CLEAR DIRECTION</span></span></p>
+                        <p class="tw-note">The call above stands as called on the record. Its live price and direction read in this window, off Sierra's firsthand 3-minute engine on the Binance public feed — re-checked on the board's 20-second cycle. A read that cannot be fetched reads HELD — no figure stands in its place.</p>
+                      </div>
+                      <div class="owner-chain" aria-label="The company chain">
+                        <b>OWNER: THE WARLORD</b><span class="arr" aria-hidden="true">→</span>
+                        <b>CEO: THE ENITY</b><span style="font-weight:400">(she runs the company)</span><span class="arr" aria-hidden="true">→</span>
+                        <b>PRESIDENT: SHEITY</b><span style="font-weight:400">(front desk)</span><span class="arr" aria-hidden="true">→</span>
+                        <span>RESEARCH MANAGER: VERITY</span><span class="arr" aria-hidden="true">→</span>
+                        <span>THE CREW</span>
+                      </div>
+                      <p class="last">Every office and desk below works under this office.</p>
+                    </div>
+
+                    <div class="dept" style="margin-top:14px">
+                      <h3>COMMAND — THE FRONT OFFICE</h3>
+                      <p class="blurb">The CEO runs the company; the President works the front desk. Everyone below works for them.</p>
+                    </div>
+
+                    <div class="office leader" aria-label="The Enity's office">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="off-flex">
+                        <div class="win tall"><video src="assets/a002.mp4" poster="assets/a003.webp" autoplay muted loop playsinline preload="auto" style="object-position:center" aria-label="The Enity, CEO, at her desk — her real motion picture: blue-energy form with long flowing light hair and a glowing core, hologram screens behind her"></video></div>
+                        <div class="who">
+                          <p class="nm">THE ENITY</p>
+                          <p class="jb">Chief Executive Officer — runs the floor day to day</p>
+                          <p class="kd">Command</p>
+                          <span class="statuschip st-working"><i></i>WORKING</span>
+                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Runs the floor day to day — every department reports to her; every miss on the floor becomes a permanent rule fix under her hand.</p></div>
+                          <p class="last">CEO — she runs this whole floor and the board, for the owner, the Warlord. Every department reports to her, and she owns the improvement loop: every miss becomes a permanent rule fix.</p>
+                        </div>
+                        <div class="oscreen" aria-hidden="true">
+                          <div class="os-frame">
+                            <p class="os-t"><i></i>OFFICE SCREEN — LIVE</p>
+                            <div class="os-row"></div><div class="os-row r2"></div><div class="os-row r3"></div>
+                          </div>
+                          <p class="os-cap">Her office screen — the board, live from her desk.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="office leader" aria-label="Sheity's office">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="off-flex">
+                        <div class="win tall"><video src="assets/a000.mp4" poster="assets/a001.webp" autoplay muted loop playsinline preload="auto" aria-label="Sheity, President, at her front desk — her real motion footage"></video></div>
+                        <div class="who">
+                          <p class="nm">SHEITY</p>
+                          <p class="jb">President — front desk, her own footage</p>
+                          <p class="kd">Command</p>
+                          <span class="statuschip st-working"><i></i>WORKING</span>
+                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Front desk standing — Simli live lane verified Nov 14: her real face generation completed and the live line renders from her own photo.</p></div>
+                          <p class="last">President of the company, at the front desk beside the board — her desk picture holds her steady at her desk, and her live Simli face rides her own button beside the board.</p>
+                        </div>
+                        <div class="oscreen" aria-hidden="true">
+                          <div class="os-frame">
+                            <p class="os-t"><i></i>OFFICE SCREEN — LIVE</p>
+                            <div class="os-row"></div><div class="os-row r2"></div><div class="os-row r3"></div>
+                          </div>
+                          <p class="os-cap">Her office screen — the board, live from her desk.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="dept">
+                      <h3>VERITY — RESEARCH MANAGER — RUNS THE FLOOR</h3>
+                      <p class="blurb">She supervises the crew — every desk below works under her, up through her to the CEO.</p>
+                    </div>
+
+                    <div class="office" aria-label="Verity, Research Manager">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="off-flex">
+                        <div class="who" style="order:2">
+                          <p class="nm">VERITY</p>
+                          <p class="jb">Research Manager — does the house's research, digs so the CEO's time stays on what matters most</p>
+                          <p class="kd">Research</p>
+                          <span class="statuschip st-working"><i></i>WORKING</span>
+                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Research Manager standing — her corner screen carries the locked board read #737 (RED holds · bulls 39% · Four Points watcher on post).</p></div>
+                          <p class="last">Runs the house's delegated studies on the CEO's orders — every study she runs is one the CEO doesn't have to. Every desk below works under her, up through her to the CEO.</p>
+                        </div>
+                        <div class="win wide" style="order:1"><video id="verity-loop" src="assets/a004.mp4" poster="assets/a005.webp" autoplay muted loop playsinline preload="auto" aria-label="Verity, Research Manager, at her wide desk — her real looping footage"></video></div>
+                        <div class="oscreen" style="order:3" aria-hidden="true">
+                          <div class="os-frame">
+                            <p class="os-t"><i></i>CORNER SCREEN — LIVE</p>
+                            <p class="os-read">BOARD #737 · RED HOLDS · BULLS 39%</p>
+                            <div class="os-row"></div><div class="os-row r2"></div><div class="os-row r3"></div>
+                            <p class="os-read">FOUR POINTS · WATCHER ON POST</p>
+                          </div>
+                          <p class="os-cap">The corner screen in her wide office — the board, live from her desk.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="dept-root"></div>
+
+                    <div class="floor-about">
+                      <b>How to read this floor (recipe v81):</b> every room on this floor carries its
+                      <b>🔒 LOCKED</b> mark, the way the real board locks every office. Eighteen desks move with real
+                      motion — Felicity, Nova, Lyric, Vesper, Raven, Kiki and Verity play the loops banked Nov 13, and
+                      the twelve group-ad loops wired Nov 16 play at Sable, Echo, Zara, Talia, Haven, Ember, Sera,
+                      Sierra and Phoenix, with Bella and Stella each playing her own loop at their shared bell desk;
+                      Lyric's is her CLEAN group-ad loop, in place of the old caption-bar clip. The rest of the crew
+                      hold their cast portraits at their windows, breathing on the floor-alive sway. Every desk's
+                      monitor runs a LIVE FEED and every desk carries its real grade record off the house record.
+                      <b>The reader offices stand sideways in Market Intel:</b> Sable reads the six-hour spread and
+                      Sierra reads the three-minute in their turned offices, and Mina's ONE MINUTE office stands
+                      directly under them — all six coins, her name MINA on the plate, her avatar seated at her desk.
+                      <b>Under Mina, above Terra, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
+                      Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH —
+                      each reading only her own frame under Sierra's doctrine. Terra watches the temp bottoms and
+                      Vega the temp tops, each on five frames — MONTH · WEEK · DAY · 4H · 6H. Tessa fires the trade
+                      alerts, Wren watches every feed, and in Records &amp; Quality Prudence's office stands sideways
+                      with the Proof Page live in her monitor. Every office's reading re-checks in place on the
+                      board's own 20-second cycle, off the certified tape — read #737, locked Friday, November 13,
+                      9:07 PM NYC: RED holds the field, bulls 39%.
+                    </div>
+
+                    <div class="recipe-log" aria-label="Recipe log — the Discord room fix, banked and graded">
+                      <h3>📜 Recipe Log — Banked &amp; Graded<span class="rgrade">RECIPE GRADE: A−</span></h3>
+                      <p><b>Entry — the Discord room fix (Nov 13 night): the three pictures, the motion, the monitors.</b>
+                      Grade A− as banked: every step verified in the build and the render; the grade rises to A on the
+                      Warlord's hand-test inside the Discord room, which is the house verdict.</p>
+                      <p><b>What was broken:</b> Sheity, The Enity and Verity were the only windows on the floor whose
+                      videos carried no still picture behind them, so when the Discord room's frame held their videos
+                      back, their windows sat empty while the crew's portraits still showed. The Enity's loop also
+                      carried a sound track at 6.8 MB — the first kind of video an embedded frame refuses to play.
+                      Nothing on the page started the loops in code, so every desk sat frozen on its first frame, and
+                      the desk monitors showed five tiny bars and no reading.</p>
+                      <p><b>The fix, step for step:</b></p>
+                      <ol>
+                        <li><b>Pictures:</b> pulled one real frame from each leader's own loop
+                        (<span class="mono">ffmpeg -ss 0.5, libwebp q82</span>) into
+                        <span class="mono">assets/sheity-poster.webp</span>, <span class="mono">assets/enity-poster.webp</span> and
+                        <span class="mono">assets/verity-poster.webp</span>, and set <span class="mono">poster=</span> plus
+                        <span class="mono">preload="auto"</span> on all five leader video slots — presenter rail (both), the CEO office,
+                        the President office, and Verity's wide office. The picture now shows whether or not the loop is playing.</li>
+                        <li><b>The Enity's loop:</b> re-encoded silent and faststart —
+                        <span class="mono">ffmpeg -an -c:v libx264 -pix_fmt yuv420p -crf 26 -movflags +faststart</span> —
+                        6.8 MB down to 2.5 MB, same picture, no sound track to refuse.</li>
+                        <li><b>Motion:</b> one engine (<span class="mono">primeVideo</span> / <span class="mono">kickMotion</span>) sets
+                        <span class="mono">muted</span> as a property in code and calls <span class="mono">play()</span> on every live loop;
+                        it re-fires when the Company screen opens, when the tab comes back, on the first tap, and on a standing
+                        4-second check. Desk videos also carry <span class="mono">autoplay</span> + <span class="mono">preload="auto"</span>.
+                        Resting desks (<span class="mono">data-live="0"</span>) still rest on their portrait frame; reduced-motion still parks all video.</li>
+                        <li><b>Monitors:</b> <span class="mono">monitorHTML</span> now draws a real screen — a DESK SCREEN — LIVE FEED / STANDBY
+                        header, nine animated bars, and a readout line of that desk's own feed — and Verity's corner screen reads the
+                        board (#737 · RED HOLDS · BULLS 39% · Four Points watcher on post).</li>
+                      </ol>
+                      <p><b>Re-apply after any future upgrade</b> (upgrades keep breaking settled things — run this list before
+                      calling a build done): ① confirm the five leader slots still hold their <span class="mono">poster=</span> attributes and the
+                      three poster files are still in <span class="mono">assets/</span>; ② if <span class="mono">enity-loop.mp4</span> is ever replaced, re-run
+                      step 2's encode on the new file before it ships; ③ confirm the <span class="mono">primeVideo</span>/<span class="mono">kickMotion</span>
+                      block and the desk <span class="mono">autoplay</span> attributes survived; ④ confirm <span class="mono">monitorHTML</span> still renders the
+                      header + readout. <b>Locked offices:</b> the CEO and President offices were NOT touched in layout — only the
+                      attributes on their <span class="mono">&lt;video&gt;</span> tags changed. Re-apply the same way: attributes only, never the office layout.</p>
+                      <p><b>Entry — RESET TO THE v81 RECIPE POINT (Nov 16, 2026, on the Warlord's order).</b> His order:
+                      “Reset it to right before they swiped it and knocked everything out. Reset it to that recipe.” —
+                      “Go back to where they stopped us at, get everything back running from that point with using that
+                      recipe, and then anything I want to update, update it from there.” This board is reset to the
+                      <b>recipe v81</b> point — the rollback base from earlier today — and everything added after that
+                      rollback is off: the direction strips beside the reader plates, the separate corner windows in
+                      the Owner's office, the office tidy layout, and the separate live-price feed lane; the Enity
+                      poster removed after v81 is restored (frame pulled from her own loop, per the Discord room fix
+                      above, and set back on both her video slots). The Owner's Office stands as v81 carried it —
+                      header + lock, the <b>TARGET CALLS</b> window with its live price line and the little direction
+                      strip inside it, and the company chain. The reader offices read live on their own engines off
+                      the Binance public feed; a coin that cannot be fetched reads <b>HELD</b>. Sierra's gate stands
+                      as the v81 recipe records it. From here, updates happen only on his word, one at a time, from
+                      this base.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- TREASURY — THE MONEY TILL (v81) -->
+                <section class="screen" id="screen-treasury" aria-label="Treasury office screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">💰 TREASURY — THE MONEY TILL</p>
+                      <p class="s">Three pots, three separate houses — Replicate · Simli · Luma. Nothing transfers between them.</p>
+                    </div>
+                    <span class="chip cert">READ-ONLY ON THIS COPY</span>
+                  </div>
+                  <div class="office-scroll" data-scroller>
+                    <div class="pot-grid">
+                      <article class="pot-card" aria-label="Replicate pot">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <p class="pt">Replicate</p>
+                        <p class="pb">Clip and promo creation — the crew-loop and group-ad lane.</p>
+                        <div class="prow"><span>Amount</span><b>$10</b></div>
+                        <div class="prow"><span>Status</span><b>Funded — credit showing</b></div>
+                        <div class="prow"><span>Confirmed</span><b>Nov 16, 2026</b></div>
+                        <p class="pb" style="margin-top:8px">The $10 landed Nov 16 and the group ad fired on it — Replicate accepted the prediction and all twelve crew loops passed QC. Lionell's filmed version (≈ $8.40) waits for his explicit word; it does not auto-fire off this credit.</p>
+                      </article>
+                      <article class="pot-card" aria-label="Simli pot">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <p class="pt">Simli</p>
+                        <p class="pb">Sheity's LIVE face only — her real-time line.</p>
+                        <div class="prow"><span>Amount</span><b>—</b></div>
+                        <div class="prow"><span>Status</span><b>Working</b></div>
+                        <div class="prow"><span>Confirmed</span><b>Nov 14, 2026</b></div>
+                        <p class="pb" style="margin-top:8px">Simli confirmed working Nov 14: Sheity's real face generation completed. The live line is gated only on his Simli Hobby upgrade, placed by him inside Simli's own billing.</p>
+                      </article>
+                      <article class="pot-card" aria-label="Luma pot">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <p class="pt">Luma</p>
+                        <p class="pb">The restyle lane — fires the moment he funds it.</p>
+                        <div class="prow"><span>Amount</span><b>—</b></div>
+                        <div class="prow"><span>Status</span><b>Not confirmed yet</b></div>
+                        <div class="prow"><span>Confirmed</span><b>—</b></div>
+                        <p class="pb" style="margin-top:8px">Connected direct on platform.lumalabs.ai; its restyle fires the moment he funds it. No amount stands here until he confirms one himself.</p>
+                      </article>
+                    </div>
+                    <p style="font-size:12px; color:rgba(254,243,199,.45); line-height:1.55; margin:12px 2px 0">Each card shows only what the Warlord has confirmed himself — the amount, the status, and the date he confirmed it. This office never makes a payment and never holds a password or a key: the money moves only in each house's own billing, by his hand.</p>
+                  </div>
+                </section>
+
+                <!-- BROADCAST — STREAM DAY (v81) -->
+                <section class="screen" id="screen-broadcast" aria-label="Broadcast office screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">📺 BROADCAST — STREAM DAY</p>
+                      <p class="s">The whole stream day in one place — checklist, bells, KickBot, seats, and sources</p>
+                    </div>
+                    <span class="chip live">● STREAM-DAY OFFICE</span>
+                  </div>
+                  <div class="office-scroll" data-scroller>
+                    <div class="bc-grid">
+                      <section class="bc-card" aria-label="Go-live checklist">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <h3>GO-LIVE CHECKLIST</h3>
+                        <ul class="bc-check" id="bc-checklist">
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>Stream seats set — Day Brief in the paper game's old seat, paper game in the Kick chat seat, Kick chat off the screen</span></button></li>
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>Browser sources loaded and showing</span></button></li>
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>KickBot on post — commands and timers live</span></button></li>
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>Bella &amp; Stella armed for the bell — three checks from the bell, one post</span></button></li>
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>Branded Content switch checked — OFF unless a paid ad is in rotation</span></button></li>
+                          <li><button type="button" role="checkbox" aria-checked="false"><span class="box" aria-hidden="true">○</span><span>Mic and TTS checked — TTS auto-read on, links never read aloud</span></button></li>
+                        </ul>
+                        <p style="font-size:11.5px; color:rgba(207,250,254,.45); margin:8px 0 0">Tap a line to check it for this sitting.</p>
+                      </section>
+                      <section class="bc-card" aria-label="Bella and Stella — the market bell announcements">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <h3>BELLA &amp; STELLA — THE BELL DESK</h3>
+                        <p style="margin:6px 0 0">Market state rides the bell desk's own monitor on the Company Floor — New York session, Mon–Fri 9:30 AM–4:00 PM ET.</p>
+                        <ul>
+                          <li><b style="color:#ecfeff">Bella — OPEN, 9:30 AM ET:</b> checks the feed <b style="color:#ecfeff">three times in a row</b> from the bell and posts once, the moment a check confirms. First success under the rule: Nov 13, on the 2nd check.</li>
+                          <li><b style="color:#ecfeff">Stella — CLOSE, 4:00 PM ET:</b> the same three-check rule. If no check confirms, nothing posts and what each check saw gets reported.</li>
+                          <li>Both post through his own Kick Developer app — KickBot cannot post one-offs.</li>
+                        </ul>
+                      </section>
+                      <section class="bc-card" aria-label="KickBot status">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <h3>KICKBOT — COMMANDS &amp; TIMERS</h3>
+                        <p style="margin:6px 0 0">Connected — moderator on LongShotWolf, resting between calls.</p>
+                        <p><b style="color:#ecfeff">Commands live:</b> !discord · !youtube · !tiktok · !x · !tip · !proof · !record — !proof and !record hand chatters the Proof Page at its house address.</p>
+                        <p><b style="color:#ecfeff">Standing settings:</b> TTS auto-read ON for everyone (links never read aloud) · chat + TTS moderation ON · alerts all ON · tipping live · Premium, moderator on the channel.</p>
+                      </section>
+                      <section class="bc-card" aria-label="The final stream seats">
+                        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                        <h3>THE FINAL STREAM SEATS</h3>
+                        <ul>
+                          <li><b style="color:#ecfeff">Day Brief</b> — sits in the paper game's old seat.</li>
+                          <li><b style="color:#ecfeff">Paper game</b> — sits in the Kick chat seat.</li>
+                          <li><b style="color:#ecfeff">Kick chat</b> — off the screen.</li>
+                          <li><b style="color:#ecfeff">War Cove News</b> — takes no seat in this arrangement; it stands on its own page (below).</li>
+                        </ul>
+                        <div class="bc-switch">
+                          <span class="sw-track" role="switch" aria-checked="false" aria-label="Branded Content switch — off. It stays off until a paid ad is actually in rotation."><span class="sw-knob"></span></span>
+                          <p><b style="color:#ecfeff">BRANDED CONTENT — OFF.</b> It stays off until a paid ad is actually in rotation; then it goes ON with the ad labels and disclosures.</p>
+                        </div>
+                      </section>
+                    </div>
+                    <section class="bc-card" style="margin-top:10px" aria-label="Browser-source addresses">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <h3>BROWSER-SOURCE ADDRESSES — ALL IN ONE PLACE</h3>
+                      <ul class="bc-src">
+                        <li><p class="sn">War Cove Newsroom</p><p class="sw">The standalone newsroom page — headline + ad rotation; War Cove News also stands here on its own, outside the Day Brief</p><a href="https://longshotwolf.github.io/war-cove-newsroom/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-newsroom/ ↗</a></li>
+                        <li><p class="sn">Battlefield — Field Radar</p><p class="sw">The battlefield chart page</p><a href="https://longshotwolf.github.io/war-cove-battlefield/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-battlefield/ ↗</a></li>
+                        <li><p class="sn">Proof Page</p><p class="sw">The graded record page</p><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-proof-page/ ↗</a></li>
+                        <li><p class="sn">Kick channel</p><p class="sw">LongShotWolf on Kick</p><a href="https://kick.com/LongShotWolf" target="_blank" rel="noopener">https://kick.com/LongShotWolf ↗</a></li>
+                        <li><p class="sn">Kick player</p><p class="sw">The stream player embed</p><a href="https://player.kick.com/LongShotWolf" target="_blank" rel="noopener">https://player.kick.com/LongShotWolf ↗</a></li>
+                      </ul>
+                    </section>
+                  </div>
+                </section>
+
+                <!-- PRODUCTION QUEUE (v81) -->
+                <section class="screen" id="screen-production" aria-label="Production Queue office screen">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">🎬 PRODUCTION QUEUE</p>
+                      <p class="s">The ads and clips still in flight — stage, lane, credit needed, and his approval</p>
+                    </div>
+                    <span class="chip cert">3 IN FLIGHT</span>
+                  </div>
+                  <div class="office-scroll" data-scroller>
+                    <article class="pq-card" aria-label="Production piece: Group ad — remaining crew desk loops">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="pq-top"><p class="pq-t">Group ad — remaining crew desk loops</p><span class="pq-tag">LANE: REPLICATE</span><span class="pq-tag parked">PARKED</span></div>
+                      <p><b>Stage:</b> Parked — waiting on Replicate credit</p>
+                      <p><b>Credit needed:</b> Replicate credit — the $10 top-up must show in Replicate's till first</p>
+                      <p class="pq-note">One group ad for the remaining crew desk loops. It fires once, on his word, after the credit shows — an earlier fire attempt was refused for insufficient credit and charged nothing. (The twelve loops from the Nov 16 group generation already stand wired on the Company Floor; this card stands as the queue's own record.)</p>
+                    </article>
+                    <article class="pq-card" aria-label="Production piece: Lionell — filmed version">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="pq-top"><p class="pq-t">Lionell — filmed version</p><span class="pq-tag">LANE: HOUSE — FILMED</span><span class="pq-tag parked">WAITING ON THE WARLORD</span></div>
+                      <p><b>Stage:</b> Pending funding</p>
+                      <p><b>Credit needed:</b> Funding needed before the filmed version goes ahead</p>
+                      <p class="pq-note">Lionell's ad, reworked as a documentary-style piece, all about them — the filmed version waits on funding. Floors first: it does not auto-fire off the Replicate credit.</p>
+                    </article>
+                    <article class="pq-card" aria-label="Production piece: Margex +425.43% ad">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="pq-top"><p class="pq-t">Margex +425.43% ad</p><span class="pq-tag">LANE: HOUSE</span><span class="pq-tag hold">ON HOLD — HIS WORD</span></div>
+                      <p><b>Stage:</b> On hold — by his word</p>
+                      <p class="pq-note">Held by the Warlord's word. It does not move until he says so.</p>
+                    </article>
+                    <p style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:4px 2px 0">Finished pieces feed the War Cove Newsroom only — when a piece is done, it leaves the in-flight queue for the Newsroom's rotation below.</p>
+                  </div>
+                </section>
+              </div>
+            </div>
+
+            <!-- Side column: Four Points, always on screen -->
+            <div class="side">
+              <div class="fourpoints" id="fourpoints" role="region" aria-label="Four Points — live hits window">
+                <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                <div class="fp-head">
+                  <p class="t">🎯 FOUR POINTS</p>
+                  <span class="fp-live"><i></i>LIVE</span>
+                  <p class="s">Entries &amp; exits as they hit — the same hits as the Proof Page, with the full description. On watch: Nova.</p>
+                </div>
+                <div class="fp-body">
+                  <ul class="fp-feed" id="fp-feed">
+                    <li><b>9:07 PM NYC</b> — Field Radar #737 locked: RED holds, bulls 39%.<span class="latest">LATEST</span></li>
+                    <li><b>Watcher on post</b> — hits land in this window on their own, ~every 20 seconds a check, newest on top.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="pedestal">
+                <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                <h3>Doors</h3>
+                <div class="row"><span>Proof Page</span><b><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener" style="color:#7dd3fc">The Graded Record ↗</a></b></div>
+                <div class="row"><span>Discord</span><b><a href="https://discord.gg/r9rYVYWztZ" target="_blank" rel="noopener" style="color:#7dd3fc">Live board 24/7 ↗</a></b></div>
+                <div class="row"><span>Telegram</span><b><a href="https://t.me/TheWarCove" target="_blank" rel="noopener" style="color:#7dd3fc">@TheWarCove ↗</a></b></div>
+                <div class="row"><span>Tips</span><b><a href="https://kickbot.com/tips/LongShotWolf" target="_blank" rel="noopener" style="color:#7dd3fc">KickBot tips ↗</a></b></div>
+              </div>
+
+              <div class="pedestal email-room" aria-label="Email room — Day Brief War Cove Doctoring">
+                <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                <h3>✉️ Email — Day Brief War Cove Doctoring</h3>
+                <div class="row"><span>Status</span><b>ACTIVE — PROTON MAIL ONLY</b></div>
+                <div class="row"><span>New emails</span><b>NONE</b></div>
+                <p>This room's mailbox is <b>longshotwolf@proton.me</b> — the Warlord's own Longshot Wolf Proton Mail box. Proton only: no Gmail or any other provider's address can sign in to this room.</p>
+                <p>The box cannot be read from this board yet — no connection runs from Proton into this room, so no mail stands here yet. When a connection exists, its mail stands in this room, on this board only. The NEW EMAILS light comes on the moment mail you haven't opened stands in this room. This room carries the Warlord's Longshot Wolf Proton box and nothing else.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- WAR COVE NEWSROOM — 17 matched headline + ad pairs (v81) -->
+      <section class="newsroom" aria-label="War Cove Newsroom — matched headline and ad pairs">
+        <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+        <div class="nr-head">
+          <h2>📰 War Cove News</h2>
+          <span class="nr-chip">MATCHED PAIRS — PRINT + AD</span>
+          <span style="font-size:12px; color:var(--dim)">17 pairs in rotation · the eight Margex ads carry their real sound</span>
+        </div>
+        <p class="nr-sub">The beats this house runs on — the Big 3 and the AI/space lane. Every story on the board runs with its own War Cove News ad on the monitor: the print and the ad rotate together. The board itself sits still — the monitor advances when an ad ends, or by your hand.</p>
+        <div class="nr-grid">
+          <div class="nr-monitor">
+            <div class="nr-mon-bar">
+              <span class="mb-t">📺 War Cove News Monitor</span>
+              <span class="mb-n" id="nr-count">Story 1 of 17</span>
+            </div>
+            <div class="nr-screen">
+              <video id="nr-video" src="assets/a006.mp4" autoplay muted loop playsinline preload="auto" aria-label="War Cove News ad on the monitor"></video>
+            </div>
+            <div class="nr-mon-foot">
+              <span class="nr-now" id="nr-now">Now showing: Binance Cold Wallet</span>
+              <span class="nr-btns">
+                <button type="button" id="nr-sound" aria-pressed="false" aria-label="Volume — turn the sound on for the ads on the Newsroom monitor">🔇 Sound off</button>
+                <button type="button" id="nr-prev" aria-label="Previous story">‹ Prev</button>
+                <button type="button" id="nr-next" aria-label="Next story">Next ›</button>
+              </span>
+            </div>
+          </div>
+          <div class="nr-print">
+            <p class="np-t">The print — now on the board</p>
+            <h3 id="nr-headline">Binance Been Hacked</h3>
+            <p class="np-d" id="nr-details">The first War Cove Crypto News Alert: the best thing for you to do is store your own crypto on your own cold wallet.</p>
+            <p class="np-a" id="nr-adline">▶ Its ad is on the monitor: Binance Cold Wallet.</p>
+            <div class="nr-dots" id="nr-dots" role="group" aria-label="Stories in the rotation"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="board-foot">
+        <span>DAY BRIEF WAR COVE DOCTORING · FRIDAY, NOVEMBER 13, 2026 · NEW YORK TIME</span>
+        <span>LAST SYNC <span id="sync-time">9:07 PM NYC</span> · RE-CHECKS ITSELF EVERY 20s</span>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* ---------- War Cove frame glyphs (crown · wolf · diamond · orb · Ł) ---------- */
+        var GLYPHS = {
+          crown: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18 L2 7 L8 12 L12 4 L16 12 L22 7 L21 18 Z"/></svg>',
+          wolf: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3 L9 7 L12 4.5 L15 7 L20 3 L19 11.5 L15.5 19.5 L12 21.5 L8.5 19.5 L5 11.5 Z"/></svg>',
+          diamond: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 L21 12 L12 21.5 L3 12 Z"/></svg>',
+          orb: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle class="orb-core" cx="12" cy="12" r="3.4"/></svg>',
+          ltc: '<span class="wc-ltc" aria-hidden="true">Ł</span>'
+        };
+        var SYMS = {
+          crown: GLYPHS.crown, wolf: GLYPHS.wolf, diamond: GLYPHS.diamond,
+          orb: GLYPHS.orb, ltc: '<span class="wc-ltc-sym" aria-hidden="true">Ł</span>'
+        };
+        document.querySelectorAll('[data-glyphs]').forEach(function (el) {
+          var kinds = el.getAttribute('data-glyphs').split(',');
+          el.innerHTML = kinds.map(function (k) { return GLYPHS[k] || ''; }).join('');
+        });
+        document.querySelectorAll('[data-syms]').forEach(function (el) {
+          var kinds = el.getAttribute('data-syms').split(',');
+          el.innerHTML = kinds.map(function (k) {
+            var orb = k === 'orb' ? ' wc-sym-orb' : '';
+            var inner = k === 'ltc' ? SYMS.ltc : (GLYPHS[k] || '');
+            return '<span class="wc-sym' + orb + '">' + inner + '</span>';
+          }).join('');
+        });
+
+        /* ---------- Company Floor roster (statuses as last read Fri Nov 13) ---------- */
+        var STATUS = {
+          working: 'WORKING', connected: 'CONNECTED', scheduled: 'SCHEDULED',
+          quiet: 'SCHEDULED', down: 'DOWN'
+        };
+        var DEPTS = [
+          { key: 'intel', title: 'MARKET INTEL — THE FIELD DESK', blurb: 'Reads the tape, watches the points, posts the survey — and the Research Manager digs so the CEO doesn\u2019t have to.' },
+          { key: 'game', title: 'THE GAME FLOOR', blurb: 'The paper game and every lane that carries it to the pages.' },
+          { key: 'chat', title: 'CHAT & COMMUNITY', blurb: 'The bots the Cove talks to — and the ears that hear them.' },
+          { key: 'announce', title: 'ANNOUNCEMENTS — THE BELL DESK', blurb: 'Scheduled voices. They work when the bell rings — three checks, one post.' },
+          { key: 'security', title: 'INFRASTRUCTURE & SECURITY — THE KEYMASTER, THE CODE CHECKER & THE FEED WATCHER', blurb: 'The Keymaster holds the key map and audits least power; the Code Checker watches the machine layer — every coded signal must decode to its locked plain meaning; the Feed Watcher watches every live feed for outages.' },
+          { key: 'ops', title: 'OPERATIONS', blurb: 'Keeps the whole company running — including itself.' },
+          { key: 'quality', title: 'RECORDS & QUALITY — THE GATE, THE GYM & THE AUDIT DESK', blurb: 'The Gatekeeper tests every change against the record before it ships; the Trainer grades every read against the tape and corrects it; the Proof Page Auditor audits the Proof Page itself, live, as it updates.' }
+        ];
+        var CREW = [
+          { dept: 'intel', name: 'RAVEN', job: 'Field Radar Engine', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a007.webp', loop: 'assets/a008.mp4', rate: 2, zoom: 'transform:scale(1.45);transform-origin:38% 42%', last: 'Her engine locks the board read — #737 stands: RED holds the field, bulls 39%. Her loop plays at her window and her monitor reads the field live.' },
+          { dept: 'intel', name: 'NOVA', job: 'Four Points Watcher', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a009.webp', loop: 'assets/a010.mp4', rate: 2, last: 'On watch — hits land in the Four Points window and on the Proof Page as they fire.' },
+          { dept: 'intel', name: 'SABLE', job: 'Spread Watch', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a011.webp', loop: 'assets/a012.mp4', rate: 2, office: 'sable', last: 'Reads the six-hour spread — live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales. On LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00 and beyond the big move. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'intel', name: 'SIERRA', job: 'Survey the Field', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a013.webp', loop: 'assets/a014.mp4', rate: 2, office: 'sierra', last: 'Reads the three-minute — all six coins\u2019 3-minute army states stand in her window. Survey the Field posts every 3 hours — LTC first, then BTC, then ETH, off the live tape. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'intel', name: 'MINA', job: 'One Minute', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a015.webp', office: 'mina', gradeText: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts, graded against the tape.', last: 'The live one-minute read — LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB. Each coin\u2019s spread against its forming one-minute candle, with its band word — and its push state beside it, the two facts kept separate.' },
+          { dept: 'intel', name: 'HERA', job: 'One Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a016.webp', office: 'tf', frame: '1H', plate: 'READING THE ONE HOUR', frameLabel: 'the one hour', gradeText: 'Record — the one hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one hour, under the same doctrine Sierra reads the three-minute by — a new candle pushing past the previous candle is PUSHING on her frame; one that does not go past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'CORA', job: 'Four Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a017.webp', office: 'tf', frame: '4H', plate: 'READING THE FOUR HOUR', frameLabel: 'the four hour', gradeText: 'Record — the four hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the four hour, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'JUNO', job: 'Six Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a018.webp', office: 'tf', frame: '6H', plate: 'READING THE SIX HOUR', frameLabel: 'the six hour', gradeText: 'Record — the six hour read stands under Sierra\u2019s doctrine, graded against the tape; Sable keeps her separate 6H spread office.', last: 'Reads ONLY the six hour — the pushing/slowing read on 6H; Sable keeps her separate 6H SPREAD office. Same doctrine as Sierra\u2019s three-minute. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'DIA', job: 'One Day Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a019.webp', office: 'tf', frame: 'DAY', plate: 'READING THE ONE DAY', frameLabel: 'the one day', gradeText: 'Record — the one day read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one day, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'SELA', job: 'One Week Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a020.webp', office: 'tf', frame: 'WEEK', plate: 'READING THE ONE WEEK', frameLabel: 'the one week', gradeText: 'Record — the one week read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one week, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'MONA', job: 'Month Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a021.webp', office: 'tf', frame: 'MONTH', plate: 'READING THE MONTH', frameLabel: 'the month', gradeText: 'Record — the month read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the month, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'TERRA', job: 'Temp Bottom Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a022.webp', office: 'temp-bottom', last: 'Watches all six coins against the bottom of every frame, read live off her own watcher service — the forming candle\u2019s standing low, refreshed about every second; the month bottom is the strongest, the 6-hour the weakest.' },
+          { dept: 'intel', name: 'VEGA', job: 'Temp Top Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a023.webp', office: 'temp-top', last: 'Watches all six coins against the top of every frame, read live off her own watcher service — the forming candle\u2019s standing high, refreshed about every second; the month top is the strongest, the 6-hour the weakest.' },
+          { dept: 'game', name: 'FELICITY', job: 'Paper Game Bot', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a024.webp', loop: 'assets/a025.mp4', rate: 1, last: 'The game is running — henrywiko top of the books at 107,574 sats. Best movement on the floor.' },
+          { dept: 'game', name: 'ECHO', job: 'Board Relay', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a026.webp', loop: 'assets/a027.mp4', rate: 2, last: 'Relays the board to the pages on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'HAVEN', job: 'State Lane', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a028.webp', loop: 'assets/a029.mp4', rate: 2, last: 'State lane standing on its rule, ready for the next pass — her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'TALIA', job: 'Presence Counter', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a030.webp', loop: 'assets/a031.mp4', rate: 2, last: 'Counts who\u2019s watching the game, on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'EMBER', job: 'Candle Guard', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a032.webp', loop: 'assets/a033.mp4', rate: 2, last: 'One-shot guard on the game\u2019s candles — between runs, resting is its healthy state. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'ZARA', job: 'Game Watchdog', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a034.webp', loop: 'assets/a035.mp4', rate: 2, last: 'Feed freshness check + auto-recovery for the game, on a 1-minute timer. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'chat', name: 'KIKI', job: 'KickBot', kind: 'Platform bot — lives on KickBot', status: 'connected', face: 'assets/a036.webp', loop: 'assets/a037.mp4', rate: 1.5, last: 'Connected — moderator on LongShotWolf, resting between calls.' },
+          { dept: 'chat', name: 'LYRIC', job: 'Kick Chat Feed', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a038.webp', loop: 'assets/a039.mp4', rate: 2, last: 'Chat feed live — carrying the Cove\u2019s chat. Her CLEAN group-ad loop stands at her desk (Nov 16) in place of the old caption-bar clip.' },
+          { dept: 'chat', name: 'VESPER', job: 'War Cove Intel', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a040.webp', loop: 'assets/a041.mp4', rate: 1.5, last: 'Working read on post — the intel feed carried live, and her own group-ad loop plays at her window.' },
+          { dept: 'security', name: 'SIGRID', job: 'The Keymaster', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a042.webp', last: 'Holds the key map and audits least power across the house\u2019s connections — watchers and readers hold no post or spend keys.' },
+          { dept: 'security', name: 'ADA', job: 'The Code Checker', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a043.webp', last: 'Watches the machine layer — verifies every coded signal decodes to its locked plain meaning: band words, Sierra\u2019s lines, spread figures, statuses, the record\u2019s grade codes.' },
+          { dept: 'security', name: 'WREN', job: 'Feed Watcher', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a024.webp', office: 'feed', last: 'Every feed the floor runs on stands on her screen with its true age — the temp feeds, the Four Points hit log, the six spread feeds, the Kick chat feed, the game feed, the board relay — fresh in green, stale or down in red.' },
+          { dept: 'ops', name: 'SERA', job: 'Bot Guardian', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a044.webp', loop: 'assets/a045.mp4', rate: 2, last: 'Guardian sweep every minute over the fleet — war-bot, watcher and chat feed all up on the last check. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'ops', name: 'PHOENIX', job: 'Guardian Bootstrap', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a046.webp', loop: 'assets/a047.mp4', rate: 2, last: 'Every 5 minutes — if the guardian\u2019s timer is ever wiped, this puts it back. The watcher that watches the watcher. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'ops', name: 'TESSA', job: 'Trade Alerts', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a048.webp', office: 'tessa', last: 'Watches four frames — MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H — and fires a trade alert when price hits one of the Four Points on one of them: the alert shows the price and where price is sitting at on the candle. The best trades are on the month candle.' },
+          { dept: 'quality', name: 'PORTIA', job: 'The Gatekeeper', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a049.webp', office: 'big', last: 'Runs the change-gate — a change is tested against the bot\u2019s own graded record, the old way against the new way, and her screen reads PASS or REJECTED when she makes the call.' },
+          { dept: 'quality', name: 'VEDA', job: 'The Trainer', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a050.webp', office: 'big', last: 'Checks the floor\u2019s reads against the tape — Sierra\u2019s three-minute and Sable\u2019s spreads first — and corrects a wrong read on the record. She grades against the whole Proof Page, read fresh.' },
+          { dept: 'quality', name: 'PRUDENCE', job: 'Proof Page Auditor', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a024.webp', office: 'big', last: 'The Proof Page runs live in her monitor and she audits it as it updates — totals math, hit-log match, descriptions, band words. Flags only; she never edits the record.' }
+        ];
+
+        function seedOf(s) { var n = 0; for (var i = 0; i < s.length; i++) n += s.charCodeAt(i); return n; }
+        /* What each desk's own monitor reads — the feed that desk carries. */
+        var READ = {
+          RAVEN: 'FIELD · LTC $49.21 · BTC $68,216.60 · ETH $1,925.20',
+          NOVA: 'WATCH · #737 LOCKED · NEXT HIT LANDS HERE',
+          SABLE: 'READING THE SIX HOUR SPREAD · LTC <30¢ WEAK · 30¢+ CYCLE · $1.00+ BIG MOVE',
+          SIERRA: 'READING THE THREE MINUTE · ALL SIX COINS',
+          MINA: 'THE ONE MINUTE · ALL SIX COINS · LIVE 1M READ',
+          HERA: 'READING THE ONE HOUR · ALL SIX COINS',
+          CORA: 'READING THE FOUR HOUR · ALL SIX COINS',
+          JUNO: 'READING THE SIX HOUR · ALL SIX COINS',
+          DIA: 'READING THE ONE DAY · ALL SIX COINS',
+          SELA: 'READING THE ONE WEEK · ALL SIX COINS',
+          MONA: 'READING THE MONTH · ALL SIX COINS',
+          TERRA: 'TEMP BOTTOMS · MONTH · WEEK · DAY · 4H · 6H',
+          VEGA: 'TEMP TOPS · MONTH · WEEK · DAY · 4H · 6H',
+          VESPER: 'INTEL FEED · @TheWarCove · ON POST',
+          FELICITY: 'BOOKS · henrywiko 107,574 SATS · TOP',
+          ECHO: 'RELAY · BOARD → PAGES · ON RULE',
+          HAVEN: 'STATE LANE · AWAITING READ',
+          KIKI: 'KICKBOT · LongShotWolf · MOD LIVE',
+          LYRIC: 'CHAT FEED · KICK CHAT · LIVE',
+          TALIA: 'PRESENCE · COUNT ON RULE',
+          EMBER: 'CANDLE GUARD · ON RULE',
+          ZARA: 'WATCHDOG · GAME UNDER WATCH',
+          SIGRID: 'KEY MAP · LEAST POWER AUDIT',
+          ADA: 'CODE CHECK · SIGNALS DECODE CHECK',
+          WREN: 'FEED WATCH · EVERY LIVE FEED · FRESHNESS',
+          SERA: 'GUARDIAN · FLEET SWEEP · ALL UP',
+          PHOENIX: 'BOOTSTRAP · READY · 5-MIN RULE',
+          TESSA: 'TRADE ALERTS · MONTH · WEEK · DAY · 6H',
+          PORTIA: 'THE GATE · CHANGE TESTED ON THE RECORD',
+          VEDA: 'THE GYM · READS GRADED ON THE TAPE',
+          PRUDENCE: 'AUDIT · PROOF PAGE LIVE IN MONITOR'
+        };
+        function monitorHTML(working, seed, name) {
+          var bars = '';
+          for (var i = 0; i < 9; i++) {
+            var h = 6 + ((seed * 7 + i * 5) % 15);
+            var d = (((seed * 3 + i * 2) % 9) * 0.13).toFixed(2);
+            bars += '<span class="' + (working ? 'work' : '') + '" style="height:' + h + 'px;animation-delay:' + d + 's"></span>';
+          }
+          var read = READ[name] || 'DESK FEED · STANDING BY';
+          return '<div class="monitor' + (working ? '' : ' off') + '" aria-hidden="true">' +
+            '<div class="mon-head"><i></i><span>DESK SCREEN — LIVE FEED</span></div>' +
+            '<div class="mon-bars">' + bars + '</div>' +
+            '<div class="mon-read">' + read + '</div></div>';
+        }
+        var SIX_COINS = ['LTC', 'BTC', 'ETH', 'SOL', 'BCH', 'BNB'];
+        /* ---------- The certified tape this floor reads from ----------
+           Field Radar read #737, locked 9:07 PM NYC: RED holds the field,
+           bulls 39%. The Big 3 carry their certified prices. The reader
+           offices (Sierra's three minute and the frame readers below) read
+           LIVE off the Binance public feed — see their engines further
+           down; this tape carries Sable's locked 6H spread anchor and the
+           watch offices (temp tops/bottoms, trade alerts) that re-check
+           in place on the board's 20-second cycle. */
+        var TAPE = {
+          LTC: { price: '$49.21', top: '', army: 'Green army', dir: 'up', seq: ['slowing', 'pushing', 'slowing', 'pushing'] },
+          BTC: { price: '$68,216.60', top: '$65,382.90', army: 'Red army', dir: 'down', seq: ['pushing', 'pushing', 'slowing', 'pushing', 'slowing'] },
+          ETH: { price: '$1,925.20', top: '$1,830.86', army: 'Red army', dir: 'down', seq: ['pushing', 'slowing', 'pushing'] },
+          SOL: { price: '', top: '$72.02', army: 'Red army', dir: 'down', seq: ['slowing', 'pushing', 'pushing', 'slowing'] },
+          BCH: { price: '', top: '$210.05', army: 'Red army', dir: 'down', seq: ['pushing', 'slowing', 'pushing', 'slowing', 'pushing'] },
+          BNB: { price: '', top: '$595.12', army: 'Green army', dir: 'up', seq: ['slowing', 'pushing', 'slowing'] }
+        };
+        function tapeLine(c) {
+          var t = TAPE[c];
+          var parts = [];
+          if (t.price) parts.push(t.price);
+          if (t.top) parts.push('6H temp top ' + t.top + ' — latest house sweep, Nov 16');
+          return parts.join(' · ');
+        }
+        function armyCall(coin, step, office) {
+          var t = TAPE[coin];
+          var off = 0;
+          if (office) { for (var i = 0; i < office.length; i++) off = (off * 31 + office.charCodeAt(i)) % 997; }
+          var st = t.seq[(step + off) % t.seq.length];
+          return { text: t.army + (st === 'pushing' ? ' pushing' : ' pushing but showing signs of slowing'), push: st === 'pushing' ? 'PUSHING' : 'SLOWING', dir: t.dir };
+        }
+        function coinWin(office, name, big, sub, dir) {
+          var mark = name === 'LTC' ? '<span class="ltc-mark" aria-hidden="true">Ł</span>' : '';
+          return '<div class="coin-win" data-office="' + office + '" data-coin="' + name + '"><p class="cw-name">' + name + mark + '</p>' +
+            '<p class="cw-big ' + (dir || '') + '">' + big + '</p><p class="cw-sub">' + sub + '</p></div>';
+        }
+        function readStamp(office, label) {
+          return '<p class="read-stamp" data-stamp="' + office + '"><i></i><span>' + label + ' · RE-CHECKED <span data-stamp-time>9:07 PM NYC</span></span></p>';
+        }
+        function coinGrid(office, frameWord, subWord) {
+          return '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+            var call = armyCall(c, 0, office);
+            var tl = tapeLine(c);
+            var big = frameWord === '3M' ? call.text : call.push + ' — ' + call.text.toLowerCase();
+            var sub = (tl ? tl + ' · ' : '') + subWord;
+            return coinWin(office, c, big, sub, call.dir);
+          }).join('') + '</div>';
+        }
+        function heldGrid(office) {
+          return '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+            return coinWin(office, c, 'HELD', 'Live read held — waiting on the Binance public feed · no figure stands in its place', '');
+          }).join('') + '</div>';
+        }
+        function officeScreen(w) {
+          if (w.office === 'sable') {
+            return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' +
+              '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+                var t = TAPE[c];
+                var sl = tapeLine(c);
+                return coinWin('sable', c, '6H spread held — same anchor gap', (sl ? sl + ' · ' : '') + 'live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales', t.dir);
+              }).join('') + '</div>' + readStamp('sable', 'SABLE · THE SIX HOUR SPREAD') +
+              '<p class="scale-note">Her LTC scale, as locked: <b>under 30 cents — a weak move</b> \u00b7 <b>30 cents and beyond — a cycle</b> \u00b7 <b>$1.00 and beyond — the big move</b>. The standing picture is read #737, locked 9:07 PM NYC — the spread held at the same anchor gap — and her screen re-checks it in place on the board\u2019s cycle, the way the real board does.</p>';
+          }
+          if (w.office === 'sierra') {
+            return '<p class="room-plate">READING THE THREE MINUTE</p>' +
+              '<p class="scale-note" style="margin:0 0 8px">Live feed: <b>Binance public feed</b> — Bitunix does not answer browsers, so this room computes live from the Binance public feed, the feed named on its face. Every figure below is derived fresh in this page on each re-check — no tape, no cached or secondhand reading. A coin whose live read cannot be fetched reads <b>HELD</b> — no stale number ever stands in its place.</p>' +
+              '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+                return coinWin('sierra', c, 'HELD', 'Live read held — waiting on the Binance public feed · no figure stands in its place', '');
+              }).join('') + '</div>' +
+              readStamp('sierra', 'SIERRA · THE THREE MINUTE · LIVE — BINANCE PUBLIC FEED') +
+              '<p class="scale-note">Her window reads <b>only</b> each coin\u2019s 3-minute read, in his wordings — Green army pushing \u00b7 Green army pushing but showing signs of slowing \u00b7 Red army pushing \u00b7 Red army pushing but showing signs of slowing — and at big-move strength, Green Army pushing — big move to the upside / Red Army pushing — big move to the downside. No other wording. <b>Her current recipe:</b> the spread is price-versus-candle — live price minus the forming 3-minute Heikin-Ashi candle\u2019s own price, built fresh off the candles every re-check. Pushing = fresh ground, full stop. Slowing only when both of the latest candles are littler than the ones before them AND no fresh ground was made AND price is pulling back. The big-move tier fires on fresh ground when the run\u2019s travel passes the coin\u2019s line (LTC $1.00+ \u00b7 BTC $1,000+ \u00b7 ETH $30+ \u00b7 SOL $2+ \u00b7 BCH $30+ \u00b7 BNB $2+) \u2014 but it does NOT fire when the latest candle is littler (smaller + pulling back), even on fresh ground past the line; it fires on fresh ground past the line when the latest candle is not littler \u2014 never paired with slowing. <b>Learned rules, kept by the Warlord\u2019s word (Nov 16):</b> the pulling-back test on her slowing call and the big-move suppression on a littler latest candle are rules Sierra learned on the live feed \u2014 reported to the Warlord, approved by him, and written into her recipe to stay. Band words on the locked scales — <b>LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00+ the big move</b> \u00b7 BTC: under $300 quiet \u00b7 $300\u2013500 a nice cycle \u00b7 $500\u2013799 a move \u00b7 $800\u2013999 a better move \u00b7 $1,000+ big big move \u00b7 ETH: under $9 quiet \u00b7 $9\u201315 a cycle \u00b7 $15+ a move \u00b7 $30+ a big move \u00b7 SOL: $2+ a nice move \u00b7 BCH: $30+ a nice move \u00b7 BNB: $2+ a good move. When the spread says cycle, her call agrees with Sable\u2019s direction on that same spread — never a contradiction.</p>';
+          }
+          if (w.office === 'mina') {
+            return '<p class="room-plate">THE ONE MINUTE</p>' +
+              '<p class="scale-note" style="margin:0 0 8px">Live feed: <b>Binance public feed</b> — every figure below is derived fresh in this page on each re-check from the live 1-minute candles — no tape, no cached or secondhand reading. A coin whose live read cannot be fetched reads <b>HELD</b> — no stale number ever stands in its place.</p>' +
+              heldGrid('mina-1M') +
+              readStamp('mina', 'MINA · THE ONE MINUTE · LIVE — BINANCE PUBLIC FEED') +
+              '<p class="scale-note">Each window carries <b>two separate facts</b>: the spread — live price versus the forming 1-minute candle, with its band word (for LTC: <b>quiet under 30 cents \u00b7 a cycle at 30 cents and beyond \u00b7 the big move at $1.00+</b>) — and the push: which army the candle carries, and whether it is pushing or showing signs of slowing. Her spread read never contradicts Sable\u2019s on the same spread.</p>';
+          }
+          if (w.office === 'tf') {
+            return '<p class="room-plate">' + w.plate + '</p>' +
+              '<p class="scale-note" style="margin:0 0 8px">Live feed: <b>Binance public feed</b> — every figure below is derived fresh in this page on each re-check from the live ' + w.frameLabel + ' candles — no tape, no cached or secondhand reading. A coin whose live read cannot be fetched reads <b>HELD</b> — no stale number ever stands in its place.</p>' +
+              heldGrid('tf-' + w.frame) +
+              readStamp('tf-' + w.frame, w.name + ' · ' + w.plate + ' · LIVE — BINANCE PUBLIC FEED') +
+              '<p class="scale-note">She reads <b>only ' + w.frameLabel + '</b>, under the same doctrine Sierra reads the three-minute by: a new candle pushing <b>past</b> the previous candle is PUSHING on her frame; a new candle that does <b>not</b> go past is SLOWING. Like Mina\u2019s office, each coin carries her frame\u2019s spread — live price versus the forming candle, with its band word off the locked scales — as a separate fact beside the push. Her screen re-checks in place on the board\u2019s cycle.</p>';
+          }
+          if (w.office === 'temp-bottom' || w.office === 'temp-top') {
+            var bottom = w.office === 'temp-bottom';
+            return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS</p>' +
+              '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+                var call = armyCall(c, 0, bottom ? 'temp-bottom' : 'temp-top');
+                return coinWin(bottom ? 'temp-bottom' : 'temp-top', c, (bottom ? 'Standing low' : 'Standing high') + ' — ' + call.push.toLowerCase(), 'the forming candle\u2019s standing ' + (bottom ? 'low' : 'high') + ' held on her ladder · ' + call.text.toLowerCase(), call.dir);
+              }).join('') + '</div>' +
+              '<div class="frame-ladder">' +
+              '<span class="fl">MONTH<small>the strongest on the ladder</small></span>' +
+              '<span class="fl">WEEK<small>a little weaker</small></span>' +
+              '<span class="fl">DAY<small>a little weaker</small></span>' +
+              '<span class="fl">4H<small>a little weaker</small></span>' +
+              '<span class="fl">6H<small>the weakest on the ladder</small></span></div>' +
+              readStamp(bottom ? 'temp-bottom' : 'temp-top', w.name + ' · TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS')) +
+              '<p class="scale-note">She watches <b>LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB</b> against the ' + (bottom ? 'bottom' : 'top') + ' of every frame — each coin\u2019s standing ' + (bottom ? 'low' : 'high') + ' on the forming candle, re-checked in place on the board\u2019s cycle; the month ' + (bottom ? 'bottom' : 'top') + ' is the strongest, the 6-hour the weakest. <b>Her light law:</b> a coin\u2019s light burns only while price sits on its level — the moment price reaches the level, the army flashes for 60 seconds, then the light goes out.</p></div>';
+          }
+          if (w.office === 'tessa') {
+            return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TRADE ALERTS, AS TAUGHT</p>' +
+              '<div class="frame-ladder">' +
+              '<span class="fl">MONTH<small>the best trades are on the month candle</small></span>' +
+              '<span class="fl">WEEK<small>on watch</small></span>' +
+              '<span class="fl">DAY<small>on watch</small></span>' +
+              '<span class="fl">6H<small>on watch</small></span></div>' +
+              readStamp('tessa', 'TESSA · TRADE ALERTS') +
+              '<p class="scale-note">She watches <b>four frames only — MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H</b>. Her alert fires when price hits one of the Four Points on one of those frames, and shows the price and where price is sitting at on the candle. <b>The best trades are on the month candle.</b> No alert stands on the current tape — her screen says so and keeps watch.</p></div>';
+          }
+          if (w.office === 'feed') {
+            return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — EVERY LIVE FEED, WITH ITS TRUE AGE</p>' +
+              '<div class="proof-screen"><p class="ps-t">FEED WATCH — ALL FRESH ON THE LAST CHECK</p>' +
+              '<p class="ps-r">The temp feeds \u00b7 the Four Points hit log \u00b7 the six spread feeds \u00b7 the Kick chat feed \u00b7 the game feed \u00b7 the board relay — <b>fresh in green</b>, stale or down in red. On the standing tape every feed checks fresh; her screen re-checks in place on the board\u2019s cycle.</p></div>' +
+              readStamp('feed', 'WREN · FEED WATCH') + '</div>';
+          }
+          if (w.office === 'big') {
+            if (w.name === 'PORTIA') {
+              return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — THE GATE · CHANGE TESTED ON THE RECORD</p>' +
+                '<div class="proof-screen"><p class="ps-t">THE GATE — LAST CALLS</p>' +
+                '<p class="ps-r"><b>PASS</b> — recipe v81 floor wiring: the twelve group-ad loops tested old way against new way on the record before they shipped (Nov 16).</p>' +
+                '<p class="ps-r"><b>PASS</b> — the Discord room fix: posters, the silent Enity loop, the motion engine — banked and graded A\u2212 in the Recipe Log below.</p></div>' +
+                readStamp('gate', 'PORTIA · THE GATE') + '</div>';
+            }
+            if (w.name === 'VEDA') {
+              return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — THE GYM · READS GRADED ON THE TAPE</p>' +
+                '<div class="proof-screen"><p class="ps-t">THE GYM — GRADED AGAINST THE WHOLE PROOF PAGE, READ FRESH</p>' +
+                '<p class="ps-r">Sierra\u2019s three-minute and Sable\u2019s spreads graded first — every read on this floor is checked against the tape and corrected on the record when it is wrong.</p>' +
+                '<p class="ps-r">Standing tape: read <b>#737</b> — RED holds, bulls 39% · henrywiko top of the books, <b>107,574 sats</b>.</p></div>' +
+                readStamp('gym', 'VEDA · THE GYM') + '</div>';
+            }
+            return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — THE PROOF PAGE, LIVE IN HER MONITOR</p>' +
+              '<div class="proof-screen"><p class="ps-t">PROOF PAGE — AUDITED AS IT UPDATES</p>' +
+              '<p class="ps-r">Top of the books — <b>henrywiko · 107,574 sats</b> · Field Radar <b>#737 locked</b> 9:07 PM NYC — RED holds, bulls 39% · Four Points watcher on post.</p>' +
+              '<p class="ps-r">Totals math \u00b7 hit-log match \u00b7 descriptions \u00b7 band words — she corrects band-word mismatches herself, annotated; prices, grades, quotes and times she never changes; everything else is flag-only. <a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">The Graded Record \u2197</a></p></div>' +
+              readStamp('audit', 'PRUDENCE · PROOF PAGE AUDIT') + '</div>';
+          }
+          return '';
+        }
+        function isWideOffice(w) {
+          return w.office === 'sable' || w.office === 'sierra' || w.office === 'mina' || w.office === 'tf' ||
+            w.office === 'temp-bottom' || w.office === 'temp-top' || w.office === 'tessa' ||
+            w.office === 'feed' || w.office === 'big';
+        }
+        /* Real grade records — each desk's standing on the house record,
+           read off the board's own certified facts (Fri Nov 13 – Mon Nov 16). */
+        var GRADES = {
+          RAVEN: 'Record — her engine locked board read #737: RED holds the field, bulls 39% (9:07 PM NYC).',
+          NOVA: 'Record — watcher on post: the #737 lock carried into the Four Points window as it fired.',
+          SABLE: 'Record — the 6H spread read on the locked per-coin scales; read #737 held at the same anchor gap.',
+          SIERRA: 'Record — Survey the Field posts every 3 hours, LTC first, then BTC, then ETH, off the live tape.',
+          FELICITY: 'Record — the game is running: henrywiko top of the books at 107,574 sats.',
+          ECHO: 'Record — board relay on its rule; her own group-ad loop wired at her desk Nov 16.',
+          HAVEN: 'Record — state lane standing on its rule; her own group-ad loop wired at her desk Nov 16.',
+          TALIA: 'Record — presence counted on its rule; her own group-ad loop wired at her desk Nov 16.',
+          EMBER: 'Record — candle guard on its rule; resting between runs is its healthy state.',
+          ZARA: 'Record — feed freshness check + auto-recovery on a 1-minute timer; her loop wired Nov 16.',
+          KIKI: 'Record — connected: moderator on LongShotWolf; commands live (!discord · !youtube · !tiktok · !x · !tip · !proof · !record).',
+          LYRIC: 'Record — chat feed live, carrying the Cove\u2019s chat; her CLEAN group-ad loop stands at her desk (Nov 16).',
+          VESPER: 'Record — working read on post: the War Cove intel feed carried live to the board.',
+          SIGRID: 'Record — the key map held: watchers and readers hold no post or spend keys; least power audited.',
+          ADA: 'Record — code check standing: every coded signal on the floor decodes to its locked plain meaning.',
+          WREN: 'Record — feed watch standing: every live feed checked fresh on the last pass.',
+          SERA: 'Record — last guardian sweep: war-bot, watcher and chat feed all up.',
+          PHOENIX: 'Record — bootstrap armed on the 5-minute rule: the watcher that watches the watcher.',
+          TESSA: 'Record — trade-alert watch standing on four frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H.',
+          PORTIA: 'Record — the gate held: recipe v81 and the Discord room fix both tested on the record before they shipped.',
+          VEDA: 'Record — the gym graded the floor\u2019s reads against the whole Proof Page, read fresh.',
+          PRUDENCE: 'Record — the Proof Page audited live as it updates: totals, hit log, descriptions, band words.',
+          TERRA: 'Record — temp bottoms watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 4H \u00b7 6H, month strongest.',
+          VEGA: 'Record — temp tops watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 4H \u00b7 6H, month strongest.',
+          MINA: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts.'
+        };
+        function deskHTML(w) {
+          var seed = seedOf(w.name);
+          /* v81: every desk with its own real loop plays it — the eighteen
+             motion desks (the Nov 13 loops, Verity's wide loop, and the
+             twelve group-ad loops wired Nov 16, Bella & Stella included
+             at their shared desk below). Every desk's monitor runs LIVE:
+             this floor is running, no desk stands at standby. */
+          var live = true;
+          var media;
+          if (w.loop) {
+            media = '<video src="' + w.loop + '" poster="' + w.face + '" autoplay muted loop playsinline preload="auto" data-rate="' + (w.rate || 1) + '" data-live="1" aria-label="' + w.name + ' at her desk — her real looping footage"></video>';
+          } else {
+            media = '<img src="' + w.face + '" alt="' + w.name + ' at her desk" class="floor-alive" />';
+          }
+          var sweep = '<span class="sweep" style="animation-delay:' + ((seed % 9) * 0.7).toFixed(1) + 's"></span>';
+          var idCol = '<div class="top"><div class="desk-win rim-live">' + media + sweep + '</div>' +
+            '<div><p class="nm">' + w.name + '</p><p class="jb">' + w.job + '</p><p class="kd">' + w.kind + '</p>' +
+            '<span class="statuschip st-' + w.status + '"><i></i>' + STATUS[w.status] + '</span></div></div>' +
+            monitorHTML(live, seed, w.name) +
+            '<div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">' + (GRADES[w.name] || w.gradeText || 'Record — standing on the house record.') + '</p></div>' +
+            '<p class="last">' + w.last + '</p>';
+          var room = officeScreen(w);
+          var body = room
+            ? '<div class="side-flex"><div class="side-id">' + idCol + '</div><div class="side-room">' + room + '</div></div>'
+            : idCol;
+          return '<article class="desk-card' + (isWideOffice(w) ? ' span-all' : '') + '">' +
+            '<span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' + body + '</article>';
+        }
+        var deptRoot = document.getElementById('dept-root');
+        var html = '';
+        DEPTS.forEach(function (d) {
+          var crew = CREW.filter(function (w) { return w.dept === d.key; });
+          html += '<div class="dept"><h3>' + d.title + '</h3><p class="blurb">' + crew.length + ' on the crew · ' + d.blurb + '</p><div class="dept-grid">';
+          if (d.key === 'announce') {
+            html += '<article class="desk-card" style="grid-column:1 / -1"><span class="lockmark" aria-label="Locked office">🔒 LOCKED</span><div class="top">' +
+              '<div class="desk-win rim-live"><video src="assets/a051.mp4" poster="assets/a052.webp" autoplay muted loop playsinline preload="auto" data-rate="2" data-live="1" aria-label="Bella, Open Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
+              '<div class="desk-win rim-live"><video src="assets/a053.mp4" poster="assets/a054.webp" autoplay muted loop playsinline preload="auto" data-rate="2" data-live="1" aria-label="Stella, Close Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
+              '<div><p class="nm">BELLA + STELLA</p><p class="jb">Open + Close Announcers — one shared office, each with her own loop</p><p class="kd">Scheduled — fires on its rule</p>' +
+              '<span class="statuschip st-scheduled"><i></i>SCHEDULED</span></div></div>' +
+              '<div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Bella posted the open on check 2 of 3 under the three-check rule (first success Nov 13) · Stella ran the close at 4:00 PM ET.</p></div>' +
+              '<div class="market-monitor"><p class="mm-t">Market Monitor — tied to the bell</p><p class="mm-v">MARKET CLOSED</p><p class="mm-n">As of the 9:07 PM NYC read · Open posted on check 2 today · Close ran 4:00 PM ET</p></div>' +
+              '<p class="last">Bella rings the open at 9:30 AM ET, Stella the close at 4:00 PM ET — three checks from the bell, one post the moment a check confirms. Since Nov 16 each plays her OWN group-ad loop at this shared desk — Bella on the left, Stella on the right.</p></article>';
+          }
+          crew.forEach(function (w) { html += deskHTML(w); });
+          html += '</div></div>';
+        });
+        deptRoot.innerHTML = html;
+
+        /* ---------- Motion engine: every live loop primed the same way ----------
+           The three leaders (Sheity, The Enity, Verity) and the crew desks all
+           start here — muted set as a property (an embedded frame can ignore
+           the muted attribute and refuse autoplay, leaving a frozen, empty
+           window), an explicit play(), and restarts on every moment an embed
+           typically unlocks or re-allows playback. Posters carry each picture
+           until its first frame lands, so no window ever sits empty. */
+        var motionKilled = reduceMotion;
+        function primeVideo(v) {
+          if (!v || motionKilled) return;
+          try { v.muted = true; v.defaultMuted = true; } catch (e) {}
+          if (!v.paused) return;
+          var p = v.play();
+          if (p && p.catch) p.catch(function () {});
+        }
+        function shouldPlay(v) {
+          if (v.classList.contains('desk-loop')) return v.getAttribute('data-live') === '1';
+          if (v.id === 'pf-sheity' || v.id === 'pf-enity') return !v.hidden;
+          return true; /* office windows + Verity */
+        }
+        function kickMotion() {
+          if (motionKilled) return;
+          document.querySelectorAll('video').forEach(function (v) { if (shouldPlay(v)) primeVideo(v); });
+        }
+
+        /* ---------- Desk loops: play while working, rest on the portrait frame ---------- */
+        document.querySelectorAll('.desk-win video').forEach(function (v, i) {
+          v.classList.add('desk-loop');
+          var rate = parseFloat(v.getAttribute('data-rate') || '1');
+          function arm() {
+            try { v.playbackRate = rate; } catch (e) {}
+            if (v.duration && isFinite(v.duration)) {
+              try { v.currentTime = (i * 1.37) % Math.max(1, v.duration - 0.2); } catch (e) {}
+            }
+            if (v.getAttribute('data-live') === '1' && !reduceMotion) primeVideo(v);
+            else v.pause();
+          }
+          v.addEventListener('loadedmetadata', arm);
+          if (v.readyState >= 1) arm();
+        });
+        if (reduceMotion) {
+          document.querySelectorAll('video').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
+        } else {
+          kickMotion();
+          window.addEventListener('load', kickMotion);
+          document.addEventListener('visibilitychange', function () { if (!document.hidden) kickMotion(); });
+          ['pointerdown', 'touchend', 'keydown'].forEach(function (ev) {
+            window.addEventListener(ev, kickMotion, { passive: true });
+          });
+          setInterval(kickMotion, 4000);
+        }
+        /* Raven's window zooms into her figure, as on the real floor */
+        var ravenVid = document.querySelector('.desk-win video[src="assets/a008.mp4"]');
+        if (ravenVid) { ravenVid.style.transform = 'scale(1.45)'; ravenVid.style.transformOrigin = '38% 42%'; }
+        var verityVid = document.getElementById('verity-loop');
+        if (verityVid) { verityVid.playbackRate = 2; }
+
+        /* ---------- View switcher: Tablet / Desk hologram / Big Screen ---------- */
+        var viewBtns = { tablet: document.getElementById('view-tablet'), holo: document.getElementById('view-holo'), big: document.getElementById('view-big') };
+        var currentView = 'tablet';
+        function setView(v) {
+          currentView = v;
+          document.body.classList.toggle('view-holo', v === 'holo');
+          document.body.classList.toggle('view-big', v === 'big');
+          document.body.classList.toggle('view-tablet', v === 'tablet');
+          Object.keys(viewBtns).forEach(function (k) { viewBtns[k].setAttribute('aria-pressed', String(k === v)); });
+        }
+        viewBtns.tablet.addEventListener('click', function () { setView('tablet'); });
+        viewBtns.holo.addEventListener('click', function () { setView('holo'); });
+        viewBtns.big.addEventListener('click', function () { setView('big'); });
+
+        /* ---------- Screen switcher: Day Board / Field Radar / The Company / Treasury / Broadcast / Production ---------- */
+        var scrBtns = { board: document.getElementById('scr-board'), radar: document.getElementById('scr-radar'), company: document.getElementById('scr-company'), treasury: document.getElementById('scr-treasury'), broadcast: document.getElementById('scr-broadcast'), production: document.getElementById('scr-production') };
+        var currentScreen = 'board';
+        function setScreen(s) {
+          currentScreen = s;
+          Object.keys(scrBtns).forEach(function (k) {
+            scrBtns[k].setAttribute('aria-pressed', String(k === s));
+            document.getElementById('screen-' + k).classList.toggle('on', k === s);
+          });
+          kickMotion(); /* loops in a freshly opened screen start the moment it shows */
+        }
+        Object.keys(scrBtns).forEach(function (k) {
+          scrBtns[k].addEventListener('click', function () { setScreen(k); });
+        });
+        /* The Offices Directory at the top of the day board walks straight
+           into the office it names — the same switch, by hand only. */
+        document.querySelectorAll('[data-open-screen]').forEach(function (b) {
+          b.addEventListener('click', function () { setScreen(b.getAttribute('data-open-screen')); });
+        });
+
+        /* ---------- Broadcast go-live checklist: this sitting only ---------- */
+        document.querySelectorAll('#bc-checklist button').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var on = b.getAttribute('aria-checked') === 'true';
+            b.setAttribute('aria-checked', String(!on));
+            b.querySelector('.box').textContent = !on ? '✓' : '○';
+          });
+        });
+
+        /* ---------- War Cove Newsroom: 17 matched pairs, print + ad together ----------
+           The monitor advances when an ad ends, or by hand (Prev / Next / dots).
+           The page itself never moves. Ads start muted; the sound button turns
+           their real sound on and off — the eight Margex ads carry theirs baked in. */
+        var NEWS_PAIRS = [
+          { headline: 'Binance Been Hacked', details: 'The first War Cove Crypto News Alert: the best thing for you to do is store your own crypto on your own cold wallet.', adTitle: 'Binance Cold Wallet', file: 'assets/a006.mp4' },
+          { headline: 'Jensen Huang\u2019s GTC Berlin Keynote', details: null, adTitle: 'Jensen Huang — GTC', file: 'assets/a055.mp4' },
+          { headline: 'Elon Musk — Boost', details: null, adTitle: 'Elon / Boost', file: 'assets/a056.mp4' },
+          { headline: 'SpaceX Picked Qualcomm — Starlink\u2019s 5G Network Is Coming', details: null, adTitle: 'SpaceX × Qualcomm — Starlink 5G', file: 'assets/a057.mp4' },
+          { headline: 'Elon & Palantir — The Golden Dome', details: null, adTitle: 'Elon & Palantir — The Golden Dome', file: 'assets/a058.mp4' },
+          { headline: 'DeepSeek Agents', details: null, adTitle: 'DeepSeek Agents', file: 'assets/a059.mp4' },
+          { headline: 'SpaceX Contracts', details: null, adTitle: 'SpaceX Contracts', file: 'assets/a060.mp4' },
+          { headline: 'NVIDIA CEO Update', details: 'The resignation, confirmed by NVIDIA\u2019s own 8-K filing — the allegations run as reports, never findings.', adTitle: 'NVIDIA CEO Update', file: 'assets/a061.mp4' },
+          { headline: 'War Cove Paper Game — The Official Promo', details: 'The official dramatic promo for the War Cove Paper Game: Sheity presents the game, its board living inside the stream\u2019s own screens. The cut the Warlord approved on Nov 13, 2026 — it rides this rotation as a promo, not a news story.', adTitle: 'Paper Game Promo — Dramatic (Sheity)', file: 'assets/a062.mp4' },
+          { headline: 'Witching Hour Trade — LTC Short +173.49%', details: 'The Witching Hour trade, off his Margex poster: Sell 100x LTCUSD, open $51.30, marked $50.41 — +173.49%.', adTitle: 'Margex — Witching Hour Short +173.49%', file: 'assets/a063.mp4' },
+          { headline: 'Long the Bottom — LTC +521.7%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $49.07, marked $51.63 — +521.7%.', adTitle: 'Margex — Long the Bottom +521.7%', file: 'assets/a064.mp4' },
+          { headline: 'The Dump — LTC Short +350.1%', details: 'Off his Margex poster: Sell 100x LTCUSD, open $49.70, marked $47.96 — +350.1%.', adTitle: 'Margex — The Dump +350.1%', file: 'assets/a065.mp4' },
+          { headline: 'Bottom Long — LTC +203.87%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $48.55 — +203.87%.', adTitle: 'Margex — Bottom Long +203.87%', file: 'assets/a066.mp4' },
+          { headline: 'Bottom Long — The Updated Trade +401.43%', details: 'The updated trade, off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $49.49 — +401.43%.', adTitle: 'Margex — Bottom Long +401.43%', file: 'assets/a067.mp4' },
+          { headline: 'Top of the AM Pump — Short +205.65%', details: 'His mark: the top of the AM pump. Off his Margex poster: Sell 100x LTCUSD, open $49.60, marked $48.58 — +205.65%.', adTitle: 'Margex — AM Pump Top Short +205.65%', file: 'assets/a068.mp4' },
+          { headline: 'Started From the Bottom — Now We Here +425.43%', details: 'His line: \u2018Started from the bottom now we here.\u2019 Off his Margex poster: Buy 100x LTCUSD, open $43.25, marked $45.09 — +425.43%.', adTitle: 'Margex — Bottom Long +425.43%', file: 'assets/a069.mp4' },
+          { headline: 'Witching Hour Bottom Long — +267.14%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $48.29, marked $49.58 — +267.14%.', adTitle: 'Margex — Witching Hour Bottom Long +267.14%', file: 'assets/a070.mp4' }
+        ];
+        var nrIdx = 0, nrSound = false;
+        var nrVideo = document.getElementById('nr-video');
+        var nrDots = document.getElementById('nr-dots');
+        NEWS_PAIRS.forEach(function (p, i) {
+          var d = document.createElement('button');
+          d.type = 'button';
+          d.setAttribute('aria-label', 'Story ' + (i + 1) + ': ' + p.headline);
+          d.setAttribute('aria-pressed', String(i === 0));
+          d.addEventListener('click', function () { setPair(i); });
+          nrDots.appendChild(d);
+        });
+        function setPair(i) {
+          nrIdx = ((i % NEWS_PAIRS.length) + NEWS_PAIRS.length) % NEWS_PAIRS.length;
+          var p = NEWS_PAIRS[nrIdx];
+          document.getElementById('nr-count').textContent = 'Story ' + (nrIdx + 1) + ' of ' + NEWS_PAIRS.length;
+          document.getElementById('nr-headline').textContent = p.headline;
+          var det = document.getElementById('nr-details');
+          det.textContent = p.details || '';
+          det.style.display = p.details ? '' : 'none';
+          document.getElementById('nr-adline').textContent = '\u25B6 Its ad is on the monitor: ' + p.adTitle + '.';
+          document.getElementById('nr-now').textContent = 'Now showing: ' + p.adTitle;
+          nrDots.querySelectorAll('button').forEach(function (d, j) { d.setAttribute('aria-pressed', String(j === nrIdx)); });
+          nrVideo.loop = false;
+          nrVideo.muted = !nrSound;
+          if (nrVideo.getAttribute('src') !== p.file) nrVideo.src = p.file;
+          nrVideo.setAttribute('aria-label', 'War Cove News ad on the monitor: ' + p.adTitle);
+          if (!reduceMotion) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
+        }
+        nrVideo.addEventListener('ended', function () { setPair(nrIdx + 1); });
+        /* One reload before a failed ad is skipped — never a spin through the rotation. */
+        var nrRetries = {};
+        nrVideo.addEventListener('canplay', function () { nrRetries[nrIdx] = 0; });
+        nrVideo.addEventListener('error', function () {
+          var tries = nrRetries[nrIdx] || 0;
+          if (tries < 1) { nrRetries[nrIdx] = tries + 1; nrVideo.load(); return; }
+          setPair(nrIdx + 1);
+        }, true);
+        document.getElementById('nr-prev').addEventListener('click', function () { setPair(nrIdx - 1); });
+        document.getElementById('nr-next').addEventListener('click', function () { setPair(nrIdx + 1); });
+        var nrSoundBtn = document.getElementById('nr-sound');
+        nrSoundBtn.addEventListener('click', function () {
+          nrSound = !nrSound;
+          nrSoundBtn.setAttribute('aria-pressed', String(nrSound));
+          nrSoundBtn.classList.toggle('on', nrSound);
+          nrSoundBtn.textContent = nrSound ? '🔊 Sound on' : '🔇 Sound off';
+          nrVideo.muted = !nrSound;
+          if (nrSound && !reduceMotion) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
+        });
+        nrVideo.loop = false; /* the rotation advances pair to pair; loop is only the no-JS fallback */
+        if (reduceMotion) { nrVideo.removeAttribute('autoplay'); nrVideo.loop = true; nrVideo.pause(); }
+        else {
+          /* Playback keeper: a paused or starved ad is restarted, the house pattern. */
+          var nrStarved = 0;
+          setInterval(function () {
+            if (nrVideo.paused && !nrVideo.ended) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
+            if (nrVideo.readyState < 2) { nrStarved++; if (nrStarved === 4) { nrVideo.load(); nrStarved = 0; } } else nrStarved = 0;
+          }, 1500);
+        }
+
+        /* ---------- Presenter switch: Sheity / The Enity ---------- */
+        var pres = 'sheity';
+        var vSheity = document.getElementById('pf-sheity');
+        var iEnity = document.getElementById('pf-enity');
+        var pName = document.getElementById('presenter-name');
+        var pRole = document.getElementById('presenter-role');
+        var talkLabel = document.getElementById('talk-label');
+        var liveNote = document.getElementById('live-note');
+        function setPresenter(p) {
+          pres = p;
+          document.getElementById('pres-sheity').setAttribute('aria-pressed', String(p === 'sheity'));
+          document.getElementById('pres-enity').setAttribute('aria-pressed', String(p === 'enity'));
+          vSheity.hidden = p !== 'sheity';
+          iEnity.hidden = p !== 'enity';
+          if (p === 'sheity' && !reduceMotion) { var pr = vSheity.play(); if (pr) pr.catch(function () {}); }
+          if (p === 'enity' && !reduceMotion) { var pe = iEnity.play(); if (pe) pe.catch(function () {}); }
+          pName.textContent = p === 'sheity' ? 'SHEITY' : 'THE ENITY';
+          pRole.textContent = p === 'sheity' ? 'President · Front Desk' : 'CEO · Runs the Floor';
+          talkLabel.textContent = p === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity';
+          liveNote.textContent = p === 'sheity'
+            ? 'Her approved loop holds the frame — the live stream opens while she presents.'
+            : 'At rest she sits at her hologram desk — talk with her and her face rises to meet you.';
+          document.getElementById('rail').classList.remove('attending');
+          talkLabel.textContent = p === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity';
+        }
+        document.getElementById('pres-sheity').addEventListener('click', function () { setPresenter('sheity'); });
+        document.getElementById('pres-enity').addEventListener('click', function () { setPresenter('enity'); });
+        var attending = false;
+        document.getElementById('talk-btn').addEventListener('click', function () {
+          attending = !attending;
+          document.getElementById('rail').classList.toggle('attending', attending);
+          talkLabel.textContent = attending ? '■ Standing by' : (pres === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity');
+        });
+
+        /* ---------- Game ticker: duplicate for a seamless loop, ~45 px/s ---------- */
+        var ticker = document.getElementById('game-ticker');
+        ticker.appendChild(ticker.children[0].cloneNode(true));
+        requestAnimationFrame(function () {
+          var w = ticker.scrollWidth / 2;
+          if (w > 0) ticker.style.animationDuration = Math.max(20, w / 45) + 's';
+        });
+
+        /* ---------- New York clock ---------- */
+        var clockEl = document.getElementById('nyc-clock');
+        var timeFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+        var shortFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true });
+        function tickClock() { clockEl.textContent = timeFmt.format(new Date()); }
+        tickClock(); setInterval(tickClock, 1000);
+
+        /* ---------- Refresh cycle: the board re-checks itself every 20 s ---------- */
+        var CYCLE = 20, remaining = CYCLE;
+        var countdownEl = document.getElementById('countdown');
+        var fpBox = document.getElementById('fourpoints');
+        var fpFeed = document.getElementById('fp-feed');
+        var checkLines = [
+          'Watcher re-check — no new Four Points hit since the #737 lock.',
+          'Watcher re-check — board holds as read: RED holds, bulls 39%.',
+          'Watcher re-check — Survey lane standing by; the Big 3 run LTC, BTC, ETH.',
+          'Watcher re-check — floor as counted: every desk on its loop, every monitor live, every room locked.'
+        ];
+        var checkIdx = 0;
+        function runRefresh() {
+          remaining = CYCLE; countdownEl.textContent = String(remaining);
+          var now = shortFmt.format(new Date());
+          document.getElementById('sync-time').textContent = now + ' NYC';
+          document.getElementById('floor-time').textContent = now.replace(' ', ' ').toUpperCase();
+          fpBox.classList.add('flash');
+          setTimeout(function () { fpBox.classList.remove('flash'); }, 900);
+          var li = document.createElement('li');
+          var b = document.createElement('b'); b.textContent = now + ' NYC';
+          li.appendChild(b);
+          li.appendChild(document.createTextNode(' — ' + checkLines[checkIdx % checkLines.length]));
+          checkIdx++;
+          fpFeed.querySelectorAll('.latest').forEach(function (s) { s.remove(); });
+          var tag = document.createElement('span'); tag.className = 'latest'; tag.textContent = 'LATEST';
+          li.appendChild(tag);
+          fpFeed.insertBefore(li, fpFeed.firstChild);
+          while (fpFeed.children.length > 4) fpFeed.removeChild(fpFeed.lastChild);
+          updateReads();
+          refreshSierra();
+          refreshLiveFrames();
+          refreshOwnerWindows();
+        }
+        document.getElementById('btn-refresh').addEventListener('click', runRefresh);
+        setInterval(function () {
+          remaining--;
+          if (remaining <= 0) runRefresh(); else countdownEl.textContent = String(remaining);
+        }, 1000);
+
+        /* ---------- Sierra LIVE — the three minute off the Binance public feed ----------
+           Her CURRENT recipe, run fresh in this page on every board re-check:
+           Bitunix does not answer browsers, so her candles and live prices come
+           from the Binance public feed (its public market-data endpoint first —
+           the main site refuses some regions — then the main public API).
+           Per coin, in isolation: fetch the live ticker price and the recent
+           3-minute candles, close the forming raw candle out by the live price,
+           build the forming 3-minute Heikin-Ashi candle, and read:
+             · SPREAD = live price − the forming candle's price (its HA close),
+               price-versus-candle, never live minus the candle's open/anchor,
+               with its band word off the locked per-coin scales below.
+             · THE CALL, by her mechanical gate: fresh ground (the run's newest
+               candle printing a new higher high on a green run / a new lower
+               low on a red run) forces PUSHING regardless of candle size;
+               SLOWING only when ALL THREE hold: both of the latest
+               candles are littler than the ones before them AND no fresh
+               ground was made AND price is pulling back (the live price
+               stepped back against the run from the previous candle's
+               close) — the pulling-back test is a
+               learned rule, kept in her recipe by the Warlord's word
+               (Nov 16); the BIG-MOVE tier fires inside pushing on fresh
+               ground when the run's travel passes the coin's line, but
+               NOT when the latest candle is littler (smaller than the one
+               before it AND pulling back), even on fresh ground past the
+               line — it fires on fresh ground past the line when the
+               latest candle is not littler (the big-move suppression is
+               the second learned rule, likewise kept by his word), and
+               never pairs with slowing.
+             · AGREEMENT: at cycle strength or beyond, a spread whose direction
+               contradicts the candle's army holds the call rather than publish
+               a contradiction of Sable's direction on the same spread.
+           A coin that cannot be fetched, or whose candle reads indecisive,
+           shows HELD — never a stale or invented figure. Nothing is cached:
+           every re-check derives every figure fresh off that pass's candles. */
+        var SIERRA_BASES = ['https://data-api.binance.vision', 'https://api.binance.com'];
+        var SIERRA_BIG = { LTC: 1.0, BTC: 1000.0, ETH: 30.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
+        var SIERRA_CYCLE = { LTC: 0.30, BTC: 300.0, ETH: 9.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
+        var sierraBusy = false;
+        function sierraBand(coin, spread) {
+          var a = Math.abs(spread), word;
+          if (coin === 'LTC') word = a < 0.30 ? 'a weak move' : a < 1.0 ? 'a cycle' : 'a big move';
+          else if (coin === 'BTC') word = a < 300 ? 'quiet' : a < 500 ? 'a nice cycle' : a < 800 ? 'a move' : a < 1000 ? 'a better move' : 'big big move';
+          else if (coin === 'ETH') word = a < 9 ? 'quiet' : a < 15 ? 'a cycle' : a < 30 ? 'a move' : 'a big move';
+          else if (coin === 'SOL') word = a < 2 ? 'quiet' : 'a nice move';
+          else if (coin === 'BCH') word = a < 30 ? 'quiet' : 'a nice move';
+          else word = a < 2 ? 'quiet' : 'a good move';
+          if (spread > 0) return word + ' up';
+          if (spread < 0) return word + ' down';
+          return word;
+        }
+        function sierraPriceText(v) {
+          return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function sierraSpreadText(coin, spread) {
+          var sign = spread < 0 ? '\u2212' : '+', a = Math.abs(spread);
+          if (coin === 'LTC') return sign + (a * 100).toFixed(2) + '\u00a2';
+          return sign + '$' + a.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function sierraHA(raw) {
+          var ha = [], po = null, pc = null;
+          raw.forEach(function (c) {
+            var hc = (c.open + c.high + c.low + c.close) / 4;
+            var ho = po === null ? (c.open + c.close) / 2 : (po + pc) / 2;
+            ha.push({ open: ho, high: Math.max(c.high, ho, hc), low: Math.min(c.low, ho, hc), close: hc, time: c.time });
+            po = ho; pc = hc;
+          });
+          return ha;
+        }
+        function sierraRead(coin, live, raw) {
+          /* Close the forming candle out by the live price — the engine's
+             construction: high/low take the live price in, close IS live. */
+          var last = raw[raw.length - 1];
+          last.high = Math.max(last.high, live); last.low = Math.min(last.low, live); last.close = live;
+          var ha = sierraHA(raw);
+          var f = ha[ha.length - 1];
+          var candlePrice = f.close;
+          var spread = live - candlePrice;
+          if (f.close === f.open) return { held: true, live: live, spread: spread };
+          var wantGreen = f.close > f.open;
+          var run = 0, i;
+          for (i = ha.length - 1; i >= 0; i--) {
+            var g = ha[i].close > ha[i].open;
+            if (ha[i].close !== ha[i].open && g === wantGreen) run++; else break;
+          }
+          if (run === 0) run = 1;
+          var runC = ha.slice(ha.length - run);
+          var progressing;
+          if (runC.length > 1) {
+            progressing = wantGreen
+              ? runC[runC.length - 1].high >= Math.max.apply(null, runC.slice(0, -1).map(function (c) { return c.high; }))
+              : runC[runC.length - 1].low <= Math.min.apply(null, runC.slice(0, -1).map(function (c) { return c.low; }));
+          } else progressing = true;
+          var bodies = ha.map(function (c) { return Math.abs(c.close - c.open); });
+          var n = bodies.length;
+          var bothLittler = n >= 3 && bodies[n - 1] < bodies[n - 2] && bodies[n - 2] < bodies[n - 3];
+          /* Learned rules, kept in her recipe by the Warlord's word (Nov 16):
+             price is PULLING BACK when the live price has stepped back
+             against the run from the previous candle's close; the latest
+             candle is LITTLER when it is smaller than the one before it
+             AND price is pulling back. */
+          var pullingBack = raw.length >= 2 && (wantGreen ? live < raw[raw.length - 2].close : live > raw[raw.length - 2].close);
+          var latestLittler = n >= 2 && bodies[n - 1] < bodies[n - 2] && pullingBack;
+          var travel = wantGreen ? runC[runC.length - 1].high - runC[0].open : runC[0].open - runC[runC.length - 1].low;
+          var armyWord = wantGreen ? 'Green' : 'Red';
+          var call, big = false;
+          if (progressing && travel >= SIERRA_BIG[coin] && !latestLittler) { big = true; }
+          if (big) call = armyWord + ' Army pushing \u2014 big move to the ' + (wantGreen ? 'upside' : 'downside');
+          else if (!progressing && bothLittler && pullingBack) call = armyWord + ' army pushing but showing signs of slowing';
+          else call = armyWord + ' army pushing';
+          /* Agreement rule: at cycle strength the spread's direction is the
+             house direction — a contradicting call is held, never published. */
+          var contradiction = Math.abs(spread) >= SIERRA_CYCLE[coin] && ((spread > 0 && !wantGreen) || (spread < 0 && wantGreen));
+          return { held: false, contradiction: contradiction, call: call, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
+        }
+        function sierraWinEl(coin) {
+          return document.querySelector('.coin-win[data-office="sierra"][data-coin="' + coin + '"]');
+        }
+        function sierraHeld(coin, note) {
+          var win = sierraWinEl(coin); if (!win) return;
+          var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
+          big.textContent = 'HELD'; big.classList.remove('up', 'down');
+          sub.textContent = note;
+        }
+        /* Every feed fetch on this floor goes through here: a hard 7-second
+           cap per request. A stalled connection used to hang a fetch
+           forever — the office's busy flag never cleared, its re-checks
+           silently no-opped, and the room sat dead at HELD for the whole
+           session while the static rooms kept standing. Now a stall fails
+           fast, the fallback host gets its turn, and the next board cycle
+           retries — no office can wedge shut again. */
+        function fetchJSON(url, ms) {
+          var limit = ms || 7000;
+          if (typeof AbortController === 'undefined') {
+            return fetch(url).then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); });
+          }
+          var ctl = new AbortController();
+          var timer = setTimeout(function () { ctl.abort(); }, limit);
+          return fetch(url, { signal: ctl.signal }).then(function (r) {
+            clearTimeout(timer);
+            if (!r.ok) throw new Error('http');
+            return r.json();
+          }, function (e) { clearTimeout(timer); throw e; });
+        }
+        function sierraFetchCoin(base, coin) {
+          var sym = coin + 'USDT';
+          return Promise.all([
+            fetchJSON(base + '/api/v3/ticker/price?symbol=' + sym),
+            fetchJSON(base + '/api/v3/klines?symbol=' + sym + '&interval=3m&limit=60')
+          ]).then(function (res) {
+            var live = parseFloat(res[0].price);
+            var raw = (res[1] || []).map(function (k) {
+              return { time: k[0], open: parseFloat(k[1]), high: parseFloat(k[2]), low: parseFloat(k[3]), close: parseFloat(k[4]) };
+            }).filter(function (c) { return isFinite(c.open) && isFinite(c.close); });
+            if (!isFinite(live) || raw.length < 10) throw new Error('shape');
+            return sierraRead(coin, live, raw);
+          });
+        }
+        function sierraFetchWithFallback(coin) {
+          return sierraFetchCoin(SIERRA_BASES[0], coin).catch(function () {
+            return sierraFetchCoin(SIERRA_BASES[1], coin);
+          });
+        }
+        function refreshSierra() {
+          if (sierraBusy) return;
+          if (!document.querySelector('.coin-win[data-office="sierra"]')) return;
+          sierraBusy = true;
+          var jobs = SIX_COINS.map(function (coin) {
+            return sierraFetchWithFallback(coin).then(function (rd) {
+              var win = sierraWinEl(coin); if (!win) return;
+              var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
+              if (rd.held) {
+                sierraHeld(coin, 'Live ' + sierraPriceText(rd.live) + ' \u00b7 Spread ' + sierraSpreadText(coin, rd.spread) + ' \u2014 ' + sierraBand(coin, rd.spread) + ' \u00b7 call held \u2014 the forming candle reads indecisive \u00b7 Binance public feed');
+                return;
+              }
+              if (rd.contradiction) {
+                sierraHeld(coin, 'Live ' + sierraPriceText(rd.live) + ' \u00b7 Spread ' + sierraSpreadText(coin, rd.spread) + ' \u2014 ' + rd.band + ' \u00b7 call held \u2014 at cycle strength the spread reads ' + (rd.spread > 0 ? 'up' : 'down') + ' and her call never contradicts it \u00b7 Binance public feed');
+                return;
+              }
+              big.textContent = rd.call;
+              big.classList.toggle('up', rd.dir === 'up');
+              big.classList.toggle('down', rd.dir === 'down');
+              sub.textContent = 'Live ' + sierraPriceText(rd.live) + ' \u00b7 Spread ' + sierraSpreadText(coin, rd.spread) + ' \u2014 ' + rd.band + ' \u00b7 live price versus the forming 3-minute candle \u00b7 Binance public feed';
+              win.classList.add('flash');
+              setTimeout(function () { win.classList.remove('flash'); }, 700);
+            }).catch(function () {
+              sierraHeld(coin, 'Live read held \u2014 the Binance public feed did not answer for this coin this pass \u00b7 no figure stands in its place');
+            });
+          });
+          Promise.all(jobs).then(function () {
+            sierraBusy = false;
+          }, function () { sierraBusy = false; });
+        }
+        refreshSierra();
+
+        /* ---------- Reader offices LIVE — every frame off the Binance feed ----------
+           Mina's one minute and the six frame readers (Hera 1H · Cora 4H ·
+           Juno 6H · Dia DAY · Sela WEEK · Mona MONTH) run the same kind of
+           live engine Sierra runs for the three minute — until now they
+           only rotated the standing tape, so none of them was actually
+           reading its candles. Per coin, per frame, in isolation: fetch
+           that frame's recent candles off the Binance public feed (the
+           forming candle's close in that payload IS the latest traded
+           price), build the frame's Heikin-Ashi candles with Sierra's own
+           builder, and read the two facts their offices have always kept
+           separate:
+             · THE PUSH, by their stated doctrine: the forming candle
+               pushing PAST the previous candle (a higher high on a green
+               candle / a lower low on a red one) is PUSHING; a candle
+               that does not go past is SLOWING.
+             · THE SPREAD = live price − the forming candle's own price
+               (its HA close), with its band word off the same locked
+               per-coin scales Sierra reads by (sierraBand above).
+           A coin that cannot be fetched, or whose forming candle reads
+           indecisive, shows HELD — never a stale or invented figure.
+           Every fetch carries the 7-second cap, each office runs under
+           its own busy flag so one slow frame never blocks another, and
+           every pass derives every figure fresh off that pass's candles. */
+        var LIVE_FRAMES = [
+          { office: 'mina-1M', interval: '1m', candle: '1-minute' },
+          { office: 'tf-1H', interval: '1h', candle: '1H' },
+          { office: 'tf-4H', interval: '4h', candle: '4H' },
+          { office: 'tf-6H', interval: '6h', candle: '6H' },
+          { office: 'tf-DAY', interval: '1d', candle: 'day' },
+          { office: 'tf-WEEK', interval: '1w', candle: 'week' },
+          { office: 'tf-MONTH', interval: '1M', candle: 'month' }
+        ];
+        var liveBusy = {};
+        function liveRead(coin, raw) {
+          var live = raw[raw.length - 1].close;
+          var ha = sierraHA(raw);
+          var f = ha[ha.length - 1], prev = ha[ha.length - 2];
+          var spread = live - f.close;
+          if (!prev || f.close === f.open) return { held: true, live: live, spread: spread };
+          var wantGreen = f.close > f.open;
+          var progressing = wantGreen ? f.high > prev.high : f.low < prev.low;
+          return { held: false, pushing: progressing, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
+        }
+        function liveFetchCoin(base, coin, interval) {
+          var sym = coin + 'USDT';
+          return fetchJSON(base + '/api/v3/klines?symbol=' + sym + '&interval=' + interval + '&limit=60').then(function (rows) {
+            var raw = (rows || []).map(function (k) {
+              return { time: k[0], open: parseFloat(k[1]), high: parseFloat(k[2]), low: parseFloat(k[3]), close: parseFloat(k[4]) };
+            }).filter(function (c) { return isFinite(c.open) && isFinite(c.close); });
+            if (raw.length < 10) throw new Error('shape');
+            return liveRead(coin, raw);
+          });
+        }
+        function liveFetchWithFallback(coin, interval) {
+          return liveFetchCoin(SIERRA_BASES[0], coin, interval).catch(function () {
+            return liveFetchCoin(SIERRA_BASES[1], coin, interval);
+          });
+        }
+        function liveWinEl(office, coin) {
+          return document.querySelector('.coin-win[data-office="' + office + '"][data-coin="' + coin + '"]');
+        }
+        function liveHeld(office, coin, note) {
+          var win = liveWinEl(office, coin); if (!win) return;
+          var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
+          big.textContent = 'HELD'; big.classList.remove('up', 'down');
+          sub.textContent = note;
+        }
+        function refreshLiveFrame(fr) {
+          if (liveBusy[fr.office]) return;
+          if (!document.querySelector('.coin-win[data-office="' + fr.office + '"]')) return;
+          liveBusy[fr.office] = true;
+          var jobs = SIX_COINS.map(function (coin) {
+            return liveFetchWithFallback(coin, fr.interval).then(function (rd) {
+              var win = liveWinEl(fr.office, coin); if (!win) return;
+              var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
+              if (rd.held) {
+                liveHeld(fr.office, coin, 'Live ' + sierraPriceText(rd.live) + ' · Spread ' + sierraSpreadText(coin, rd.spread) + ' — ' + sierraBand(coin, rd.spread) + ' · call held — the forming candle reads indecisive · Binance public feed');
+                return;
+              }
+              var armyWord = rd.dir === 'up' ? 'Green' : 'Red';
+              big.textContent = rd.pushing
+                ? 'PUSHING — ' + armyWord + ' army pushing'
+                : 'SLOWING — ' + armyWord + ' army pushing but showing signs of slowing';
+              big.classList.toggle('up', rd.dir === 'up');
+              big.classList.toggle('down', rd.dir === 'down');
+              sub.textContent = 'Live ' + sierraPriceText(rd.live) + ' · Spread ' + sierraSpreadText(coin, rd.spread) + ' — ' + rd.band + ' · live price versus the forming ' + fr.candle + ' candle · Binance public feed';
+              win.classList.add('flash');
+              setTimeout(function () { win.classList.remove('flash'); }, 700);
+            }).catch(function () {
+              liveHeld(fr.office, coin, 'Live read held — the Binance public feed did not answer for this coin this pass · no figure stands in its place');
+            });
+          });
+          Promise.all(jobs).then(function () {
+            liveBusy[fr.office] = false;
+          }, function () { liveBusy[fr.office] = false; });
+        }
+        function refreshLiveFrames() { LIVE_FRAMES.forEach(refreshLiveFrame); }
+        refreshLiveFrames();
+
+        /* ---------- The Owner's little direction strip — LIVE-window size ----------
+           One compact strip inside the Owner's TARGET CALLS window (LTC
+           only), driven by Sierra's firsthand 3-minute LTC read off her
+           own engine — flashing GREEN ARMY PUSHING / RED ARMY PUSHING in
+           army color while LTC is pushing, sitting in a holding state
+           while it is slowing, and reading NO CLEAR DIRECTION when her
+           read cannot be fetched. The strip never resizes the office. */
+        function dirSet(key, state, text) {
+          var el = document.querySelector('[data-dir="' + key + '"]');
+          if (!el) return;
+          ['push-up', 'push-down', 'hold-up', 'hold-down'].forEach(function (c) { el.classList.remove(c); });
+          if (state) el.classList.add(state);
+          var txt = el.querySelector('.dir-txt');
+          if (txt) txt.textContent = text;
+        }
+
+        /* ---------- The Owner's office — live price + direction (v81) ----------
+           The TARGET CALLS window's live price line and little direction
+           strip read off Sierra's own 3-minute engine on the Binance
+           public feed — the same firsthand read her office runs, fetched
+           through her own fallback (public data host, then the main
+           public API). There is no separate price lane. The window's
+           OPEN — WATCHING / TARGET HIT state (a hit at $48.56, the under
+           edge of the call's 20% range) follows the live price. A read
+           that cannot be fetched reads HELD — no figure stands in its
+           place — and the next 20-second cycle retries. */
+        var ownerBusy = false;
+        function refreshOwnerWindows() {
+          var priceEl = document.getElementById('tw-live-price');
+          if (!priceEl || ownerBusy) return;
+          ownerBusy = true;
+          var srcEl = document.getElementById('tw-live-src');
+          var distEl = document.getElementById('tw-live-dist');
+          sierraFetchWithFallback('LTC').then(function (rd) {
+            if (isFinite(rd.live)) {
+              priceEl.textContent = sierraPriceText(rd.live);
+              priceEl.classList.remove('held');
+              if (srcEl) srcEl.textContent = 'Litecoin, live off the Binance public feed · read ' + shortFmt.format(new Date()) + ' NYC · re-checked every 20 seconds';
+              if (distEl) distEl.textContent = rd.live >= 48.56
+                ? 'At or past the $48.56 hit line — the $49.50 call has hit.'
+                : sierraPriceText(48.56 - rd.live) + ' under the $48.56 hit line for the $49.50 call.';
+              var stateEl = document.getElementById('tw-state');
+              if (stateEl) stateEl.textContent = rd.live >= 48.56 ? 'TARGET HIT' : 'OPEN — WATCHING';
+              var readEl = document.getElementById('tw-read');
+              if (readEl) readEl.textContent = 'read ' + shortFmt.format(new Date()) + ' NYC';
+            } else {
+              priceEl.textContent = 'HELD';
+              priceEl.classList.add('held');
+              if (srcEl) srcEl.textContent = 'Live read held — the Binance public feed did not answer this check · re-checking every 20 seconds. No figure stands in its place.';
+            }
+            if (!rd.held && !rd.contradiction && rd.call.indexOf('slowing') === -1) {
+              dirSet('owner', rd.dir === 'up' ? 'push-up' : 'push-down',
+                'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN ARMY PUSHING' : 'RED ARMY PUSHING'));
+            } else if (!rd.held && !rd.contradiction) {
+              dirSet('owner', rd.dir === 'up' ? 'hold-up' : 'hold-down',
+                'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN' : 'RED') + ' ARMY HOLDS DIRECTION — SLOWING');
+            } else {
+              dirSet('owner', '', 'LTC DIRECTION · NO CLEAR DIRECTION');
+            }
+            ownerBusy = false;
+          }).catch(function () {
+            priceEl.textContent = 'HELD';
+            priceEl.classList.add('held');
+            if (srcEl) srcEl.textContent = 'Live read held — the Binance public feed did not answer this check · re-checking every 20 seconds. No figure stands in its place.';
+            dirSet('owner', '', 'LTC DIRECTION · NO CLEAR DIRECTION');
+            ownerBusy = false;
+          });
+        }
+        refreshOwnerWindows();
+
+        /* ---------- Watch offices: the readings re-check in place ----------
+           On every board re-check, the watch offices' coin windows (temp
+           tops/bottoms) step to the next call on the standing tape and
+           every office stamp takes the current New York check time. The
+           live reader offices (Sierra, Mina, and the six frame readers)
+           are skipped here — their windows belong to their live candle
+           engines above and are never overwritten by the tape. Sable's
+           spread line stands on the locked read #737 anchor gap; her
+           stamp carries the re-check. */
+        var readStep = 0;
+        function updateReads() {
+          readStep++;
+          var now = shortFmt.format(new Date());
+          document.querySelectorAll('[data-stamp-time]').forEach(function (el) { el.textContent = now + ' NYC'; });
+          document.querySelectorAll('.coin-win[data-office]').forEach(function (win) {
+            var office = win.getAttribute('data-office');
+            var coin = win.getAttribute('data-coin');
+            if (!TAPE[coin] || office === 'sable' || office === 'sierra' || office === 'mina-1M' || office.indexOf('tf-') === 0) return;
+            var call = armyCall(coin, readStep, office);
+            var big = win.querySelector('.cw-big');
+            if (!big) return;
+            if (office === 'temp-bottom') big.textContent = 'Standing low — ' + call.push.toLowerCase();
+            else if (office === 'temp-top') big.textContent = 'Standing high — ' + call.push.toLowerCase();
+            else big.textContent = call.push + ' — ' + call.text.toLowerCase();
+            big.classList.toggle('up', call.dir === 'up');
+            big.classList.toggle('down', call.dir === 'down');
+            win.classList.add('flash');
+            setTimeout(function () { win.classList.remove('flash'); }, 700);
+          });
+        }
+
+        /* ---------- Board sits still: no auto-scroll, no auto-rotate ----------
+           The page stays exactly where the viewer leaves it. Scrolling and
+           view/screen switching happen by hand only (the switchers above).
+           In-place data refresh (clock + 20s re-check) is unchanged. */
+      })();
+    </script>
+  </body>
+</html>
