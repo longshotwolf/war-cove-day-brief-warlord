@@ -1,9 +1,17 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background:#060b18">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
+    <meta name="description" content="The War Cove Day Brief — the company floor, live reads and the day board, New York time." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Day Brief — War Cove" />
+    <meta property="og:description" content="The company floor, live reads and the day board — New York time." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Day Brief — War Cove" />
+    <meta name="twitter:description" content="The company floor, live reads and the day board — New York time." />
+    <meta name="theme-color" content="#060b18" />
     <link rel="icon" href="data:," />
     <title>Day Brief War Cove Doctoring</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -92,7 +100,7 @@
       }
 
       /* ===== Header / deck ===== */
-      .shell{ max-width:1152px; margin:0 auto; }
+      .shell{ width:100%; max-width:none; margin:0; }
       header.deck{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:6px 4px 12px; }
       header.deck .brand{ margin-right:auto; }
       header.deck .brand .kick-line{ font-size:11px; font-weight:700; letter-spacing:.25em; text-transform:uppercase; color:rgba(103,232,249,.75); margin:0; }
@@ -110,16 +118,17 @@
         color:#cffafe; border-radius:999px; padding:2px 10px; cursor:pointer; min-height:1.9rem; }
 
       /* ===== Stage layout ===== */
-      .stage{ display:grid; grid-template-columns:250px minmax(0,1fr) 300px; gap:14px; align-items:start; }
+      .stage{ display:grid; grid-template-columns:280px minmax(0,1fr) 340px; gap:16px; align-items:start; }
+      @media (min-width:1700px){ .stage{ grid-template-columns:300px minmax(0,1fr) 380px; } }
       @media (max-width:1100px){ .stage{ grid-template-columns:230px minmax(0,1fr); } .side{ grid-column:1 / -1; } }
       @media (max-width:720px){ .stage{ grid-template-columns:minmax(0,1fr); } }
       .tablet-frame{ border:1px solid #2a3a55; background:#0a1220; border-radius:22px; padding:8px; box-shadow:0 25px 50px rgba(0,0,0,.6); }
       .tablet-inner{ background:#071022; border-radius:16px; padding:14px; }
       body.view-holo .tablet-frame{ border-color:rgba(34,211,238,.5); border-radius:14px; background:rgba(7,16,34,.6);
         box-shadow:0 0 42px rgba(34,211,238,.16), inset 0 0 60px rgba(34,211,238,.05); }
-      body.view-big .shell{ max-width:1920px; }
+      body.view-big .shell{ max-width:none; }
       body.view-big{ padding:22px 12px 26px; }
-      body.view-big .stage{ grid-template-columns:212px minmax(0,1fr) 340px; }
+      body.view-big .stage{ grid-template-columns:240px minmax(0,1fr) 380px; }
       @media (max-width:1100px){ body.view-big .stage{ grid-template-columns:212px minmax(0,1fr); } }
       @media (max-width:720px){ body.view-big .stage{ grid-template-columns:minmax(0,1fr); } }
       @media (min-width:1024px){
@@ -197,7 +206,7 @@
 
       /* ===== Screens ===== */
       .stack{ display:flex; flex-direction:column; gap:10px; min-width:0; min-height:0; }
-      .screen-switcher{ display:flex; width:100%; max-width:560px; gap:4px; align-self:center;
+      .screen-switcher{ display:flex; width:100%; max-width:920px; gap:4px; align-self:center;
         border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5); border-radius:999px; padding:4px; box-shadow:0 2px 10px rgba(0,0,0,.5); }
       .screen-switcher button{ flex:1; font:inherit; font-size:11.5px; font-weight:900; text-transform:uppercase; letter-spacing:.05em;
         border:none; border-radius:999px; padding:6px 10px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:30px; }
@@ -302,6 +311,41 @@
       .tessa-hit{ border:1px solid rgba(110,231,183,.4); background:rgba(52,211,153,.08); border-radius:6px; padding:6px 9px; font-size:12px; color:rgba(209,250,229,.9); margin:6px 0 0; line-height:1.5; }
       .tessa-none{ font-size:12px; color:rgba(207,250,254,.55); margin:6px 0 0; line-height:1.5; }
       .desk-card.flash{ border-color:rgba(110,231,183,.7); }
+      /* Temp watchers — direct doors + landing flash: Terra's and Vega's
+         windows stand deep in the floor; these put them one tap away and
+         mark the desk the moment the jump lands on it. */
+      .desk-card{ scroll-margin-top:10px; }
+      .desk-card.desk-flash{ border-color:#34d399; box-shadow:0 0 0 2px rgba(52,211,153,.75), 0 0 34px rgba(16,185,129,.45); }
+      .temp-jump{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+      .temp-jump button{ flex:1 1 200px; font:inherit; text-align:left; border:1px solid rgba(110,231,183,.5); background:rgba(4,20,11,.85);
+        border-radius:10px; padding:10px 12px; cursor:pointer; color:var(--text); min-height:48px; }
+      .temp-jump button:hover{ border-color:#34d399; background:rgba(52,211,153,.12); }
+      .temp-jump .tj-nm{ display:block; font-size:15px; font-weight:900; letter-spacing:.04em; color:#ecfdf5; }
+      .temp-jump .tj-nm .arr{ color:#34d399; }
+      .temp-jump .tj-ln{ display:block; font-size:12px; color:rgba(209,250,229,.65); margin-top:2px; line-height:1.45; }
+      /* ===== Big Screen repair — the path that ate the windows =====
+         The fault, seen in the rendered board: at desktop width the old
+         big-view rules locked the body to 100dvh with the shell as a flex
+         column — header, stage frame, Newsroom, footer all competing for
+         that one screenful. The Newsroom cannot shrink below its content,
+         so the stage frame was crushed to a shallow band and the Company
+         Floor spilled out of it underneath the Newsroom: an office could
+         open with its desk and name in the slice, and NONE of its windows
+         standing in view — Terra's and Vega's thirty apiece included.
+         Now the frame takes a full screen-height of its own, the page
+         scrolls to the Newsroom below it, and inside the frame the screen
+         and its scroller are height-bounded flex children, so the floor
+         scrolls inside its frame and every office stands at full height
+         with its windows in it. Tablet and hologram views are untouched. */
+      @media (min-width:1024px){
+        body.view-big{ height:auto; min-height:100dvh; overflow:visible; display:block; }
+        body.view-big .shell{ display:block; flex:none; min-height:0; }
+        body.view-big .tablet-frame{ flex:none; height:calc(100dvh - 148px); min-height:620px; }
+        body.view-big .holo-board{ flex:1; min-height:0; display:flex; flex-direction:column; }
+        body.view-big .screen{ flex:1; min-height:0; }
+        body.view-big .screen-scroll{ flex:1; min-height:0; }
+        body.view-big .rail{ overflow-y:auto; min-height:0; }
+      }
 
       /* ===== Company Floor ===== */
       .floor-scroll{ padding:14px; overflow-y:auto; }
@@ -321,8 +365,7 @@
       .dept{ margin-top:18px; }
       .dept h3{ font-size:13px; font-weight:900; letter-spacing:.1em; color:#ecfeff; margin:0; }
       .dept .blurb{ font-size:12.5px; color:rgba(207,250,254,.6); margin:2px 0 10px; }
-      .dept-grid{ display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(215px, 1fr)); }
-      body.view-holo .dept-grid{ grid-template-columns:minmax(0,1fr); }
+      .dept-grid{ display:grid; gap:10px; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); }
       .desk-card{ border:1px solid rgba(103,199,235,.3); border-radius:10px; padding:10px;
         background:linear-gradient(155deg, rgba(21,52,92,.75), rgba(10,25,48,.88)); }
       .desk-card .top{ display:flex; gap:10px; }
@@ -601,12 +644,12 @@
       .nr-dots{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
       .nr-dots button{ width:14px; height:14px; min-height:14px; border-radius:50%; border:none; background:rgba(100,116,139,.5); cursor:pointer; padding:0; }
       .nr-dots button[aria-pressed="true"]{ background:#22d3ee; }
-      .screen-switcher{ flex-wrap:wrap; max-width:760px; }
+      .screen-switcher{ flex-wrap:wrap; max-width:920px; }
 
       .side{ display:flex; flex-direction:column; gap:14px; min-width:0; }
-      footer.board-foot{ max-width:1152px; margin:16px auto 0; padding:0 4px; font-size:12px; color:var(--dim);
+      footer.board-foot{ max-width:none; margin:16px 0 0; padding:0 4px; font-size:12px; color:var(--dim);
         font-family:"IBM Plex Mono",monospace; display:flex; flex-wrap:wrap; gap:6px 18px; justify-content:space-between; }
-      body.view-big footer.board-foot{ max-width:1920px; }
+      body.view-big footer.board-foot{ max-width:none; }
 
       @media (prefers-reduced-motion: reduce){
         .holo-board, .wc-rod, .fp-live i, .statuschip i, .monitor .mon-bars span.work, .monitor .mon-head i, .desk-win .sweep,
@@ -617,9 +660,240 @@
         .oscreen .os-row, .oscreen .os-t i{ animation:none !important; }
         .desk-win .sweep{ opacity:0; }
       }
+
+      /* ===== Compact framing pass (Nov 16, the Warlord's word): the floor
+         framed tight and small, the Day Brief's way — same offices, same
+         order, same reads, same windows, nothing removed; only the framing
+         tightens so the board is not one long scroll. Scoped to the floor:
+         the Day Board, Treasury, Broadcast and Production keep their own
+         frames. ===== */
+      .floor-scroll{ padding:10px; }
+      .floor-scroll .office{ padding:10px; margin-bottom:10px; }
+      .floor-scroll .office .win.tall{ width:128px; height:146px; }
+      .floor-scroll .dept{ margin-top:12px; }
+      .floor-scroll .dept .blurb{ margin:2px 0 6px; }
+      .floor-scroll .dept-grid{ gap:8px; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); }
+      .floor-scroll .desk-card{ padding:8px; }
+      .floor-scroll .desk-card .top{ gap:8px; }
+      .floor-scroll .desk-win{ width:70px; height:82px; }
+      .floor-scroll .desk-card .nm{ font-size:16px; }
+      .floor-scroll .monitor{ margin-top:7px; padding:5px 7px 6px; }
+      .floor-scroll .monitor .mon-bars{ height:15px; }
+      .floor-scroll .grade-box{ margin-top:6px; padding:3px 7px; }
+      .floor-scroll .desk-card .last, .floor-scroll .office .last{ margin-top:5px; line-height:1.35; }
+      .floor-scroll .desk-card .side-flex{ gap:10px; }
+      .floor-scroll .desk-card .side-room{ padding-left:10px; }
+      .floor-scroll .room-plate{ margin:6px 0; padding:4px 8px; font-size:12.5px; }
+      .floor-scroll .coin-grid{ gap:3px; }
+      .floor-scroll .coin-win{ padding:2px 5px; border-radius:6px; }
+      .floor-scroll .coin-win .cw-name{ font-size:9.5px; }
+      .floor-scroll .coin-win .cw-big{ font-size:11.5px; line-height:1.15; margin-top:1px; }
+      .floor-scroll .coin-win .cw-sub{ font-size:10px; line-height:1.25; margin-top:1px; }
+      .floor-scroll .scale-note{ margin-top:5px; font-size:11.5px; line-height:1.42; }
+      .floor-scroll .temp-screen{ margin-top:7px; }
+      .floor-scroll .temp-screen .ts-t{ margin:0 0 4px; }
+      .floor-scroll .frame-ladder{ gap:5px; }
+      .floor-scroll .frame-ladder .fl{ padding:4px 7px; }
+      .floor-scroll .proof-screen{ margin-top:7px; padding:7px 9px; }
+      .floor-scroll .proof-live{ margin-top:7px; }
+      .floor-scroll .proof-live iframe{ height:300px; }
+      .floor-scroll .target-window{ margin-top:10px; padding:10px 12px; }
+      .floor-scroll .tw-row{ margin-top:8px; padding:8px 10px; }
+      .floor-scroll .floor-about{ margin-top:12px; padding:10px 12px; line-height:1.48; }
+      .floor-scroll .recipe-log{ padding:10px 12px; line-height:1.48; }
+      /* Terra's and Vega's five-frame grids run three tiles wide wherever
+         the frame holds them — thirty windows take ten rows, not fifteen. */
+      .floor-scroll .coin-grid:has(> .coin-win[data-office="temp-bottom"]),
+      .floor-scroll .coin-grid:has(> .coin-win[data-office="temp-top"]){ grid-template-columns:repeat(3, minmax(0,1fr)); }
+      /* On the Big Screen frame the sideways offices are wide: their coin
+         grids run three wide there too. */
+      body.view-big .floor-scroll .desk-card.span-all .coin-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+      @media (max-width:560px){
+        .floor-scroll .coin-grid,
+        .floor-scroll .coin-grid:has(> .coin-win[data-office="temp-bottom"]),
+        .floor-scroll .coin-grid:has(> .coin-win[data-office="temp-top"]){ grid-template-columns:minmax(0,1fr); }
+      }
+
+      /* ===== Full-width format match (the live Day Brief's presentation):
+         the board stretches edge to edge — no centered column, no empty
+         side margins — in every view. The reader offices stand SIDEWAYS
+         at full width: identity, monitor and grade in a fixed rail on the
+         left, the reading room filling the rest of the row, so no desk's
+         text ever stacks on top of its windows. Regular desks lay out in
+         rows across the full floor width. Structure, order, reads and
+         engines are untouched — presentation only. ===== */
+      .tablet-frame, .newsroom{ width:100%; }
+      .desk-card .side-id{ flex:0 0 272px; min-width:0; }
+      .desk-card .side-room{ flex:1 1 0; min-width:0; }
+      @media (min-width:1200px){
+        .desk-card .side-flex{ flex-wrap:nowrap; }
+        .floor-scroll .desk-card.span-all .coin-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+      }
+      @media (max-width:899px){
+        .desk-card .side-id{ flex:1 1 100%; }
+        .desk-card .side-room{ flex:1 1 100%; border-left:none; padding-left:0; border-top:1px solid rgba(103,232,249,.18); padding-top:10px; }
+      }
+      @media (max-width:720px){
+        .stage{ grid-template-columns:minmax(0,1fr); }
+        .dept-grid, .floor-scroll .dept-grid{ grid-template-columns:minmax(0,1fr); }
+      }
+      @media (min-width:721px) and (max-width:1100px){
+        .dept-grid, .floor-scroll .dept-grid{ grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); }
+      }
+
+      /* ===== Locked-room format (the live Day Brief's presentation, the
+         Warlord's picture, Nov 17): every reader office stands as ONE
+         full-width room — her picture and desk record across the top,
+         a divider, then her plate and windows filling the room's width
+         beneath. No side column and no doctrine paragraphs inside the
+         room: the plate, her windows, and her stamp. ===== */
+      .room-head{ display:flex; gap:10px; align-items:flex-start; }
+      .room-ava{ flex:none; display:flex; flex-direction:column; align-items:center; gap:3px; }
+      .room-ava .desk-win, .floor-scroll .room-ava .desk-win{ width:92px; height:108px; }
+      .monitor.mini{ margin-top:0; padding:3px 5px 4px; border-radius:5px; }
+      .monitor.mini .mon-bars{ height:12px; gap:2px; }
+      .monitor.mini .mon-bars span{ width:4px; }
+      .room-info{ flex:1; min-width:0; }
+      .room-info .nm-line{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin:0; }
+      .room-info .nm{ font-size:19px; font-weight:900; letter-spacing:.05em; color:#ecfeff; line-height:1.1; }
+      .lockchip{ display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:900; letter-spacing:.1em;
+        color:#fde68a; background:rgba(251,191,36,.14); border:1px solid rgba(251,191,36,.45); border-radius:999px; padding:2px 9px; white-space:nowrap; }
+      .room-info .jb{ font-size:13px; font-weight:700; color:#cffafe; margin:2px 0 0; }
+      .room-info .kd{ font-size:10.5px; letter-spacing:.1em; color:rgba(165,243,252,.55); text-transform:uppercase; margin:2px 0 0; }
+      .room-info .last{ font-size:12.5px; color:rgba(207,250,254,.65); margin:4px 0 0; line-height:1.45; }
+      .room-body{ margin-top:9px; border-top:1px solid rgba(103,232,249,.2); padding-top:9px; }
+      .room-body .temp-screen{ margin-top:0; }
+      .feed-banner{ border:1px solid rgba(251,191,36,.6); background:rgba(251,191,36,.10); border-radius:6px;
+        padding:6px 10px; font-size:11px; font-weight:700; letter-spacing:.03em; color:#fcd34d; margin:0 0 8px; }
+      .feed-banner[hidden]{ display:none; }
+      /* Sable's spread windows — the number on the left, the strength
+         word on its side inside the same window, both in the spread's
+         own colour (green up, red down); Bitcoin's number runs
+         biggest, as locked. Two abreast, one abreast on a phone. */
+      .coin-grid.spread-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+      .floor-scroll .desk-card.span-all .coin-grid.spread-grid,
+      body.view-big .floor-scroll .desk-card.span-all .coin-grid.spread-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+      @media (max-width:559px){ .coin-grid.spread-grid{ grid-template-columns:minmax(0,1fr); } }
+      .floor-scroll .coin-grid.spread-grid, .floor-scroll .coin-grid.army-grid{ gap:8px; }
+      .spread-win{ display:flex; align-items:center; gap:10px; }
+      .floor-scroll .spread-win{ padding:8px 10px; }
+      .spread-win .sw-main{ flex:none; }
+      .floor-scroll .spread-win .cw-big{ font-size:18px; white-space:nowrap; }
+      .floor-scroll .spread-win[data-coin="BTC"] .cw-big{ font-size:24px; }
+      .spread-win .cw-big.held{ color:#fcd34d; letter-spacing:.14em; }
+      .spread-win .cw-band{ flex:1; min-width:0; font-size:12.5px; font-weight:700; line-height:1.3; color:rgba(207,250,254,.6); margin:0; }
+      .spread-win .cw-band.up{ color:#6ee7b7; } .spread-win .cw-band.down{ color:#fda4af; }
+      .spread-win .cw-sub{ display:none; }
+      /* Sierra's three-minute windows — name and army line only, three
+         abreast (two on a narrow phone); while HELD the lines stay
+         standing but muted under amber, the locked board's way. */
+      .coin-grid.army-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+      @media (max-width:559px){ .coin-grid.army-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+      .floor-scroll .army-grid .coin-win{ padding:8px 10px; }
+      .floor-scroll .army-grid .cw-big{ font-size:15px; line-height:1.25; }
+      .army-grid .cw-sub{ display:none; }
+      .army-grid.held .coin-win{ border-color:rgba(251,191,36,.7); box-shadow:0 0 14px rgba(251,191,36,.18); }
+      .army-grid.held .cw-big.up{ color:rgba(110,231,183,.45); }
+      .army-grid.held .cw-big.down{ color:rgba(253,164,175,.45); }
+      /* Mina's and the six frame readers' windows — the same locked
+         presentation as Sierra's room: three abreast, Sierra's window
+         size and army line. Their second line stays standing, where
+         Sierra's hides: it carries each coin's live spread and band
+         word, the second fact their offices keep separate from the
+         push — their live engine paints it on every pass. */
+      .coin-grid.frame-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
+      @media (max-width:559px){ .coin-grid.frame-grid{ grid-template-columns:repeat(2, minmax(0,1fr)); } }
+      .floor-scroll .coin-grid.frame-grid{ gap:8px; }
+      .floor-scroll .frame-grid .coin-win{ padding:8px 10px; }
+      .floor-scroll .frame-grid .cw-big{ font-size:15px; line-height:1.25; }
+
+      /* ===== Boot veil — the board is never a blank screen =====
+         Painted with the first byte of the page, in the board's own dark
+         colors, before any font, feed or video arrives. The main script
+         removes it the moment it starts; if scripts are blocked or a host
+         stalls, the watchdog below swaps in plain guidance instead of
+         leaving the reader staring at an empty white window. */
+      #wc-boot{ position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
+        background:var(--bg); color:var(--text); padding:24px; }
+      #wc-boot .wb-card{ max-width:420px; text-align:center; border:1px solid var(--holo-green-dim); border-radius:12px;
+        background:var(--surface); padding:26px 24px; box-shadow:0 0 22px rgba(0,230,118,.15), inset 0 0 40px rgba(0,230,118,.05); }
+      #wc-boot .wb-t{ font-size:19px; font-weight:900; letter-spacing:.1em; color:#ecfeff; margin:0; }
+      #wc-boot .wb-s{ font-size:13px; color:var(--dim); margin:8px 0 0; line-height:1.55; }
+      #wc-boot .wb-dot{ width:10px; height:10px; margin:0 auto 14px; border-radius:50%; background:var(--holo-green);
+        box-shadow:0 0 12px var(--holo-green-glow); animation:wcPulse 1.6s infinite; }
+
+      /* ===== Browser copy — NO TEXT WALL (the Warlord's standing ruling,
+         restated Nov 17, 2026: "It got all that writing back in again") =====
+         This copy is the live-stream browser source. It carries the
+         company look — offices as rooms, names, jobs, status chips, live
+         windows and numbers — and NOT the recipe / description writing.
+         Every long-form prose class the board uses stands down here:
+         desk description lines, grade-window prose, department blurbs,
+         the target-call doctrine / description / footnotes, the floor
+         about-box, the recipe log, directory and jump-button sub-lines,
+         timeline card notes, office-screen captions, treasury blurbs,
+         production notes and the side-window explainers. Live data is
+         not prose and keeps standing: monitor read lines, coin windows,
+         prices, army lines, status rows, the Four Points hit feed and
+         the Proof Page window itself. This block sits last so it wins
+         over every earlier rule, in every view. */
+      .last, .grade-box, .floor-about, .recipe-log,
+      .tw-doctrine, .tw-desc, .tw-note, .tw-cell .tc-s,
+      .dept .blurb, .os-cap, .scale-note,
+      .proof-screen .ps-r, .email-room p,
+      .live-note, .screen-head .s,
+      .holo-card .cm, .off-card .cm,
+      .od-ln, .tj-ln,
+      .fp-head .s, .fp-alarm-note, .kw-foot,
+      .pot-card .pb, .bc-src .sw, .pq-note,
+      .nr-sub, #tw-live-src{ display:none !important; }
+      /* Finish of the strip (Nov 17): the Four Points feed's standing
+         explainer line, Tessa's per-window standing note (her live
+         check overwrites that line with the real P1–P4 prices, which
+         keep standing), and her no-alert-yet line stand down too. */
+      .fp-note, .tessa-stand-note, .tessa-none{ display:none !important; }
+      /* Reader/temp windows (the Warlord's word, Nov 17, from his photo
+         of Terra's screen): a window shows the coin, the headline figure
+         and the army line — the explainer sentence under the read
+         ("Live $… · price $… above this low · the forming MONTH candle
+         · Binance public feed" and its kin on every reader) does not render.
+         The engines keep writing that line in the DOM as before; this
+         is presentation only. Covers Terra, Vega, Sierra, Mina and the
+         six frame readers — every coin window that carries data-office.
+         Tessa's windows carry no data-office: her live P1–P4 price line
+         is a read, not an explainer, and keeps standing. */
+      .coin-win[data-office] .cw-sub{ display:none !important; }
     </style>
   </head>
   <body class="view-tablet">
+    <!-- Boot veil: stands from the first paint until the board's script
+         starts, so this page can never sit as a blank white screen. -->
+    <div id="wc-boot" role="status" aria-label="Day Brief is loading">
+      <div class="wb-card">
+        <div class="wb-dot" aria-hidden="true"></div>
+        <p class="wb-t">DAY BRIEF — WAR COVE</p>
+        <p class="wb-s" id="wc-boot-msg">The board is loading — the company floor stands in a moment.</p>
+      </div>
+    </div>
+    <script>
+      /* Boot watchdog (classic script, no dependencies): if the board's
+         main script has not started within a few seconds — a blocked
+         script, a stalled host, an in-app window that never finished
+         loading — say so in plain words on the veil instead of leaving
+         a blank screen standing. */
+      (function () {
+        var tries = 0;
+        var timer = setInterval(function () {
+          tries++;
+          if (document.body && document.body.className.indexOf('wc-booted') !== -1) { clearInterval(timer); return; }
+          if (tries === 14) {
+            var msg = document.getElementById('wc-boot-msg');
+            if (msg) msg.textContent = 'Still loading — this window is slow to bring the board up. Give it a few more seconds; if it stays here, open the board in a full browser window instead.';
+          }
+          if (tries > 40) clearInterval(timer);
+        }, 500);
+      })();
+    </script>
     <!-- War Cove hologram frame — the Day Brief's own border -->
     <div class="wc-frame" aria-hidden="true">
       <span class="wc-corner tl"></span><span class="wc-corner tr"></span>
@@ -663,8 +937,45 @@
             <!-- Presenter rail -->
             <div class="rail" id="rail">
               <div class="presenter-frame" id="presenter-frame">
-                <video id="pf-sheity" class="pf-media" src="assets/a000.bin" poster="assets/a001.webp" autoplay muted loop playsinline preload="auto" aria-label="Sheity, President, at her front desk — her real motion footage"></video>
-                <video id="pf-enity" class="pf-media pf-enity" src="assets/a002.bin" poster="assets/a003.webp" autoplay muted loop playsinline preload="auto" style="object-position:center" aria-label="The Enity, CEO — her real motion picture: blue-energy form with long flowing light hair and a glowing core, at her desk with hologram screens behind her" hidden></video>
+                <video id="pf-sheity" class="pf-media" src="assets/a000.bin" autoplay muted loop playsinline preload="metadata" aria-label="Sheity, President, at her front desk — her real motion footage"></video>
+                <div id="pf-enity" class="pf-media pf-enity enity-live" role="img" aria-label="The Enity, CEO — her live blue-energy form: flowing light hair and a glowing core, drawn as moving light at her desk" hidden>
+                  <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                    <defs>
+                      <linearGradient id="eBodyA" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#7dd3fc" stop-opacity=".95" />
+                        <stop offset=".55" stop-color="#38bdf8" stop-opacity=".75" />
+                        <stop offset="1" stop-color="#0369a1" stop-opacity=".9" />
+                      </linearGradient>
+                      <radialGradient id="eGlowA" cx=".5" cy=".5" r=".5">
+                        <stop offset="0" stop-color="#e0f2fe" />
+                        <stop offset=".55" stop-color="#38bdf8" stop-opacity=".85" />
+                        <stop offset="1" stop-color="#38bdf8" stop-opacity="0" />
+                      </radialGradient>
+                    </defs>
+                    <g class="e-ring"><ellipse cx="150" cy="150" rx="96" ry="62" fill="none" stroke="#38bdf8" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="10 8" /></g>
+                    <g class="e-ring-rev"><ellipse cx="150" cy="150" rx="76" ry="110" fill="none" stroke="#7dd3fc" stroke-opacity=".3" stroke-width="1.3" stroke-dasharray="6 9" /></g>
+                    <rect class="e-scan" x="52" y="96" width="196" height="2" fill="#a5f3fc" fill-opacity=".55" />
+                    <g class="e-body">
+                      <path class="e-hair-slow" d="M118 92 C84 150 92 236 74 308" fill="none" stroke="#7dd3fc" stroke-width="5" stroke-linecap="round" opacity=".8" />
+                      <path class="e-hair" d="M182 92 C216 150 208 236 226 308" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" opacity=".8" />
+                      <path class="e-hair" d="M128 84 C104 160 112 250 100 326" fill="none" stroke="#bae6fd" stroke-width="3.4" stroke-linecap="round" opacity=".65" />
+                      <path class="e-hair-slow" d="M172 84 C196 160 188 250 200 326" fill="none" stroke="#bae6fd" stroke-width="3.4" stroke-linecap="round" opacity=".65" />
+                      <path d="M150 138 C118 138 104 172 98 226 C94 268 88 322 78 356 L222 356 C212 322 206 268 202 226 C196 172 182 138 150 138 Z" fill="url(#eBodyA)" opacity=".88" />
+                      <circle cx="150" cy="106" r="27" fill="url(#eGlowA)" />
+                      <circle cx="150" cy="106" r="19" fill="#bae6fd" fill-opacity=".9" />
+                      <circle class="e-halo" cx="150" cy="208" r="24" fill="url(#eGlowA)" />
+                      <circle class="e-core" cx="150" cy="208" r="10" fill="#e0f2fe" />
+                    </g>
+                    <circle class="e-dot" cx="96" cy="300" r="3.2" fill="#7dd3fc" />
+                    <circle class="e-dot d2" cx="204" cy="316" r="2.6" fill="#38bdf8" />
+                    <circle class="e-dot d3" cx="128" cy="330" r="2.2" fill="#a5f3fc" />
+                    <circle class="e-dot d4" cx="176" cy="292" r="2.8" fill="#7dd3fc" />
+                    <rect class="e-bar" x="118" y="352" width="7" height="26" rx="3" fill="#38bdf8" fill-opacity=".8" />
+                    <rect class="e-bar b2" x="147" y="352" width="7" height="26" rx="3" fill="#7dd3fc" fill-opacity=".8" />
+                    <rect class="e-bar b3" x="176" y="352" width="7" height="26" rx="3" fill="#38bdf8" fill-opacity=".8" />
+                  </svg>
+                  <span class="enity-live-label"><i></i>THE ENITY · LIVE</span>
+                </div>
               </div>
               <div class="nameplate">
                 <p class="nm" id="presenter-name">SHEITY</p>
@@ -691,9 +1002,9 @@
             <!-- Screens -->
             <div class="stack">
               <div class="screen-switcher" role="group" aria-label="Switch the main screen — day board, field radar, the company floor, treasury, broadcast, or production queue">
-                <button type="button" id="scr-board" aria-pressed="true">Day Board</button>
+                <button type="button" id="scr-board" aria-pressed="false">Day Board</button>
                 <button type="button" id="scr-radar" aria-pressed="false">📡 Field Radar</button>
-                <button type="button" id="scr-company" aria-pressed="false">🏢 The Company</button>
+                <button type="button" id="scr-company" aria-pressed="true">🏢 The Company</button>
                 <button type="button" id="scr-treasury" aria-pressed="false">💰 Treasury</button>
                 <button type="button" id="scr-broadcast" aria-pressed="false">📺 Broadcast</button>
                 <button type="button" id="scr-production" aria-pressed="false">🎬 Production</button>
@@ -701,7 +1012,7 @@
 
               <!-- DAY BOARD -->
               <div class="holo-board">
-                <section class="screen on" id="screen-board" aria-label="Day board screen">
+                <section class="screen" id="screen-board" aria-label="Day board screen">
                   <div class="screen-head">
                     <div>
                       <p class="t">Friday, November 13, 2026</p>
@@ -716,7 +1027,15 @@
                       <div class="od-grid">
                         <button type="button" class="od-wide" data-open-screen="company" aria-label="Open the Company Floor — every bot office, the reader offices among them">
                           <span class="od-nm">🏢 THE COMPANY FLOOR — EVERY BOT OFFICE <span class="arr" aria-hidden="true">›</span></span>
-                          <span class="od-ln">Sable reads the six hour spread · Sierra reads the three minute · Mina reads THE ONE MINUTE · under her, the six new readers — Hera the ONE HOUR · Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH · Terra &amp; Vega watch the temps · Tessa fires the trade alerts · the whole crew at their desks</span>
+                          <span class="od-ln">Sable reads the six hour spread · Sierra reads the three minute · Terra &amp; Vega watch the temps, standing right under Sierra · Mina reads THE ONE MINUTE · under her, the six new readers — Hera the ONE HOUR · Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH · Tessa fires the trade alerts · the whole crew at their desks</span>
+                        </button>
+                        <button type="button" class="od-wide" data-open-desk="terra" aria-label="Go straight to Terra — Temp Bottom Watcher, all thirty of her windows">
+                          <span class="od-nm">🌡 TERRA — TEMP BOTTOMS <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing low</span>
+                        </button>
+                        <button type="button" class="od-wide" data-open-desk="vega" aria-label="Go straight to Vega — Temp Top Watcher, all thirty of her windows">
+                          <span class="od-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing high</span>
                         </button>
                         <button type="button" data-open-screen="treasury" aria-label="Open the Treasury office — the three money pots, kept separate">
                           <span class="od-nm">💰 TREASURY <span class="arr" aria-hidden="true">›</span></span>
@@ -772,23 +1091,19 @@
                           <p class="cm">The always-on Four Points box and the full big-screen floor landed on this board today.</p>
                         </article>
                         <article class="off-card">
-                          <p class="ct">🏆 Paper game — top of the books</p>
-                          <p class="cm">henrywiko leads the board at 107,574 sats.</p>
+                          <p class="ct">📜 Proof Page — the graded record</p>
+                          <p class="cm">Running live in its own window on this board, below.</p>
                         </article>
                       </div>
                     </div>
                   </div>
-                  <div class="gamespots">
-                    <p class="gs-t">Open positions — riding the field</p>
-                    <div class="ticker-mask">
-                      <div class="ticker-track" id="game-ticker">
-                        <div class="ticker-set">
-                          <span><b>CryptoWarLord369</b> · LONG · LTC · 50x · entry on the Nov 12 read · <span class="neg">≈ −1,600 sats</span></span><span class="sep" aria-hidden="true">◆</span>
-                          <span><b>Rain_p</b> · LONG · LTC · down <span class="neg">≈ 2,600–2,800 sats</span> on the Nov 12 books read</span><span class="sep" aria-hidden="true">◆</span>
-                          <span><b>henrywiko</b> · TOP OF THE BOOKS · <span class="pos">107,574 sats</span></span><span class="sep" aria-hidden="true">◆</span>
-                        </div>
-                      </div>
-                    </div>
+                  <!-- THE PROOF PAGE WINDOW — the Warlord's correction for this
+                       browser copy (Nov 16–17, 2026): the paper game board does
+                       NOT run in this copy; the only board that runs in this
+                       seat is the Proof Page, live, on the Day Board. -->
+                  <div class="proof-live" style="margin:0; border-left:0; border-right:0; border-bottom:0; border-radius:0">
+                    <div class="pl-head"><i></i><span>THE PROOF PAGE — LIVE WINDOW · THE GRADED RECORD</span><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">Open the Record ↗</a></div>
+                    <iframe src="https://longshotwolf.github.io/war-cove-proof-page/" title="The Graded Record — the real published Proof Page, running live on the Day Board" loading="lazy" style="height:420px"></iframe>
                   </div>
                 </section>
 
@@ -822,7 +1137,7 @@
                         <span class="carmy" style="color:#fda4af">Red · pushing strong</span>
                       </li>
                     </ul>
-                    <p style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:6px 2px 0">
+                    <p class="last" style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:6px 2px 0">
                       Read #737, locked 9:07 PM NYC, shown with its time. This screen only reads the field:
                       it never trades, never touches the game, never moves a piece.
                     </p>
@@ -838,7 +1153,7 @@
                 </section>
 
                 <!-- COMPANY FLOOR -->
-                <section class="screen" id="screen-company" aria-label="Company floor screen">
+                <section class="screen on" id="screen-company" aria-label="Company floor screen">
                   <div class="screen-head">
                     <div>
                       <p class="t">🏢 THE COMPANY FLOOR</p>
@@ -848,6 +1163,19 @@
                     <span class="chip live" id="floor-chip">● FLOOR READ · <span id="floor-time">9:07 PM</span> NYC</span>
                   </div>
                   <div class="floor-scroll screen-scroll" data-scroller>
+                    <!-- The temp watchers stand deep in Market Intel — these
+                         two doors sit at the head of the floor so Terra and
+                         Vega are one tap away, never a long scroll down. -->
+                    <div class="temp-jump" aria-label="Jump straight to the temp watchers">
+                      <button type="button" data-open-desk="terra" aria-label="Jump straight to Terra — Temp Bottom Watcher">
+                        <span class="tj-nm">🌡 TERRA — TEMP BOTTOMS <span class="arr" aria-hidden="true">›</span></span>
+                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                      </button>
+                      <button type="button" data-open-desk="vega" aria-label="Jump straight to Vega — Temp Top Watcher">
+                        <span class="tj-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
+                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                      </button>
+                    </div>
                     <!-- The Owner's office — the head of the floor. The Warlord
                          holds no crew desk: his office sits over the whole
                          floor, and the chain under him reads from here. -->
@@ -901,13 +1229,41 @@
                     <div class="office leader" aria-label="The Enity's office">
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="off-flex">
-                        <div class="win tall"><video src="assets/a002.bin" poster="assets/a003.webp" autoplay muted loop playsinline preload="auto" style="object-position:center" aria-label="The Enity, CEO, at her desk — her real motion picture: blue-energy form with long flowing light hair and a glowing core, hologram screens behind her"></video></div>
+                        <div class="win tall"><div class="enity-live" role="img" aria-label="The Enity, CEO, at her desk — her live blue-energy form, drawn as moving light, hologram screens behind her">
+                          <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                            <defs>
+                              <linearGradient id="eBodyB" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0" stop-color="#7dd3fc" stop-opacity=".95" />
+                                <stop offset=".55" stop-color="#38bdf8" stop-opacity=".75" />
+                                <stop offset="1" stop-color="#0369a1" stop-opacity=".9" />
+                              </linearGradient>
+                              <radialGradient id="eGlowB" cx=".5" cy=".5" r=".5">
+                                <stop offset="0" stop-color="#e0f2fe" />
+                                <stop offset=".55" stop-color="#38bdf8" stop-opacity=".85" />
+                                <stop offset="1" stop-color="#38bdf8" stop-opacity="0" />
+                              </radialGradient>
+                            </defs>
+                            <g class="e-ring"><ellipse cx="150" cy="150" rx="96" ry="62" fill="none" stroke="#38bdf8" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="10 8" /></g>
+                            <g class="e-ring-rev"><ellipse cx="150" cy="150" rx="76" ry="110" fill="none" stroke="#7dd3fc" stroke-opacity=".3" stroke-width="1.3" stroke-dasharray="6 9" /></g>
+                            <g class="e-body">
+                              <path class="e-hair-slow" d="M118 92 C84 150 92 236 74 308" fill="none" stroke="#7dd3fc" stroke-width="5" stroke-linecap="round" opacity=".8" />
+                              <path class="e-hair" d="M182 92 C216 150 208 236 226 308" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" opacity=".8" />
+                              <path d="M150 138 C118 138 104 172 98 226 C94 268 88 322 78 356 L222 356 C212 322 206 268 202 226 C196 172 182 138 150 138 Z" fill="url(#eBodyB)" opacity=".88" />
+                              <circle cx="150" cy="106" r="27" fill="url(#eGlowB)" />
+                              <circle cx="150" cy="106" r="19" fill="#bae6fd" fill-opacity=".9" />
+                              <circle class="e-halo" cx="150" cy="208" r="24" fill="url(#eGlowB)" />
+                              <circle class="e-core" cx="150" cy="208" r="10" fill="#e0f2fe" />
+                            </g>
+                            <circle class="e-dot" cx="96" cy="300" r="3.2" fill="#7dd3fc" />
+                            <circle class="e-dot d3" cx="204" cy="316" r="2.6" fill="#38bdf8" />
+                          </svg>
+                        </div></div>
                         <div class="who">
                           <p class="nm">THE ENITY</p>
                           <p class="jb">Chief Executive Officer — runs the floor day to day</p>
                           <p class="kd">Command</p>
                           <span class="statuschip st-working"><i></i>WORKING</span>
-                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Runs the floor day to day — every department reports to her; every miss on the floor becomes a permanent rule fix under her hand.</p></div>
+                          <div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">Runs the floor day to day — every department reports to her; every miss on the floor becomes a permanent rule fix under her hand.</p></div>
                           <p class="last">CEO — she runs this whole floor and the board, for the owner, the Warlord. Every department reports to her, and she owns the improvement loop: every miss becomes a permanent rule fix.</p>
                         </div>
                         <div class="oscreen" aria-hidden="true">
@@ -923,13 +1279,13 @@
                     <div class="office leader" aria-label="Sheity's office">
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="off-flex">
-                        <div class="win tall"><video src="assets/a000.bin" poster="assets/a001.webp" autoplay muted loop playsinline preload="auto" aria-label="Sheity, President, at her front desk — her real motion footage"></video></div>
+                        <div class="win tall"><video src="assets/a000.bin" autoplay muted loop playsinline preload="metadata" aria-label="Sheity, President, at her front desk — her real motion footage"></video></div>
                         <div class="who">
                           <p class="nm">SHEITY</p>
                           <p class="jb">President — front desk, her own footage</p>
                           <p class="kd">Command</p>
                           <span class="statuschip st-working"><i></i>WORKING</span>
-                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Front desk standing — Simli live lane verified Nov 14: her real face generation completed and the live line renders from her own photo.</p></div>
+                          <div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">Front desk standing — Simli live lane verified Nov 14: her real face generation completed and the live line renders from her own photo.</p></div>
                           <p class="last">President of the company, at the front desk beside the board — her desk picture holds her steady at her desk, and her live Simli face rides her own button beside the board.</p>
                         </div>
                         <div class="oscreen" aria-hidden="true">
@@ -955,10 +1311,10 @@
                           <p class="jb">Research Manager — does the house's research, digs so the CEO's time stays on what matters most</p>
                           <p class="kd">Research</p>
                           <span class="statuschip st-working"><i></i>WORKING</span>
-                          <div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Research Manager standing — her corner screen carries the locked board read #737 (RED holds · bulls 39% · Four Points watcher on post).</p></div>
+                          <div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">Research Manager standing — her corner screen carries the locked board read #737 (RED holds · bulls 39% · Four Points watcher on post).</p></div>
                           <p class="last">Runs the house's delegated studies on the CEO's orders — every study she runs is one the CEO doesn't have to. Every desk below works under her, up through her to the CEO.</p>
                         </div>
-                        <div class="win wide" style="order:1"><video id="verity-loop" src="assets/a004.bin" poster="assets/a005.webp" autoplay muted loop playsinline preload="auto" aria-label="Verity, Research Manager, at her wide desk — her real looping footage"></video></div>
+                        <div class="win wide" style="order:1"><video id="verity-loop" src="assets/a001.bin" poster="assets/a002.webp" autoplay muted loop playsinline preload="metadata" aria-label="Verity, Research Manager, at her wide desk — her real looping footage"></video></div>
                         <div class="oscreen" style="order:3" aria-hidden="true">
                           <div class="os-frame">
                             <p class="os-t"><i></i>CORNER SCREEN — LIVE</p>
@@ -975,158 +1331,35 @@
 
                     <div class="floor-about">
                       <b>How to read this floor (recipe v81):</b> every room on this floor carries its
-                      <b>🔒 LOCKED</b> mark, the way the real board locks every office. Eighteen desks move with real
-                      motion — Felicity, Nova, Lyric, Vesper, Raven, Kiki and Verity play the loops banked Nov 13, and
-                      the twelve group-ad loops wired Nov 16 play at Sable, Echo, Zara, Talia, Haven, Ember, Sera,
-                      Sierra and Phoenix, with Bella and Stella each playing her own loop at their shared bell desk;
-                      Lyric's is her CLEAN group-ad loop, in place of the old caption-bar clip. The rest of the crew
-                      hold their cast portraits at their windows, breathing on the floor-alive sway. Every desk's
+                      <b>🔒 LOCKED</b> mark, the way the real board locks every office. Every desk on this floor
+                      moves with real motion — Felicity, Nova, Lyric, Vesper, Raven, Kiki and Verity play the loops
+                      banked Nov 13, the twelve group-ad loops wired Nov 16 play at Sable, Echo, Zara, Talia, Haven,
+                      Ember, Sera, Sierra and Phoenix, the sixteen banked loops wired Nov 16 play at Portia, Veda,
+                      Terra, Ada, Sigrid, Vega, Tessa, Mina, Hera, Cora, Juno, Dia, Sela, Mona, Prudence and Wren,
+                      and Bella and Stella each play her own loop at their shared bell desk; Lyric's is her CLEAN
+                      group-ad loop, in place of the old caption-bar clip. No desk holds a still portrait any
+                      more: each desk's own cast portrait stands as her loop's poster, her loop wakes as her desk
+                      comes on or near the screen and rests while it stands far off it, the primes run in
+                      small batches — presenter and leaders first, then the crew — and no more than five
+                      loops ever play at any one moment on this copy, the presenter, the leaders and the reader desks in
+                      view holding the slots first, so the load stays light and the live stream stays stable.
+                      Every desk's
                       monitor runs a LIVE FEED and every desk carries its real grade record off the house record.
                       <b>The reader offices stand sideways in Market Intel:</b> Sable reads the six-hour spread and
-                      Sierra reads the three-minute in their turned offices, and Mina's ONE MINUTE office stands
-                      directly under them — all six coins, her name MINA on the plate, her avatar seated at her desk.
-                      <b>Under Mina, above Terra, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
+                      Sierra reads the three-minute in their turned offices, and Terra and Vega stand directly
+                      under Sierra — Terra watches the temp bottoms and Vega the temp tops, each on five frames —
+                      MONTH · WEEK · DAY · 4H · 6H. Mina's ONE MINUTE office stands under them — all six coins,
+                      her name MINA on the plate, her avatar seated at her desk.
+                      <b>Under Mina, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
                       Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH —
-                      each reading only her own frame under Sierra's doctrine. Terra watches the temp bottoms and
-                      Vega the temp tops, each on five frames — MONTH · WEEK · DAY · 4H · 6H. Tessa fires the trade
+                      each reading only her own frame under Sierra's doctrine. Tessa fires the trade
                       alerts, Wren watches every feed, and in Records &amp; Quality Prudence's office stands sideways
                       with the Proof Page live in her monitor. Every office's reading re-checks in place on the
                       board's own 20-second cycle, off the certified tape — read #737, locked Friday, November 13,
                       9:07 PM NYC: RED holds the field, bulls 39%.
                     </div>
 
-                    <div class="recipe-log" aria-label="Recipe log — the Discord room fix, banked and graded">
-                      <h3>📜 Recipe Log — Banked &amp; Graded<span class="rgrade">RECIPE GRADE: A−</span></h3>
-                      <p><b>Entry — the Discord room fix (Nov 13 night): the three pictures, the motion, the monitors.</b>
-                      Grade A− as banked: every step verified in the build and the render; the grade rises to A on the
-                      Warlord's hand-test inside the Discord room, which is the house verdict.</p>
-                      <p><b>What was broken:</b> Sheity, The Enity and Verity were the only windows on the floor whose
-                      videos carried no still picture behind them, so when the Discord room's frame held their videos
-                      back, their windows sat empty while the crew's portraits still showed. The Enity's loop also
-                      carried a sound track at 6.8 MB — the first kind of video an embedded frame refuses to play.
-                      Nothing on the page started the loops in code, so every desk sat frozen on its first frame, and
-                      the desk monitors showed five tiny bars and no reading.</p>
-                      <p><b>The fix, step for step:</b></p>
-                      <ol>
-                        <li><b>Pictures:</b> pulled one real frame from each leader's own loop
-                        (<span class="mono">ffmpeg -ss 0.5, libwebp q82</span>) into
-                        <span class="mono">assets/sheity-poster.webp</span>, <span class="mono">assets/enity-poster.webp</span> and
-                        <span class="mono">assets/verity-poster.webp</span>, and set <span class="mono">poster=</span> plus
-                        <span class="mono">preload="auto"</span> on all five leader video slots — presenter rail (both), the CEO office,
-                        the President office, and Verity's wide office. The picture now shows whether or not the loop is playing.</li>
-                        <li><b>The Enity's loop:</b> re-encoded silent and faststart —
-                        <span class="mono">ffmpeg -an -c:v libx264 -pix_fmt yuv420p -crf 26 -movflags +faststart</span> —
-                        6.8 MB down to 2.5 MB, same picture, no sound track to refuse.</li>
-                        <li><b>Motion:</b> one engine (<span class="mono">primeVideo</span> / <span class="mono">kickMotion</span>) sets
-                        <span class="mono">muted</span> as a property in code and calls <span class="mono">play()</span> on every live loop;
-                        it re-fires when the Company screen opens, when the tab comes back, on the first tap, and on a standing
-                        4-second check. Desk videos also carry <span class="mono">autoplay</span> + <span class="mono">preload="auto"</span>.
-                        Resting desks (<span class="mono">data-live="0"</span>) still rest on their portrait frame; reduced-motion still parks all video.</li>
-                        <li><b>Monitors:</b> <span class="mono">monitorHTML</span> now draws a real screen — a DESK SCREEN — LIVE FEED / STANDBY
-                        header, nine animated bars, and a readout line of that desk's own feed — and Verity's corner screen reads the
-                        board (#737 · RED HOLDS · BULLS 39% · Four Points watcher on post).</li>
-                      </ol>
-                      <p><b>Re-apply after any future upgrade</b> (upgrades keep breaking settled things — run this list before
-                      calling a build done): ① confirm the five leader slots still hold their <span class="mono">poster=</span> attributes and the
-                      three poster files are still in <span class="mono">assets/</span>; ② if <span class="mono">enity-loop.mp4</span> is ever replaced, re-run
-                      step 2's encode on the new file before it ships; ③ confirm the <span class="mono">primeVideo</span>/<span class="mono">kickMotion</span>
-                      block and the desk <span class="mono">autoplay</span> attributes survived; ④ confirm <span class="mono">monitorHTML</span> still renders the
-                      header + readout. <b>Locked offices:</b> the CEO and President offices were NOT touched in layout — only the
-                      attributes on their <span class="mono">&lt;video&gt;</span> tags changed. Re-apply the same way: attributes only, never the office layout.</p>
-                      <p><b>Entry — RESET TO THE v81 RECIPE POINT (Nov 16, 2026, on the Warlord's order).</b> His order:
-                      “Reset it to right before they swiped it and knocked everything out. Reset it to that recipe.” —
-                      “Go back to where they stopped us at, get everything back running from that point with using that
-                      recipe, and then anything I want to update, update it from there.” This board is reset to the
-                      <b>recipe v81</b> point — the rollback base from earlier today — and everything added after that
-                      rollback is off: the direction strips beside the reader plates, the separate corner windows in
-                      the Owner's office, the office tidy layout, and the separate live-price feed lane; the Enity
-                      poster removed after v81 is restored (frame pulled from her own loop, per the Discord room fix
-                      above, and set back on both her video slots). The Owner's Office stands as v81 carried it —
-                      header + lock, the <b>TARGET CALLS</b> window with its live price line and the little direction
-                      strip inside it, and the company chain. The reader offices read live on their own engines off
-                      the Binance public feed; a coin that cannot be fetched reads <b>HELD</b>. Sierra's gate stands
-                      as the v81 recipe records it. From here, updates happen only on his word, one at a time, from
-                      this base.</p>
-                      <p><b>Entry — THE SIXTEEN STILL DESKS GOT THEIR BANKED LOOPS (Nov 16, 2026, on the Warlord's
-                      word).</b> The sixteen desks that still held cast portraits now play their own banked moving
-                      loops, wired in the board's standing desk pattern — muted, looping, autoplay, each desk's own
-                      portrait standing as the video's poster: Portia the Gatekeeper · Veda the Trainer · Terra on
-                      Temp Bottoms · Ada the Code Checker · Sigrid the Keymaster · Vega on Temp Tops · Tessa on
-                      Trade Alerts · Mina in the One Minute office · Hera the 1H reader · Cora the 4H reader · Juno
-                      the 6H reader · Dia the Day reader · Sela the Week reader · Mona the Month reader · Prudence
-                      the Proof Page Auditor · Wren the Feed Watcher. Prudence and Wren also carry their own banked
-                      portraits at their desks now (<span class="mono">assets/cast-girl-33.webp</span> ·
-                      <span class="mono">assets/cast-girl-34.webp</span>) in place of the shared stand-in portrait
-                      they held. Nothing else moved: the board stands on the recipe v81 reset with Sierra's two
-                      learned rules kept, the Owner's Office as v81 carried it, every reader office on her own live
-                      engine with the 7-second fetch cap, the 20-second re-check and HELD on a failed fetch, Sable's
-                      room as it stands, and every lock, the Offices Directory, Treasury, Broadcast, Production
-                      Queue, the Newsroom, the NYC timestamps, the border and the sit-still rule all untouched.
-                      This pass added desk motion only. The same word also stands confirmed on the direction box:
-                      the LTC DIRECTION strip inside the Owner's TARGET CALLS window reads Litecoin only — LTC
-                      pushing or slowing, in its army color, off Sierra's 3-minute LTC read — and no other coin
-                      appears in that box, ever; it was checked in this pass and already stood that way. The bell
-                      check stands in this same pass, on his word the same evening: this copy carried the temp-hit
-                      flash but no sound at all, so Terra's and Vega's hit logic now fires the locked v63 dual
-                      sound — the opening bell and the cash register cha-ching struck together on one
-                      AudioContext, the house board's own WebAudio strikes carried over — once per fresh temp hit,
-                      bottoms and tops alike, alongside the flash, the first re-check setting the baseline so a
-                      page load never sounds. The light law stands exactly as locked, untouched; a strike the
-                      browser holds for a first tap stays pending and rings on that tap — no popup, no new button.</p>
-                      <p><b>Entry — TESSA'S ALARM WIRED (Nov 16, 2026, on the Warlord's word).</b> He called it plain:
-                      make sure Tessa gets an alarm on her entries and exits. The check found why she had none —
-                      her office stood as a still description of the rule (four frames named, no live check
-                      behind them), and the board's only sound was Terra's and Vega's temp bell, which her hits
-                      never touched. Her office now runs a live engine on the board's 20-second cycle, off the
-                      same Binance public feed as the reader offices (7-second fetch cap, HELD on a failed
-                      fetch, nothing invented): the Big 3 on her four frames — MONTH · WEEK · DAY · 6H — with
-                      each frame's Four Points taken off its previous closed candle (P1 its low · P2 the 38.2%
-                      line · P3 the middle · P4 its high). Price reaching a point is her <b>ENTRY</b> — the hit
-                      posts at the top of the Four Points window and on her own screen, with the price and where
-                      price is sitting at on the candle, and her alarm rings a rising two-tone strike; price
-                      leaving the point is her <b>EXIT</b> and rings the falling strike. The baseline law matches
-                      the temp bell's: the first check only seeds the watch, and a level that moves when a new
-                      candle forms re-baselines instead of firing — a page load never sounds. Browser law stands
-                      honest: her sound arms on the first tap or key press anywhere on the page, a hit that lands
-                      before that tap is held and rings on the tap, and her alarm chip — standing in the Four
-                      Points window and at her own desk, with a test button beside it — says which state she is
-                      in: ARMED, HELD, or RINGING. Nothing else moved.</p>
-                      <p><b>Entry — EVERY OFFICE WIRED THE SABLE WAY + ALL WINDOWS BACK (Nov 16, 2026, on the
-                      Warlord's word).</b> His order: “Get everything hooked up like how Sable hooked up…
-                      All them offices need to be set up like Sable because her feed don't go down” — and “make
-                      sure all them offices get all they windows back”: the temp tops and bottoms had lost their
-                      windows, and the one hour, four hour, six hour, day, week and month readers were gone.
-                      The check found why: Sable's room stands on the house tape — the locked record, read
-                      #737 — so her windows are never empty; every other reader stood on the single browser
-                      fetch alone, and the moment that fetch missed, her room dropped to HELD and read as
-                      gone. Now every office carries Sable's arrangement: <b>the standing house-tape read
-                      underneath, the live read landing over it the moment the feed answers, and a missed
-                      pass leaving the standing read in place, labeled standing</b> — no figure dressed as
-                      live that is not, no stale live number kept, HELD kept for the calls her doctrine holds
-                      (indecisive candle, spread contradiction) where the live figures themselves stand in
-                      the window. Wired this way: Sierra (3M) · Mina (1M) · Hera (1H) · Cora (4H) · Juno (6H) ·
-                      Dia (DAY) · Sela (WEEK) · Mona (MONTH) · Tessa (her twelve Big-3 × four-frame windows
-                      now stand in her office and fill with her Four Points on every live check) · the
-                      Owner's live price line (stands on the tape price when the feed misses; TARGET HIT is
-                      still only ever called on a live read) · Prudence's Proof Page window, which already
-                      stood on the record and stands unchanged. <b>Windows restored in full:</b> Terra and
-                      Vega each carry all six coins on all five frames again — MONTH · WEEK · DAY · 4H · 6H,
-                      thirty windows apiece, strongest to weakest down the ladder — with the locked light law
-                      and the dual bell + cash register on fresh hits untouched; every reader office carries
-                      her full six-coin window set under her own plate, with her desk, her lock and her own
-                      loop playing. Nothing locked moved: the v81 base, Sierra's doctrine and her two learned
-                      rules, the band scales, the locks, the layout, the NYC clock, the border, the sit-still
-                      rule and the LTC-only direction box all stand as they stood. Same pass, on his word:
-                      the <b>Kick stream window</b> stands back in its seat in the side column under the Four
-                      Points window, loading the player the Broadcast office lists —
-                      <span class="mono">player.kick.com/LongShotWolf</span> — the way it loaded when the board
-                      was running right; and the floor render is <b>firewalled desk-by-desk</b> with a load-time
-                      re-check that re-renders the floor if Sable's spread windows are missing, so no single
-                      desk's fault can take her room — or any room — off the board on a refresh. And the
-                      <b>Proof Page</b> with them, on his word: Prudence's monitor loads the real published
-                      Record live in her office again — her standing audit summary stands underneath it, the
-                      Sable way — instead of canned lines standing in for the page itself.</p>
-                    </div>
+
                   </div>
                 </section>
 
@@ -1169,7 +1402,7 @@
                         <p class="pb" style="margin-top:8px">Connected direct on platform.lumalabs.ai; its restyle fires the moment he funds it. No amount stands here until he confirms one himself.</p>
                       </article>
                     </div>
-                    <p style="font-size:12px; color:rgba(254,243,199,.45); line-height:1.55; margin:12px 2px 0">Each card shows only what the Warlord has confirmed himself — the amount, the status, and the date he confirmed it. This office never makes a payment and never holds a password or a key: the money moves only in each house's own billing, by his hand.</p>
+                    <p class="last" style="font-size:12px; color:rgba(254,243,199,.45); line-height:1.55; margin:12px 2px 0">Each card shows only what the Warlord has confirmed himself — the amount, the status, and the date he confirmed it. This office never makes a payment and never holds a password or a key: the money moves only in each house's own billing, by his hand.</p>
                   </div>
                 </section>
 
@@ -1233,6 +1466,7 @@
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <h3>BROWSER-SOURCE ADDRESSES — ALL IN ONE PLACE</h3>
                       <ul class="bc-src">
+                        <li><p class="sn">Discord — Day Brief room</p><p class="sw">The house Discord — the Day Brief room, where this board's link stands for the room</p><a href="https://discord.gg/r9rYVYWztZ" target="_blank" rel="noopener">https://discord.gg/r9rYVYWztZ ↗</a></li>
                         <li><p class="sn">War Cove Newsroom</p><p class="sw">The standalone newsroom page — headline + ad rotation; War Cove News also stands here on its own, outside the Day Brief</p><a href="https://longshotwolf.github.io/war-cove-newsroom/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-newsroom/ ↗</a></li>
                         <li><p class="sn">Battlefield — Field Radar</p><p class="sw">The battlefield chart page</p><a href="https://longshotwolf.github.io/war-cove-battlefield/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-battlefield/ ↗</a></li>
                         <li><p class="sn">Proof Page</p><p class="sw">The graded record page</p><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">https://longshotwolf.github.io/war-cove-proof-page/ ↗</a></li>
@@ -1296,7 +1530,7 @@
                 <div class="fp-body">
                   <ul class="fp-feed" id="fp-feed">
                     <li><b>9:07 PM NYC</b> — Field Radar #737 locked: RED holds, bulls 39%.<span class="latest">LATEST</span></li>
-                    <li><b>Watcher on post</b> — hits land in this window on their own, ~every 20 seconds a check, newest on top.</li>
+                    <li class="fp-note"><b>Watcher on post</b> — hits land in this window on their own, ~every 20 seconds a check, newest on top.</li>
                   </ul>
                 </div>
               </div>
@@ -1308,7 +1542,13 @@
                   <span class="fp-live"><i></i>STREAM PLAYER</span>
                 </div>
                 <div class="kw-frame">
-                  <iframe src="https://player.kick.com/LongShotWolf" title="LongShotWolf — live on Kick" loading="eager" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                  <!-- The Kick player loads AFTER the board itself stands:
+                       its heavy WebGL player must never hold the whole
+                       board's first paint hostage (a stalled player in an
+                       in-app window is what left this page looking blank).
+                       The board's script sets the real src once it is up. -->
+                  <iframe id="kick-player" data-src="https://player.kick.com/LongShotWolf" title="LongShotWolf — live on Kick" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                  <p id="kick-player-wait" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; margin:0; padding:16px; text-align:center; font-size:12.5px; color:rgba(209,250,229,.65);">Stream player loading — <a href="https://kick.com/longshotwolf" target="_blank" rel="noopener" style="color:#6ee7b7; font-weight:700;">watch on Kick ↗</a></p>
                 </div>
                 <p class="kw-foot">The Warlord's stream in its seat — the same player the Broadcast office lists. When he is live it plays here; off air, Kick's own offline screen stands in the frame. If the player ever stays dark, <a href="https://kick.com/longshotwolf" target="_blank" rel="noopener">open the stream on Kick ↗</a></p>
               </div>
@@ -1317,7 +1557,7 @@
                 <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                 <h3>Doors</h3>
                 <div class="row"><span>Proof Page</span><b><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener" style="color:#7dd3fc">The Graded Record ↗</a></b></div>
-                <div class="row"><span>Discord</span><b><a href="https://discord.gg/r9rYVYWztZ" target="_blank" rel="noopener" style="color:#7dd3fc">Live board 24/7 ↗</a></b></div>
+                <div class="row"><span>Discord</span><b><a href="https://discord.gg/r9rYVYWztZ" target="_blank" rel="noopener" style="color:#7dd3fc">Day Brief room · live board 24/7 ↗</a></b></div>
                 <div class="row"><span>Telegram</span><b><a href="https://t.me/TheWarCove" target="_blank" rel="noopener" style="color:#7dd3fc">@TheWarCove ↗</a></b></div>
                 <div class="row"><span>Tips</span><b><a href="https://kickbot.com/tips/LongShotWolf" target="_blank" rel="noopener" style="color:#7dd3fc">KickBot tips ↗</a></b></div>
               </div>
@@ -1352,7 +1592,7 @@
               <span class="mb-n" id="nr-count">Story 1 of 17</span>
             </div>
             <div class="nr-screen">
-              <video id="nr-video" src="assets/a006.bin" autoplay muted loop playsinline preload="auto" aria-label="War Cove News ad on the monitor"></video>
+              <video id="nr-video" src="assets/a003.bin" poster="assets/a004.jpg" autoplay muted loop playsinline preload="metadata" aria-label="War Cove News ad on the monitor"></video>
             </div>
             <div class="nr-mon-foot">
               <span class="nr-now" id="nr-now">Now showing: Binance Cold Wallet</span>
@@ -1381,6 +1621,10 @@
 
     <script>
       (function () {
+        /* The board is alive — lift the boot veil. */
+        document.body.classList.add('wc-booted');
+        var bootVeil = document.getElementById('wc-boot');
+        if (bootVeil && bootVeil.parentNode) bootVeil.parentNode.removeChild(bootVeil);
         var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         /* ---------- War Cove frame glyphs (crown · wolf · diamond · orb · Ł) ---------- */
@@ -1423,37 +1667,37 @@
           { key: 'quality', title: 'RECORDS & QUALITY — THE GATE, THE GYM & THE AUDIT DESK', blurb: 'The Gatekeeper tests every change against the record before it ships; the Trainer grades every read against the tape and corrects it; the Proof Page Auditor audits the Proof Page itself, live, as it updates.' }
         ];
         var CREW = [
-          { dept: 'intel', name: 'RAVEN', job: 'Field Radar Engine', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a007.webp', loop: 'assets/a008.bin', rate: 2, zoom: 'transform:scale(1.45);transform-origin:38% 42%', last: 'Her engine locks the board read — #737 stands: RED holds the field, bulls 39%. Her loop plays at her window and her monitor reads the field live.' },
-          { dept: 'intel', name: 'NOVA', job: 'Four Points Watcher', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a009.webp', loop: 'assets/a010.bin', rate: 2, last: 'On watch — hits land in the Four Points window and on the Proof Page as they fire.' },
-          { dept: 'intel', name: 'SABLE', job: 'Spread Watch', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a011.webp', loop: 'assets/a012.bin', rate: 2, office: 'sable', last: 'Reads the six-hour spread — live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales. On LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00 and beyond the big move. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'intel', name: 'SIERRA', job: 'Survey the Field', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a013.webp', loop: 'assets/a014.bin', rate: 2, office: 'sierra', last: 'Reads the three-minute — all six coins\u2019 3-minute army states stand in her window. Survey the Field posts every 3 hours — LTC first, then BTC, then ETH, off the live tape. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'intel', name: 'MINA', job: 'One Minute', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a015.webp', loop: 'assets/a016.bin', rate: 2, office: 'mina', gradeText: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts, graded against the tape.', last: 'The live one-minute read — LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB. Each coin\u2019s spread against its forming one-minute candle, with its band word — and its push state beside it, the two facts kept separate.' },
-          { dept: 'intel', name: 'HERA', job: 'One Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a017.webp', loop: 'assets/a018.bin', rate: 2, office: 'tf', frame: '1H', plate: 'READING THE ONE HOUR', frameLabel: 'the one hour', gradeText: 'Record — the one hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one hour, under the same doctrine Sierra reads the three-minute by — a new candle pushing past the previous candle is PUSHING on her frame; one that does not go past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'CORA', job: 'Four Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a019.webp', loop: 'assets/a020.bin', rate: 2, office: 'tf', frame: '4H', plate: 'READING THE FOUR HOUR', frameLabel: 'the four hour', gradeText: 'Record — the four hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the four hour, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'JUNO', job: 'Six Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a021.webp', loop: 'assets/a022.bin', rate: 2, office: 'tf', frame: '6H', plate: 'READING THE SIX HOUR', frameLabel: 'the six hour', gradeText: 'Record — the six hour read stands under Sierra\u2019s doctrine, graded against the tape; Sable keeps her separate 6H spread office.', last: 'Reads ONLY the six hour — the pushing/slowing read on 6H; Sable keeps her separate 6H SPREAD office. Same doctrine as Sierra\u2019s three-minute. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'DIA', job: 'One Day Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a023.webp', loop: 'assets/a024.bin', rate: 2, office: 'tf', frame: 'DAY', plate: 'READING THE ONE DAY', frameLabel: 'the one day', gradeText: 'Record — the one day read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one day, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'SELA', job: 'One Week Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a025.webp', loop: 'assets/a026.bin', rate: 2, office: 'tf', frame: 'WEEK', plate: 'READING THE ONE WEEK', frameLabel: 'the one week', gradeText: 'Record — the one week read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one week, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'MONA', job: 'Month Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a027.webp', loop: 'assets/a028.bin', rate: 2, office: 'tf', frame: 'MONTH', plate: 'READING THE MONTH', frameLabel: 'the month', gradeText: 'Record — the month read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the month, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
-          { dept: 'intel', name: 'TERRA', job: 'Temp Bottom Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a029.webp', loop: 'assets/a030.bin', rate: 2, office: 'temp-bottom', last: 'Watches all six coins against the bottom of every frame, read live off her own watcher service — the forming candle\u2019s standing low, refreshed about every second; the month bottom is the strongest, the 6-hour the weakest.' },
-          { dept: 'intel', name: 'VEGA', job: 'Temp Top Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a031.webp', loop: 'assets/a032.bin', rate: 2, office: 'temp-top', last: 'Watches all six coins against the top of every frame, read live off her own watcher service — the forming candle\u2019s standing high, refreshed about every second; the month top is the strongest, the 6-hour the weakest.' },
-          { dept: 'game', name: 'FELICITY', job: 'Paper Game Bot', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a033.webp', loop: 'assets/a034.bin', rate: 1, last: 'The game is running — henrywiko top of the books at 107,574 sats. Best movement on the floor.' },
-          { dept: 'game', name: 'ECHO', job: 'Board Relay', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a035.webp', loop: 'assets/a036.bin', rate: 2, last: 'Relays the board to the pages on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'game', name: 'HAVEN', job: 'State Lane', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a037.webp', loop: 'assets/a038.bin', rate: 2, last: 'State lane standing on its rule, ready for the next pass — her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'game', name: 'TALIA', job: 'Presence Counter', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a039.webp', loop: 'assets/a040.bin', rate: 2, last: 'Counts who\u2019s watching the game, on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'game', name: 'EMBER', job: 'Candle Guard', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a041.webp', loop: 'assets/a042.bin', rate: 2, last: 'One-shot guard on the game\u2019s candles — between runs, resting is its healthy state. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'game', name: 'ZARA', job: 'Game Watchdog', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a043.webp', loop: 'assets/a044.bin', rate: 2, last: 'Feed freshness check + auto-recovery for the game, on a 1-minute timer. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'chat', name: 'KIKI', job: 'KickBot', kind: 'Platform bot — lives on KickBot', status: 'connected', face: 'assets/a045.webp', loop: 'assets/a046.bin', rate: 1.5, last: 'Connected — moderator on LongShotWolf, resting between calls.' },
-          { dept: 'chat', name: 'LYRIC', job: 'Kick Chat Feed', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a047.webp', loop: 'assets/a048.bin', rate: 2, last: 'Chat feed live — carrying the Cove\u2019s chat. Her CLEAN group-ad loop stands at her desk (Nov 16) in place of the old caption-bar clip.' },
-          { dept: 'chat', name: 'VESPER', job: 'War Cove Intel', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a049.webp', loop: 'assets/a050.bin', rate: 1.5, last: 'Working read on post — the intel feed carried live, and her own group-ad loop plays at her window.' },
-          { dept: 'security', name: 'SIGRID', job: 'The Keymaster', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a051.webp', loop: 'assets/a052.bin', rate: 2, last: 'Holds the key map and audits least power across the house\u2019s connections — watchers and readers hold no post or spend keys.' },
-          { dept: 'security', name: 'ADA', job: 'The Code Checker', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a053.webp', loop: 'assets/a054.bin', rate: 2, last: 'Watches the machine layer — verifies every coded signal decodes to its locked plain meaning: band words, Sierra\u2019s lines, spread figures, statuses, the record\u2019s grade codes.' },
-          { dept: 'security', name: 'WREN', job: 'Feed Watcher', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a055.webp', loop: 'assets/a056.bin', rate: 2, office: 'feed', last: 'Every feed the floor runs on stands on her screen with its true age — the temp feeds, the Four Points hit log, the six spread feeds, the Kick chat feed, the game feed, the board relay — fresh in green, stale or down in red.' },
-          { dept: 'ops', name: 'SERA', job: 'Bot Guardian', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a057.webp', loop: 'assets/a058.bin', rate: 2, last: 'Guardian sweep every minute over the fleet — war-bot, watcher and chat feed all up on the last check. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'ops', name: 'PHOENIX', job: 'Guardian Bootstrap', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a059.webp', loop: 'assets/a060.bin', rate: 2, last: 'Every 5 minutes — if the guardian\u2019s timer is ever wiped, this puts it back. The watcher that watches the watcher. Her own group-ad loop plays at her desk (Nov 16).' },
-          { dept: 'ops', name: 'TESSA', job: 'Trade Alerts', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a061.webp', loop: 'assets/a062.bin', rate: 2, office: 'tessa', last: 'Watches four frames — MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H — and fires a trade alert when price hits one of the Four Points on one of them: the alert shows the price and where price is sitting at on the candle. The best trades are on the month candle. Her alarm is wired to the hit: a rising tone on the entry, a falling tone on the exit.' },
-          { dept: 'quality', name: 'PORTIA', job: 'The Gatekeeper', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a063.webp', loop: 'assets/a064.bin', rate: 2, office: 'big', last: 'Runs the change-gate — a change is tested against the bot\u2019s own graded record, the old way against the new way, and her screen reads PASS or REJECTED when she makes the call.' },
-          { dept: 'quality', name: 'VEDA', job: 'The Trainer', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a065.webp', loop: 'assets/a066.bin', rate: 2, office: 'big', last: 'Checks the floor\u2019s reads against the tape — Sierra\u2019s three-minute and Sable\u2019s spreads first — and corrects a wrong read on the record. She grades against the whole Proof Page, read fresh.' },
-          { dept: 'quality', name: 'PRUDENCE', job: 'Proof Page Auditor', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a067.webp', loop: 'assets/a068.bin', rate: 2, office: 'big', last: 'The Proof Page runs live in her monitor and she audits it as it updates — totals math, hit-log match, descriptions, band words. Flags only; she never edits the record.' }
+          { dept: 'intel', name: 'RAVEN', job: 'Field Radar Engine', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a005.webp', loop: 'assets/a006.bin', rate: 2, zoom: 'transform:scale(1.45);transform-origin:38% 42%', last: 'Her engine locks the board read — #737 stands: RED holds the field, bulls 39%. Her loop plays at her window and her monitor reads the field live.' },
+          { dept: 'intel', name: 'NOVA', job: 'Four Points Watcher', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a007.webp', loop: 'assets/a008.bin', rate: 2, last: 'On watch — hits land in the Four Points window and on the Proof Page as they fire.' },
+          { dept: 'intel', name: 'SABLE', job: 'Spread Watch', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a009.webp', loop: 'assets/a010.bin', rate: 2, office: 'sable', last: 'Reads the six-hour spread — live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales. On LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00 and beyond the big move. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'intel', name: 'SIERRA', job: 'Survey the Field', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a011.webp', loop: 'assets/a012.bin', rate: 2, office: 'sierra', last: 'Reads the three-minute — all six coins\u2019 3-minute army states stand in her window. Survey the Field posts every 3 hours — LTC first, then BTC, then ETH, off the live tape. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'intel', name: 'TERRA', job: 'Temp Bottom Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a013.webp', loop: 'assets/a014.bin', rate: 2, office: 'temp-bottom', last: 'Watches all six coins against the bottom of every frame — each window carries the forming candle\u2019s standing low as a live figure, read off the shared feed layer on the board\u2019s cycle, with a second source picking up whenever one drops; the month bottom is the strongest, the 6-hour the weakest.' },
+          { dept: 'intel', name: 'VEGA', job: 'Temp Top Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a015.webp', loop: 'assets/a016.bin', rate: 2, office: 'temp-top', last: 'Watches all six coins against the top of every frame — each window carries the forming candle\u2019s standing high as a live figure, read off the shared feed layer on the board\u2019s cycle, with a second source picking up whenever one drops; the month top is the strongest, the 6-hour the weakest.' },
+          { dept: 'intel', name: 'MINA', job: 'One Minute', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a017.webp', loop: 'assets/a018.bin', rate: 2, office: 'mina', gradeText: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts, graded against the tape.', last: 'The live one-minute read — LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB. Each coin\u2019s spread against its forming one-minute candle, with its band word — and its push state beside it, the two facts kept separate.' },
+          { dept: 'intel', name: 'HERA', job: 'One Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a019.webp', loop: 'assets/a020.bin', rate: 2, office: 'tf', frame: '1H', plate: 'READING THE ONE HOUR', frameLabel: 'the one hour', gradeText: 'Record — the one hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one hour, under the same doctrine Sierra reads the three-minute by — a new candle pushing past the previous candle is PUSHING on her frame; one that does not go past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'CORA', job: 'Four Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a021.webp', loop: 'assets/a022.bin', rate: 2, office: 'tf', frame: '4H', plate: 'READING THE FOUR HOUR', frameLabel: 'the four hour', gradeText: 'Record — the four hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the four hour, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'JUNO', job: 'Six Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a023.webp', loop: 'assets/a024.bin', rate: 2, office: 'tf', frame: '6H', plate: 'READING THE SIX HOUR', frameLabel: 'the six hour', gradeText: 'Record — the six hour read stands under Sierra\u2019s doctrine, graded against the tape; Sable keeps her separate 6H spread office.', last: 'Reads ONLY the six hour — the pushing/slowing read on 6H; Sable keeps her separate 6H SPREAD office. Same doctrine as Sierra\u2019s three-minute. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'DIA', job: 'One Day Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a025.webp', loop: 'assets/a026.bin', rate: 2, office: 'tf', frame: 'DAY', plate: 'READING THE ONE DAY', frameLabel: 'the one day', gradeText: 'Record — the one day read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one day, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'SELA', job: 'One Week Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a027.webp', loop: 'assets/a028.bin', rate: 2, office: 'tf', frame: 'WEEK', plate: 'READING THE ONE WEEK', frameLabel: 'the one week', gradeText: 'Record — the one week read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one week, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'intel', name: 'MONA', job: 'Month Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a029.webp', loop: 'assets/a030.bin', rate: 2, office: 'tf', frame: 'MONTH', plate: 'READING THE MONTH', frameLabel: 'the month', gradeText: 'Record — the month read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the month, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
+          { dept: 'game', name: 'FELICITY', job: 'Paper Game Bot', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a031.webp', loop: 'assets/a032.bin', rate: 1, last: 'The game is running — henrywiko top of the books at 107,574 sats. Best movement on the floor.' },
+          { dept: 'game', name: 'ECHO', job: 'Board Relay', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a033.webp', loop: 'assets/a034.bin', rate: 2, last: 'Relays the board to the pages on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'HAVEN', job: 'State Lane', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a035.webp', loop: 'assets/a036.bin', rate: 2, last: 'State lane standing on its rule, ready for the next pass — her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'TALIA', job: 'Presence Counter', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a037.webp', loop: 'assets/a038.bin', rate: 2, last: 'Counts who\u2019s watching the game, on its rule. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'EMBER', job: 'Candle Guard', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a039.webp', loop: 'assets/a040.bin', rate: 2, last: 'One-shot guard on the game\u2019s candles — between runs, resting is its healthy state. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'game', name: 'ZARA', job: 'Game Watchdog', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/a041.webp', loop: 'assets/a042.bin', rate: 2, last: 'Feed freshness check + auto-recovery for the game, on a 1-minute timer. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'chat', name: 'KIKI', job: 'KickBot', kind: 'Platform bot — lives on KickBot', status: 'connected', face: 'assets/a043.webp', loop: 'assets/a044.bin', rate: 1.5, last: 'Connected — moderator on LongShotWolf, resting between calls.' },
+          { dept: 'chat', name: 'LYRIC', job: 'Kick Chat Feed', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a045.webp', loop: 'assets/a046.bin', rate: 2, last: 'Chat feed live — carrying the Cove\u2019s chat. Her CLEAN group-ad loop stands at her desk (Nov 16) in place of the old caption-bar clip.' },
+          { dept: 'chat', name: 'VESPER', job: 'War Cove Intel', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a047.webp', loop: 'assets/a048.bin', rate: 1.5, last: 'Working read on post — the intel feed carried live, and her own group-ad loop plays at her window.' },
+          { dept: 'security', name: 'SIGRID', job: 'The Keymaster', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a049.webp', loop: 'assets/a050.bin', rate: 2, last: 'Holds the key map and audits least power across the house\u2019s connections — watchers and readers hold no post or spend keys.' },
+          { dept: 'security', name: 'ADA', job: 'The Code Checker', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a051.webp', loop: 'assets/a052.bin', rate: 2, last: 'Watches the machine layer — verifies every coded signal decodes to its locked plain meaning: band words, Sierra\u2019s lines, spread figures, statuses, the record\u2019s grade codes.' },
+          { dept: 'security', name: 'WREN', job: 'Feed Watcher', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a053.webp', loop: 'assets/a054.bin', rate: 2, office: 'feed', last: 'Every feed the floor runs on stands on her screen with its true age — the temp feeds, the Four Points hit log, the six spread feeds, the Kick chat feed, the game feed, the board relay — fresh in green, stale or down in red.' },
+          { dept: 'ops', name: 'SERA', job: 'Bot Guardian', kind: 'Service — runs on this machine', status: 'working', face: 'assets/a055.webp', loop: 'assets/a056.bin', rate: 2, last: 'Guardian sweep every minute over the fleet — war-bot, watcher and chat feed all up on the last check. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'ops', name: 'PHOENIX', job: 'Guardian Bootstrap', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a057.webp', loop: 'assets/a058.bin', rate: 2, last: 'Every 5 minutes — if the guardian\u2019s timer is ever wiped, this puts it back. The watcher that watches the watcher. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'ops', name: 'TESSA', job: 'Trade Alerts', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a059.webp', loop: 'assets/a060.bin', rate: 2, office: 'tessa', last: 'Watches four frames — MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H — and fires a trade alert when price hits one of the Four Points on one of them: the alert shows the price and where price is sitting at on the candle. The best trades are on the month candle. Her alarm is wired to the hit: a rising tone on the entry, a falling tone on the exit.' },
+          { dept: 'quality', name: 'PORTIA', job: 'The Gatekeeper', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a061.webp', loop: 'assets/a062.bin', rate: 2, office: 'big', last: 'Runs the change-gate — a change is tested against the bot\u2019s own graded record, the old way against the new way, and her screen reads PASS or REJECTED when she makes the call.' },
+          { dept: 'quality', name: 'VEDA', job: 'The Trainer', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/a063.webp', loop: 'assets/a064.bin', rate: 2, office: 'big', last: 'Checks the floor\u2019s reads against the tape — Sierra\u2019s three-minute and Sable\u2019s spreads first — and corrects a wrong read on the record. She grades against the whole Proof Page, read fresh.' },
+          { dept: 'quality', name: 'PRUDENCE', job: 'Proof Page Auditor', kind: 'Scheduled — fires on its rule', status: 'working', face: 'assets/a065.webp', loop: 'assets/a066.bin', rate: 2, office: 'big', last: 'The Proof Page runs live in her monitor and she audits it as it updates — totals math, hit-log match, descriptions, band words. Flags only; she never edits the record.' }
         ];
 
         function seedOf(s) { var n = 0; for (var i = 0; i < s.length; i++) n += s.charCodeAt(i); return n; }
@@ -1504,6 +1748,18 @@
             '<div class="mon-bars">' + bars + '</div>' +
             '<div class="mon-read">' + read + '</div></div>';
         }
+        /* The little desk monitor that stands under her picture in a
+           locked room's header — bars only, the way the real board
+           carries it. */
+        function monitorMini(seed) {
+          var bars = '';
+          for (var i = 0; i < 9; i++) {
+            var h = 4 + ((seed * 7 + i * 5) % 9);
+            var d = (((seed * 3 + i * 2) % 9) * 0.13).toFixed(2);
+            bars += '<span class="work" style="height:' + h + 'px;animation-delay:' + d + 's"></span>';
+          }
+          return '<div class="monitor mini" aria-hidden="true"><div class="mon-bars">' + bars + '</div></div>';
+        }
         var SIX_COINS = ['LTC', 'BTC', 'ETH', 'SOL', 'BCH', 'BNB'];
         /* ---------- The certified tape this floor reads from ----------
            Field Radar read #737, locked 9:07 PM NYC: RED holds the field,
@@ -1540,14 +1796,27 @@
           return '<div class="coin-win" data-office="' + office + '" data-coin="' + name + '"><p class="cw-name">' + name + mark + '</p>' +
             '<p class="cw-big ' + (dir || '') + '">' + big + '</p><p class="cw-sub">' + sub + '</p></div>';
         }
+        /* Terra's and Vega's windows carry their FRAME in the markup —
+           data-frame beside data-office and data-coin — so every one of
+           their thirty windows apiece is individually addressable: the
+           live temp engine paints each frame's own window, and the
+           board's guards can count and re-stand them frame by frame.
+           Before this, all five frames shared one selector per coin, so
+           no code could tell a MONTH window from a 6H one, verify the
+           set, or restore a lost frame. */
+        function tempWin(office, frame, name, big, sub, dir) {
+          var mark = name === 'LTC' ? '<span class="ltc-mark" aria-hidden="true">Ł</span>' : '';
+          return '<div class="coin-win" data-office="' + office + '" data-frame="' + frame + '" data-coin="' + name + '"><p class="cw-name">' + name + mark + '</p>' +
+            '<p class="cw-big ' + (dir || '') + '">' + big + '</p><p class="cw-sub">' + sub + '</p></div>';
+        }
         function readStamp(office, label) {
           return '<p class="read-stamp" data-stamp="' + office + '"><i></i><span><span data-stamp-label>' + label + '</span> · RE-CHECKED <span data-stamp-time>9:07 PM NYC</span></span></p>';
         }
         function setStampState(key, label) {
           document.querySelectorAll('[data-stamp="' + key + '"] [data-stamp-label]').forEach(function (el) { el.textContent = label; });
         }
-        function coinGrid(office, frameWord, subWord) {
-          return '<div class="coin-grid">' + SIX_COINS.map(function (c) {
+        function coinGrid(office, frameWord, subWord, gridCls) {
+          return '<div class="coin-grid' + (gridCls ? ' ' + gridCls : '') + '">' + SIX_COINS.map(function (c) {
             var call = armyCall(c, 0, office);
             var tl = tapeLine(c);
             var big = frameWord === '3M' ? call.text : call.push + ' — ' + call.text.toLowerCase();
@@ -1562,34 +1831,35 @@
         }
         function officeScreen(w) {
           if (w.office === 'sable') {
+            /* Her windows stand in the locked board's own shape: the
+               coin's name and its live spread figure on the left, the
+               strength word on the figure's side — both painted by her
+               live engine below (refreshSable), in the spread's own
+               colour. Before the first live pass lands they read …,
+               and a pass the feed misses reads HELD — no figure is
+               ever dressed as live that is not. */
             return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' +
-              '<div class="coin-grid">' + SIX_COINS.map(function (c) {
-                var t = TAPE[c];
-                var sl = tapeLine(c);
-                return coinWin('sable', c, '6H spread held — same anchor gap', (sl ? sl + ' · ' : '') + 'live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales', t.dir);
-              }).join('') + '</div>' + readStamp('sable', 'SABLE · THE SIX HOUR SPREAD') +
-              '<p class="scale-note">Her LTC scale, as locked: <b>under 30 cents — a weak move</b> \u00b7 <b>30 cents and beyond — a cycle</b> \u00b7 <b>$1.00 and beyond — the big move</b>. The standing picture is read #737, locked 9:07 PM NYC — the spread held at the same anchor gap — and her screen re-checks it in place on the board\u2019s cycle, the way the real board does.</p>';
+              '<div class="coin-grid spread-grid">' + SIX_COINS.map(function (c) {
+                var mark = c === 'LTC' ? '<span class="ltc-mark" aria-hidden="true">Ł</span>' : '';
+                return '<div class="coin-win spread-win" data-office="sable" data-coin="' + c + '"><div class="sw-main"><p class="cw-name">' + c + mark + '</p>' +
+                  '<p class="cw-big">…</p></div><p class="cw-band"></p></div>';
+              }).join('') + '</div>' + readStamp('sable', 'SABLE · THE SIX HOUR SPREAD');
           }
           if (w.office === 'sierra') {
             return '<p class="room-plate">READING THE THREE MINUTE</p>' +
-              '<p class="scale-note" style="margin:0 0 8px">Wired <b>the Sable way</b>: her windows stand on the house tape — read #737, the standing record — so this room never sits empty, and her live read, computed fresh off her own <b>THREE-MINUTE candles</b> on every re-check — the feed layer tries Binance.US first (it answers in the US, where the global Binance hosts refuse), then the Binance public feed, then Coinbase and Kraken, and her window only ever accepts candles spaced three minutes apart — lands over the standing read the moment the feed answers. A pass the feed misses leaves the standing read in place, labeled standing — no figure is ever dressed as live that is not, and no stale live number ever stands in its place.</p>' +
-              coinGrid('sierra', '3M', 'standing on the house tape — read #737 · her live 3-minute read lands over this the moment the feed answers') +
-              readStamp('sierra', 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE') +
-              '<p class="scale-note">Her window reads <b>only</b> each coin\u2019s 3-minute read, in his wordings — Green army pushing \u00b7 Green army pushing but showing signs of slowing \u00b7 Red army pushing \u00b7 Red army pushing but showing signs of slowing — and at big-move strength, Green Army pushing — big move to the upside / Red Army pushing — big move to the downside. No other wording. <b>Her current recipe:</b> the spread is price-versus-candle — live price minus the forming 3-minute Heikin-Ashi candle\u2019s own price, built fresh off the candles every re-check. Pushing = fresh ground, full stop. Slowing only when both of the latest candles are littler than the ones before them AND no fresh ground was made AND price is pulling back. The big-move tier fires on fresh ground when the run\u2019s travel passes the coin\u2019s line (LTC $1.00+ \u00b7 BTC $1,000+ \u00b7 ETH $30+ \u00b7 SOL $2+ \u00b7 BCH $30+ \u00b7 BNB $2+) \u2014 but it does NOT fire when the latest candle is littler (smaller + pulling back), even on fresh ground past the line; it fires on fresh ground past the line when the latest candle is not littler \u2014 never paired with slowing. <b>Learned rules, kept by the Warlord\u2019s word (Nov 16):</b> the pulling-back test on her slowing call and the big-move suppression on a littler latest candle are rules Sierra learned on the live feed \u2014 reported to the Warlord, approved by him, and written into her recipe to stay. Band words on the locked scales — <b>LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00+ the big move</b> \u00b7 BTC: under $300 quiet \u00b7 $300\u2013500 a nice cycle \u00b7 $500\u2013799 a move \u00b7 $800\u2013999 a better move \u00b7 $1,000+ big big move \u00b7 ETH: under $9 quiet \u00b7 $9\u201315 a cycle \u00b7 $15+ a move \u00b7 $30+ a big move \u00b7 SOL: $2+ a nice move \u00b7 BCH: $30+ a nice move \u00b7 BNB: $2+ a good move. When the spread says cycle, her call agrees with Sable\u2019s direction on that same spread — never a contradiction.</p>';
+              '<p class="feed-banner" data-sierra-banner role="status" hidden></p>' +
+              coinGrid('sierra', '3M', 'standing on the house tape — read #737 · her live 3-minute read lands over this the moment the feed answers', 'army-grid') +
+              readStamp('sierra', 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'mina') {
             return '<p class="room-plate">THE ONE MINUTE</p>' +
-              '<p class="scale-note" style="margin:0 0 8px">Wired <b>the Sable way</b>: her windows stand on the house tape — read #737 — so the room never sits empty, and her live read, derived fresh in this page on each re-check from the live <b>1-minute candles only</b> off the feed layer (Binance.US first — it answers in the US — the Binance public feed, Coinbase and Kraken behind it; her window only ever accepts candles spaced one minute apart), lands over the standing read the moment the feed answers. A pass the feed misses leaves the standing read in place, labeled standing — no figure dressed as live that is not.</p>' +
-              coinGrid('mina-1M', '1M', 'standing on the house tape — read #737 · her live 1-minute read lands over this the moment the feed answers') +
-              readStamp('mina', 'MINA · THE ONE MINUTE · STANDING — HOUSE TAPE') +
-              '<p class="scale-note">Each window carries <b>two separate facts</b>: the spread — live price versus the forming 1-minute candle, with its band word (for LTC: <b>quiet under 30 cents \u00b7 a cycle at 30 cents and beyond \u00b7 the big move at $1.00+</b>) — and the push: which army the candle carries, and whether it is pushing or showing signs of slowing. Her spread read never contradicts Sable\u2019s on the same spread.</p>';
+              coinGrid('mina-1M', '1M', 'standing on the house tape — read #737 · her live 1-minute read lands over this the moment the feed answers', 'frame-grid') +
+              readStamp('mina', 'MINA · THE ONE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'tf') {
             return '<p class="room-plate">' + w.plate + '</p>' +
-              '<p class="scale-note" style="margin:0 0 8px">Wired <b>the Sable way</b>: her windows stand on the house tape — read #737 — so the room never sits empty, and her live read, derived fresh in this page on each re-check from the live ' + w.frameLabel + ' candles off the feed layer (Binance.US first — it answers in the US — the Binance public feed, Coinbase and Kraken behind it; her window only ever accepts candles of her own frame), lands over the standing read the moment the feed answers. A pass the feed misses leaves the standing read in place, labeled standing — no figure dressed as live that is not.</p>' +
-              coinGrid('tf-' + w.frame, w.frame, 'standing on the house tape — read #737 · her live ' + w.frameLabel + ' read lands over this the moment the feed answers') +
-              readStamp('tf-' + w.frame, w.name + ' · ' + w.plate + ' · STANDING — HOUSE TAPE') +
-              '<p class="scale-note">She reads <b>only ' + w.frameLabel + '</b>, under the same doctrine Sierra reads the three-minute by: a new candle pushing <b>past</b> the previous candle is PUSHING on her frame; a new candle that does <b>not</b> go past is SLOWING. Like Mina\u2019s office, each coin carries her frame\u2019s spread — live price versus the forming candle, with its band word off the locked scales — as a separate fact beside the push. Her screen re-checks in place on the board\u2019s cycle.</p>';
+              coinGrid('tf-' + w.frame, w.frame, 'standing on the house tape — read #737 · her live ' + w.frameLabel + ' read lands over this the moment the feed answers', 'frame-grid') +
+              readStamp('tf-' + w.frame, w.name + ' · ' + w.plate + ' · STANDING — HOUSE TAPE');
           }
           if (w.office === 'temp-bottom' || w.office === 'temp-top') {
             var bottom = w.office === 'temp-bottom';
@@ -1601,11 +1871,11 @@
                 '<div class="coin-grid">' + SIX_COINS.map(function (c) {
                   var call = armyCall(c, 0, off);
                   var tl = tapeLine(c);
-                  return coinWin(off, c, (bottom ? 'Standing low' : 'Standing high') + ' — ' + call.push.toLowerCase(), 'the forming ' + fr[0] + ' candle\u2019s standing ' + (bottom ? 'low' : 'high') + ' · ' + call.text.toLowerCase() + (tl ? ' · ' + tl : ''), call.dir);
+                  return tempWin(off, fr[0], c, (bottom ? 'Standing low' : 'Standing high') + ' — ' + call.push.toLowerCase(), 'the forming ' + fr[0] + ' candle\u2019s standing ' + (bottom ? 'low' : 'high') + ' · ' + call.text.toLowerCase() + (tl ? ' · ' + tl : ''), call.dir);
                 }).join('') + '</div>';
             });
             thtml += readStamp(off, w.name + ' · TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS')) +
-              '<p class="scale-note">She watches <b>LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB</b> against the ' + (bottom ? 'bottom' : 'top') + ' of every frame — all six coins on all five frames, each coin\u2019s standing ' + (bottom ? 'low' : 'high') + ' on the forming candle, standing on the house tape and re-checked in place on the board\u2019s cycle; the month ' + (bottom ? 'bottom' : 'top') + ' is the strongest, the 6-hour the weakest. <b>Her light law:</b> a coin\u2019s light burns only while price sits on its level — the moment price reaches the level, the army flashes for 60 seconds, then the light goes out. <b>Her bell law:</b> a fresh hit rings the locked dual sound — the opening bell and the cash register cha-ching struck together — once per fresh hit.</p></div>';
+              '<p class="scale-note">She watches <b>LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB</b> against the ' + (bottom ? 'bottom' : 'top') + ' of every frame — all six coins on all five frames, each window carrying its frame\u2019s own forming-candle standing ' + (bottom ? 'low' : 'high') + ' as a live figure, read off the shared feed layer on the board\u2019s cycle (the Binance public feed first — data-api.binance.vision, the master\u2019s door — Coinbase, Kraken and MEXC behind it — when one source drops, the next picks it up, and her stamp names the source that answered); a pass the feed misses leaves the standing house-tape read in place, labeled standing. The month ' + (bottom ? 'bottom' : 'top') + ' is the strongest, the 6-hour the weakest. <b>Her light law:</b> a coin\u2019s light burns only while price sits on its level — the moment price reaches the level, the army flashes for 60 seconds, then the light goes out. <b>Her bell law:</b> a fresh hit rings the locked dual sound — the opening bell and the cash register cha-ching struck together — once per fresh hit.</p></div>';
             return thtml;
           }
           if (w.office === 'tessa') {
@@ -1617,7 +1887,7 @@
               '<span class="fl">6H<small>on watch</small></span></div>' +
               '<div class="coin-grid" style="margin-top:10px">' + ['LTC', 'BTC', 'ETH'].map(function (cn) {
                 return ['MONTH', 'WEEK', 'DAY', '6H'].map(function (fm) {
-                  return '<div class="coin-win" data-tessa-win="' + cn + '|' + fm + '"><p class="cw-name">' + cn + ' — ' + fm + '</p><p class="cw-big">Standing watch</p><p class="cw-sub">Her Four Points for this frame stand here — P1 · P2 · P3 · P4 land on the first live check, and the window keeps standing between checks, the Sable way</p></div>';
+                  return '<div class="coin-win" data-tessa-win="' + cn + '|' + fm + '"><p class="cw-name">' + cn + ' — ' + fm + '</p><p class="cw-big">Standing watch</p><p class="cw-sub"><span class="tessa-stand-note">Her Four Points for this frame stand here — P1 · P2 · P3 · P4 land on the first live check, and the window keeps standing between checks, the Sable way</span></p></div>';
                 }).join('');
               }).join('') + '</div>' +
               readStamp('tessa', 'TESSA · TRADE ALERTS') +
@@ -1637,7 +1907,7 @@
               return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — THE GATE · CHANGE TESTED ON THE RECORD</p>' +
                 '<div class="proof-screen"><p class="ps-t">THE GATE — LAST CALLS</p>' +
                 '<p class="ps-r"><b>PASS</b> — recipe v81 floor wiring: the twelve group-ad loops tested old way against new way on the record before they shipped (Nov 16).</p>' +
-                '<p class="ps-r"><b>PASS</b> — the Discord room fix: posters, the silent Enity loop, the motion engine — banked and graded A\u2212 in the Recipe Log below.</p></div>' +
+                '<p class="ps-r"><b>PASS</b> — the Discord room fix: posters, the silent Enity loop, the motion engine — banked and graded A\u2212 on the house record.</p></div>' +
                 readStamp('gate', 'PORTIA · THE GATE') + '</div>';
             }
             if (w.name === 'VEDA') {
@@ -1649,7 +1919,7 @@
             }
             return '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — THE PROOF PAGE, LIVE IN HER MONITOR</p>' +
               '<div class="proof-live"><div class="pl-head"><i></i><span>THE PROOF PAGE — LIVE WINDOW · THE REAL PUBLISHED RECORD</span><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">Open the Record \u2197</a></div>' +
-              '<iframe src="https://longshotwolf.github.io/war-cove-proof-page/" title="The Graded Record — the real published Proof Page, loaded live in Prudence\u2019s monitor" loading="eager"></iframe>' +
+              '<iframe src="https://longshotwolf.github.io/war-cove-proof-page/" title="The Graded Record — the real published Proof Page, loaded live in Prudence\u2019s monitor" loading="lazy"></iframe>' +
               '<p class="pl-foot">The real published record, loaded live in her monitor — the same page the Doors open, not a copy and not a summary. If the frame ever stays dark, her standing audit below holds her post and the Record still opens from the link above.</p></div>' +
               '<div class="proof-screen"><p class="ps-t">HER STANDING AUDIT — THE RECORD SHE CHECKS IT AGAINST</p>' +
               '<p class="ps-r">Top of the books — <b>henrywiko · 107,574 sats</b> · Field Radar <b>#737 locked</b> 9:07 PM NYC — RED holds, bulls 39% · Four Points watcher on post.</p>' +
@@ -1668,8 +1938,8 @@
         var GRADES = {
           RAVEN: 'Record — her engine locked board read #737: RED holds the field, bulls 39% (9:07 PM NYC).',
           NOVA: 'Record — watcher on post: the #737 lock carried into the Four Points window as it fired.',
-          SABLE: 'Record — the 6H spread read on the locked per-coin scales; read #737 held at the same anchor gap.',
-          SIERRA: 'Record — Survey the Field posts every 3 hours, LTC first, then BTC, then ETH, off the live tape.',
+          SABLE: 'Grade pending — record building',
+          SIERRA: 'Grade pending — record building',
           FELICITY: 'Record — the game is running: henrywiko top of the books at 107,574 sats.',
           ECHO: 'Record — board relay on its rule; her own group-ad loop wired at her desk Nov 16.',
           HAVEN: 'Record — state lane standing on its rule; her own group-ad loop wired at her desk Nov 16.',
@@ -1694,15 +1964,17 @@
         };
         function deskHTML(w) {
           var seed = seedOf(w.name);
-          /* v81: every desk with its own real loop plays it — the eighteen
-             motion desks (the Nov 13 loops, Verity's wide loop, and the
-             twelve group-ad loops wired Nov 16, Bella & Stella included
-             at their shared desk below). Every desk's monitor runs LIVE:
-             this floor is running, no desk stands at standby. */
+          /* v81: every desk plays its own real loop — the Nov 13 loops,
+             Verity's wide loop, the twelve group-ad loops and the sixteen
+             banked loops wired Nov 16, Bella & Stella included at their
+             shared desk below. Playback is scheduled by the motion engine:
+             a desk plays while its card is on or near the screen and rests
+             on its portrait poster while far off it. Every desk's monitor
+             runs LIVE: this floor is running, no desk stands at standby. */
           var live = true;
           var media;
           if (w.loop) {
-            media = '<video src="' + w.loop + '" poster="' + w.face + '" autoplay muted loop playsinline preload="auto" data-rate="' + (w.rate || 1) + '" data-live="1" aria-label="' + w.name + ' at her desk — her real looping footage"></video>';
+            media = '<video src="' + w.loop + '" poster="' + w.face + '" autoplay muted loop playsinline preload="metadata" data-rate="' + (w.rate || 1) + '" data-live="1" aria-label="' + w.name + ' at her desk — her real looping footage"></video>';
           } else {
             media = '<img src="' + w.face + '" alt="' + w.name + ' at her desk" class="floor-alive" />';
           }
@@ -1711,13 +1983,31 @@
             '<div><p class="nm">' + w.name + '</p><p class="jb">' + w.job + '</p><p class="kd">' + w.kind + '</p>' +
             '<span class="statuschip st-' + w.status + '"><i></i>' + STATUS[w.status] + '</span></div></div>' +
             monitorHTML(live, seed, w.name) +
-            '<div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">' + (GRADES[w.name] || w.gradeText || 'Record — standing on the house record.') + '</p></div>' +
+            '<div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">' + (GRADES[w.name] || w.gradeText || 'Record — standing on the house record.') + '</p></div>' +
             '<p class="last">' + w.last + '</p>';
           var room = officeScreen(w);
+          /* The locked-room format (the live Day Brief's presentation):
+             a reader office stands as ONE full-width room — her picture
+             with the little desk monitor under it, her name with the
+             SCHEDULED/WORKING chip and the LOCKED chip beside it, her
+             job, her kind line, her detail and her GRADE WINDOW across
+             the top — then a divider, and her plate and windows filling
+             the room's width beneath. No side column. */
+          if (room && isWideOffice(w)) {
+            var roomBody = '<div class="room-head"><div class="room-ava"><div class="desk-win rim-live">' + media + sweep + '</div>' + monitorMini(seed) + '</div>' +
+              '<div class="room-info"><p class="nm-line"><span class="nm">' + w.name + '</span>' +
+              '<span class="statuschip st-' + w.status + '"><i></i>' + STATUS[w.status] + '</span>' +
+              '<span class="lockchip">🔒 LOCKED</span></p>' +
+              '<p class="jb">' + w.job + '</p><p class="kd">' + w.kind + '</p>' +
+              '<p class="last">' + w.last + '</p>' +
+              '<div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">' + (GRADES[w.name] || w.gradeText || 'Record — standing on the house record.') + '</p></div>' +
+              '</div></div><div class="room-body">' + room + '</div>';
+            return '<article class="desk-card span-all" id="desk-' + w.name.toLowerCase() + '" data-desk="' + w.name + '">' + roomBody + '</article>';
+          }
           var body = room
             ? '<div class="side-flex"><div class="side-id">' + idCol + '</div><div class="side-room">' + room + '</div></div>'
             : idCol;
-          return '<article class="desk-card' + (isWideOffice(w) ? ' span-all' : '') + '">' +
+          return '<article class="desk-card' + (isWideOffice(w) ? ' span-all' : '') + '" id="desk-' + w.name.toLowerCase() + '" data-desk="' + w.name + '">' +
             '<span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' + body + '</article>';
         }
         var deptRoot = document.getElementById('dept-root');
@@ -1726,7 +2016,7 @@
            room — off the board; and if a refreshed load ever comes up
            without Sable's windows, the floor re-renders itself on load. */
         function fallbackDeskCard(w) {
-          return '<article class="desk-card"><span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' +
+          return '<article class="desk-card" id="desk-' + w.name.toLowerCase() + '" data-desk="' + w.name + '"><span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' +
             '<p style="font-size:17px; font-weight:900; letter-spacing:.05em; color:#ecfeff; margin:0">' + w.name + '</p>' +
             '<p style="font-size:12.5px; font-weight:700; color:#cffafe; margin:0">' + w.job + '</p>' +
             '<p class="last">Her desk stands and her post is held — her windows re-stand on the board\u2019s next pass. Nothing about her office is lost.</p></article>';
@@ -1738,11 +2028,11 @@
           html += '<div class="dept"><h3>' + d.title + '</h3><p class="blurb">' + crew.length + ' on the crew · ' + d.blurb + '</p><div class="dept-grid">';
           if (d.key === 'announce') {
             html += '<article class="desk-card" style="grid-column:1 / -1"><span class="lockmark" aria-label="Locked office">🔒 LOCKED</span><div class="top">' +
-              '<div class="desk-win rim-live"><video src="assets/a069.bin" poster="assets/a070.webp" autoplay muted loop playsinline preload="auto" data-rate="2" data-live="1" aria-label="Bella, Open Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
-              '<div class="desk-win rim-live"><video src="assets/a071.bin" poster="assets/a072.webp" autoplay muted loop playsinline preload="auto" data-rate="2" data-live="1" aria-label="Stella, Close Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
+              '<div class="desk-win rim-live"><video src="assets/a067.bin" poster="assets/a068.webp" autoplay muted loop playsinline preload="metadata" data-rate="2" data-live="1" aria-label="Bella, Open Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
+              '<div class="desk-win rim-live"><video src="assets/a069.bin" poster="assets/a070.webp" autoplay muted loop playsinline preload="metadata" data-rate="2" data-live="1" aria-label="Stella, Close Announcer, at the shared bell desk — her own real looping footage"></video></div>' +
               '<div><p class="nm">BELLA + STELLA</p><p class="jb">Open + Close Announcers — one shared office, each with her own loop</p><p class="kd">Scheduled — fires on its rule</p>' +
               '<span class="statuschip st-scheduled"><i></i>SCHEDULED</span></div></div>' +
-              '<div class="grade-box"><span class="gl">Grade — on the record</span><p class="gv">Bella posted the open on check 2 of 3 under the three-check rule (first success Nov 13) · Stella ran the close at 4:00 PM ET.</p></div>' +
+              '<div class="grade-box"><span class="gl">GRADE WINDOW</span><p class="gv">Bella posted the open on check 2 of 3 under the three-check rule (first success Nov 13) · Stella ran the close at 4:00 PM ET.</p></div>' +
               '<div class="market-monitor"><p class="mm-t">Market Monitor — tied to the bell</p><p class="mm-v">MARKET CLOSED</p><p class="mm-n">As of the 9:07 PM NYC read · Open posted on check 2 today · Close ran 4:00 PM ET</p></div>' +
               '<p class="last">Bella rings the open at 9:30 AM ET, Stella the close at 4:00 PM ET — three checks from the bell, one post the moment a check confirms. Since Nov 16 each plays her OWN group-ad loop at this shared desk — Bella on the left, Stella on the right.</p></article>';
           }
@@ -1776,34 +2066,142 @@
           if (!v || motionKilled) return;
           try { v.muted = true; v.defaultMuted = true; } catch (e) {}
           if (!v.paused) return;
+          if (wantedSet && !wantedSet.has(v)) return; /* the five slots are spoken for */
           var p = v.play();
           if (p && p.catch) p.catch(function () {});
         }
-        function shouldPlay(v) {
+
+        /* ---------- Playback scheduling (Nov 16 pass): visibility gating +
+           staggered prime + a HARD CAP on how many loops play at once. The
+           floor carries ~38 loops; firing play() on all of them at once
+           froze desks on their posters. Now every video carries
+           preload="metadata" with its own cast portrait standing as its
+           poster, a video plays only while its card is on or near the
+           screen (IntersectionObserver with a generous margin), and primes
+           run through one queue in small batches — the presenter and the
+           leaders first, then the crew — so no moment ever fires 30+
+           play() calls at once. The Warlord tightened the cap twice the
+           same night — fifteen, then ten — and his final word for THIS
+           browser-link copy is FIVE loops playing at any one moment:
+           stability of the live stream outranks motion, so the five
+           slots go to the presenter and the leaders first, then the reader
+           desks in view, then the rest of the crew in view; every other
+           desk holds its cast portrait until a slot frees and it is in
+           view. No loop is deleted and no desk loses its loop — the cap
+           only decides how many play at once, and when in doubt it keeps
+           fewer moving, never more. primeVideo / kickMotion stay the one
+           engine: screen-open, visibility return and the first tap still
+           re-prime, and they re-prime gated desks as those desks come near
+           the screen. Where IntersectionObserver does not exist, nothing is
+           gated and every loop primes the way it always did — still under
+           the same five cap. */
+        var MAX_PLAYING = 5;
+        var nearScreen = new Set();
+        var gateObserver = null;
+        var primeQueue = [];
+        var primeTimer = null;
+        var wantedSet = null; /* the videos holding the five slots */
+        function isGated(v) { return v.getAttribute('data-gated') === '1'; }
+        function baseShouldPlay(v) {
           if (v.classList.contains('desk-loop')) return v.getAttribute('data-live') === '1';
           if (v.id === 'pf-sheity' || v.id === 'pf-enity') return !v.hidden;
           return true; /* office windows + Verity */
         }
+        function shouldPlay(v) {
+          if (isGated(v) && !nearScreen.has(v)) return false;
+          return baseShouldPlay(v);
+        }
+        /* Slot priority: presenter first, then the leader windows, then
+           the reader desks (the offices with a room of their own), then
+           the rest of the crew. */
+        function motionPriority(v) {
+          if (v.id === 'pf-sheity' || v.id === 'pf-enity') return 0;
+          if (!v.classList.contains('desk-loop')) return 1;
+          var card = v.closest ? v.closest('article') : null;
+          if (card && card.querySelector('.side-room')) return 2;
+          return 3;
+        }
+        function scheduleMotion() {
+          if (motionKilled) return;
+          var cands = [];
+          document.querySelectorAll('video').forEach(function (v, idx) {
+            if (shouldPlay(v)) cands.push({ v: v, p: motionPriority(v), i: idx });
+          });
+          cands.sort(function (a, b) { return (a.p - b.p) || (a.i - b.i); });
+          wantedSet = new Set();
+          cands.slice(0, MAX_PLAYING).forEach(function (c) { wantedSet.add(c.v); });
+          /* Anything playing outside the five yields its slot. */
+          document.querySelectorAll('video').forEach(function (v) {
+            if (!v.paused && !wantedSet.has(v)) { try { v.pause(); } catch (e) {} }
+          });
+          cands.slice(0, MAX_PLAYING).forEach(function (c) { if (c.v.paused) queuePrime(c.v); });
+        }
+        function queuePrime(v) {
+          if (!v || motionKilled) return;
+          if (primeQueue.indexOf(v) === -1) primeQueue.push(v);
+          runPrimeQueue();
+        }
+        function runPrimeQueue() {
+          if (primeTimer !== null) return;
+          var step = function () {
+            var n = 0;
+            while (primeQueue.length && n < 4) {
+              var v = primeQueue.shift();
+              if (v && document.contains(v) && shouldPlay(v)) { primeVideo(v); n++; }
+            }
+            if (primeQueue.length) { primeTimer = setTimeout(step, 220); }
+            else { primeTimer = null; }
+          };
+          step();
+        }
+        if ('IntersectionObserver' in window) {
+          gateObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              var v = en.target;
+              if (en.isIntersecting) {
+                nearScreen.add(v);
+              } else {
+                nearScreen.delete(v);
+                try { v.pause(); } catch (e) {}
+              }
+            });
+            /* A desk entering or leaving the near zone can free or claim
+               one of the five slots — re-deal them. */
+            scheduleMotion();
+          }, { rootMargin: '800px 0px 800px 0px', threshold: 0 });
+        }
+        function wireVideos() {
+          document.querySelectorAll('video').forEach(function (v) {
+            if (v.getAttribute('data-gated') !== '1') {
+              v.setAttribute('data-gated', '1');
+              if (gateObserver) gateObserver.observe(v);
+              else nearScreen.add(v); /* no IntersectionObserver: never gated */
+            }
+          });
+          document.querySelectorAll('.desk-win video').forEach(function (v, i) {
+            if (v.classList.contains('desk-loop')) return;
+            v.classList.add('desk-loop');
+            var rate = parseFloat(v.getAttribute('data-rate') || '1');
+            function arm() {
+              try { v.playbackRate = rate; } catch (e) {}
+              if (v.duration && isFinite(v.duration)) {
+                try { v.currentTime = (i * 1.37) % Math.max(1, v.duration - 0.2); } catch (e) {}
+              }
+              if (v.getAttribute('data-live') === '1' && !reduceMotion) { if (shouldPlay(v)) queuePrime(v); }
+              else v.pause();
+            }
+            v.addEventListener('loadedmetadata', arm);
+            if (v.readyState >= 1) arm();
+          });
+        }
         function kickMotion() {
           if (motionKilled) return;
-          document.querySelectorAll('video').forEach(function (v) { if (shouldPlay(v)) primeVideo(v); });
+          wireVideos();
+          scheduleMotion();
         }
 
         /* ---------- Desk loops: play while working, rest on the portrait frame ---------- */
-        document.querySelectorAll('.desk-win video').forEach(function (v, i) {
-          v.classList.add('desk-loop');
-          var rate = parseFloat(v.getAttribute('data-rate') || '1');
-          function arm() {
-            try { v.playbackRate = rate; } catch (e) {}
-            if (v.duration && isFinite(v.duration)) {
-              try { v.currentTime = (i * 1.37) % Math.max(1, v.duration - 0.2); } catch (e) {}
-            }
-            if (v.getAttribute('data-live') === '1' && !reduceMotion) primeVideo(v);
-            else v.pause();
-          }
-          v.addEventListener('loadedmetadata', arm);
-          if (v.readyState >= 1) arm();
-        });
+        wireVideos();
         if (reduceMotion) {
           document.querySelectorAll('video').forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
         } else {
@@ -1816,7 +2214,7 @@
           setInterval(kickMotion, 4000);
         }
         /* Raven's window zooms into her figure, as on the real floor */
-        var ravenVid = document.querySelector('.desk-win video[src="assets/a008.bin"]');
+        var ravenVid = document.querySelector('.desk-win video[src="assets/a006.bin"]');
         if (ravenVid) { ravenVid.style.transform = 'scale(1.45)'; ravenVid.style.transformOrigin = '38% 42%'; }
         var verityVid = document.getElementById('verity-loop');
         if (verityVid) { verityVid.playbackRate = 2; }
@@ -1837,7 +2235,7 @@
 
         /* ---------- Screen switcher: Day Board / Field Radar / The Company / Treasury / Broadcast / Production ---------- */
         var scrBtns = { board: document.getElementById('scr-board'), radar: document.getElementById('scr-radar'), company: document.getElementById('scr-company'), treasury: document.getElementById('scr-treasury'), broadcast: document.getElementById('scr-broadcast'), production: document.getElementById('scr-production') };
-        var currentScreen = 'board';
+        var currentScreen = 'company';
         function setScreen(s) {
           currentScreen = s;
           Object.keys(scrBtns).forEach(function (k) {
@@ -1854,6 +2252,30 @@
         document.querySelectorAll('[data-open-screen]').forEach(function (b) {
           b.addEventListener('click', function () { setScreen(b.getAttribute('data-open-screen')); });
         });
+        /* Straight to a desk — Terra's and Vega's doors. Their windows
+           stand deep in Market Intel, past the Owner's office and eleven
+           other desks; counted in the DOM they were always there, but on
+           the tablet they read as gone because nothing took the Warlord
+           to them. One tap now opens the Company Floor and lands on the
+           desk itself, lit up so his eyes catch it. The landing retries
+           briefly in case a floor guard re-render lands mid-jump. */
+        function goToDesk(name) {
+          setScreen('company');
+          var tries = 0;
+          (function land() {
+            var el = document.getElementById('desk-' + name);
+            if (el) {
+              el.scrollIntoView({ block: 'start', behavior: reduceMotion ? 'auto' : 'smooth' });
+              el.classList.add('desk-flash');
+              setTimeout(function () { el.classList.remove('desk-flash'); }, 2600);
+              return;
+            }
+            if (++tries < 8) setTimeout(land, 180);
+          })();
+        }
+        document.querySelectorAll('[data-open-desk]').forEach(function (b) {
+          b.addEventListener('click', function () { goToDesk(b.getAttribute('data-open-desk')); });
+        });
 
         /* ---------- Broadcast go-live checklist: this sitting only ---------- */
         document.querySelectorAll('#bc-checklist button').forEach(function (b) {
@@ -1869,23 +2291,23 @@
            The page itself never moves. Ads start muted; the sound button turns
            their real sound on and off — the eight Margex ads carry theirs baked in. */
         var NEWS_PAIRS = [
-          { headline: 'Binance Been Hacked', details: 'The first War Cove Crypto News Alert: the best thing for you to do is store your own crypto on your own cold wallet.', adTitle: 'Binance Cold Wallet', file: 'assets/a006.bin' },
-          { headline: 'Jensen Huang\u2019s GTC Berlin Keynote', details: null, adTitle: 'Jensen Huang — GTC', file: 'assets/a073.bin' },
-          { headline: 'Elon Musk — Boost', details: null, adTitle: 'Elon / Boost', file: 'assets/a074.bin' },
-          { headline: 'SpaceX Picked Qualcomm — Starlink\u2019s 5G Network Is Coming', details: null, adTitle: 'SpaceX × Qualcomm — Starlink 5G', file: 'assets/a075.bin' },
-          { headline: 'Elon & Palantir — The Golden Dome', details: null, adTitle: 'Elon & Palantir — The Golden Dome', file: 'assets/a076.bin' },
-          { headline: 'DeepSeek Agents', details: null, adTitle: 'DeepSeek Agents', file: 'assets/a077.bin' },
-          { headline: 'SpaceX Contracts', details: null, adTitle: 'SpaceX Contracts', file: 'assets/a078.bin' },
-          { headline: 'NVIDIA CEO Update', details: 'The resignation, confirmed by NVIDIA\u2019s own 8-K filing — the allegations run as reports, never findings.', adTitle: 'NVIDIA CEO Update', file: 'assets/a079.bin' },
-          { headline: 'War Cove Paper Game — The Official Promo', details: 'The official dramatic promo for the War Cove Paper Game: Sheity presents the game, its board living inside the stream\u2019s own screens. The cut the Warlord approved on Nov 13, 2026 — it rides this rotation as a promo, not a news story.', adTitle: 'Paper Game Promo — Dramatic (Sheity)', file: 'assets/a080.bin' },
-          { headline: 'Witching Hour Trade — LTC Short +173.49%', details: 'The Witching Hour trade, off his Margex poster: Sell 100x LTCUSD, open $51.30, marked $50.41 — +173.49%.', adTitle: 'Margex — Witching Hour Short +173.49%', file: 'assets/a081.bin' },
-          { headline: 'Long the Bottom — LTC +521.7%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $49.07, marked $51.63 — +521.7%.', adTitle: 'Margex — Long the Bottom +521.7%', file: 'assets/a082.bin' },
-          { headline: 'The Dump — LTC Short +350.1%', details: 'Off his Margex poster: Sell 100x LTCUSD, open $49.70, marked $47.96 — +350.1%.', adTitle: 'Margex — The Dump +350.1%', file: 'assets/a083.bin' },
-          { headline: 'Bottom Long — LTC +203.87%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $48.55 — +203.87%.', adTitle: 'Margex — Bottom Long +203.87%', file: 'assets/a084.bin' },
-          { headline: 'Bottom Long — The Updated Trade +401.43%', details: 'The updated trade, off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $49.49 — +401.43%.', adTitle: 'Margex — Bottom Long +401.43%', file: 'assets/a085.bin' },
-          { headline: 'Top of the AM Pump — Short +205.65%', details: 'His mark: the top of the AM pump. Off his Margex poster: Sell 100x LTCUSD, open $49.60, marked $48.58 — +205.65%.', adTitle: 'Margex — AM Pump Top Short +205.65%', file: 'assets/a086.bin' },
-          { headline: 'Started From the Bottom — Now We Here +425.43%', details: 'His line: \u2018Started from the bottom now we here.\u2019 Off his Margex poster: Buy 100x LTCUSD, open $43.25, marked $45.09 — +425.43%.', adTitle: 'Margex — Bottom Long +425.43%', file: 'assets/a087.bin' },
-          { headline: 'Witching Hour Bottom Long — +267.14%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $48.29, marked $49.58 — +267.14%.', adTitle: 'Margex — Witching Hour Bottom Long +267.14%', file: 'assets/a088.bin' }
+          { headline: 'Binance Been Hacked', details: 'The first War Cove Crypto News Alert: the best thing for you to do is store your own crypto on your own cold wallet.', adTitle: 'Binance Cold Wallet', file: 'assets/a003.bin' },
+          { headline: 'Jensen Huang\u2019s GTC Berlin Keynote', details: null, adTitle: 'Jensen Huang — GTC', file: 'assets/a071.bin' },
+          { headline: 'Elon Musk — Boost', details: null, adTitle: 'Elon / Boost', file: 'assets/a072.bin' },
+          { headline: 'SpaceX Picked Qualcomm — Starlink\u2019s 5G Network Is Coming', details: null, adTitle: 'SpaceX × Qualcomm — Starlink 5G', file: 'assets/a073.bin' },
+          { headline: 'Elon & Palantir — The Golden Dome', details: null, adTitle: 'Elon & Palantir — The Golden Dome', file: 'assets/a074.bin' },
+          { headline: 'DeepSeek Agents', details: null, adTitle: 'DeepSeek Agents', file: 'assets/a075.bin' },
+          { headline: 'SpaceX Contracts', details: null, adTitle: 'SpaceX Contracts', file: 'assets/a076.bin' },
+          { headline: 'NVIDIA CEO Update', details: 'The resignation, confirmed by NVIDIA\u2019s own 8-K filing — the allegations run as reports, never findings.', adTitle: 'NVIDIA CEO Update', file: 'assets/a077.bin' },
+          { headline: 'War Cove Paper Game — The Official Promo', details: 'The official dramatic promo for the War Cove Paper Game: Sheity presents the game, its board living inside the stream\u2019s own screens. The cut the Warlord approved on Nov 13, 2026 — it rides this rotation as a promo, not a news story.', adTitle: 'Paper Game Promo — Dramatic (Sheity)', file: 'assets/a078.bin' },
+          { headline: 'Witching Hour Trade — LTC Short +173.49%', details: 'The Witching Hour trade, off his Margex poster: Sell 100x LTCUSD, open $51.30, marked $50.41 — +173.49%.', adTitle: 'Margex — Witching Hour Short +173.49%', file: 'assets/a079.bin' },
+          { headline: 'Long the Bottom — LTC +521.7%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $49.07, marked $51.63 — +521.7%.', adTitle: 'Margex — Long the Bottom +521.7%', file: 'assets/a080.bin' },
+          { headline: 'The Dump — LTC Short +350.1%', details: 'Off his Margex poster: Sell 100x LTCUSD, open $49.70, marked $47.96 — +350.1%.', adTitle: 'Margex — The Dump +350.1%', file: 'assets/a081.bin' },
+          { headline: 'Bottom Long — LTC +203.87%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $48.55 — +203.87%.', adTitle: 'Margex — Bottom Long +203.87%', file: 'assets/a082.bin' },
+          { headline: 'Bottom Long — The Updated Trade +401.43%', details: 'The updated trade, off his Margex poster: Buy 100x LTCUSD, open $47.58, marked $49.49 — +401.43%.', adTitle: 'Margex — Bottom Long +401.43%', file: 'assets/a083.bin' },
+          { headline: 'Top of the AM Pump — Short +205.65%', details: 'His mark: the top of the AM pump. Off his Margex poster: Sell 100x LTCUSD, open $49.60, marked $48.58 — +205.65%.', adTitle: 'Margex — AM Pump Top Short +205.65%', file: 'assets/a084.bin' },
+          { headline: 'Started From the Bottom — Now We Here +425.43%', details: 'His line: \u2018Started from the bottom now we here.\u2019 Off his Margex poster: Buy 100x LTCUSD, open $43.25, marked $45.09 — +425.43%.', adTitle: 'Margex — Bottom Long +425.43%', file: 'assets/a085.bin' },
+          { headline: 'Witching Hour Bottom Long — +267.14%', details: 'Off his Margex poster: Buy 100x LTCUSD, open $48.29, marked $49.58 — +267.14%.', adTitle: 'Margex — Witching Hour Bottom Long +267.14%', file: 'assets/a086.bin' }
         ];
         var nrIdx = 0, nrSound = false;
         var nrVideo = document.getElementById('nr-video');
@@ -1911,19 +2333,42 @@
           nrDots.querySelectorAll('button').forEach(function (d, j) { d.setAttribute('aria-pressed', String(j === nrIdx)); });
           nrVideo.loop = false;
           nrVideo.muted = !nrSound;
+          nrHeld = false;
+          nrVideo.poster = p.file.replace('.mp4', '-poster.jpg');
           if (nrVideo.getAttribute('src') !== p.file) nrVideo.src = p.file;
           nrVideo.setAttribute('aria-label', 'War Cove News ad on the monitor: ' + p.adTitle);
           if (!reduceMotion) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
         }
         nrVideo.addEventListener('ended', function () { setPair(nrIdx + 1); });
-        /* One reload before a failed ad is skipped — never a spin through the rotation. */
+        /* A failed ad is NEVER skipped past. The old path — one reload,
+           then advance — is what raced the monitor through the whole
+           rotation on a screen that could not decode the files: every
+           pair errored in a fraction of a second and the monitor spun
+           without ever playing. Now: one reload, then the monitor HOLDS
+           on this pair — its own still (a real frame of the ad, set as
+           the poster in setPair) stands on the screen, the print stays
+           beside it, and the rotation waits here until the Warlord taps
+           the monitor to retry or moves by hand with Prev / Next. The
+           only automatic advance left in the room is 'ended': a pair
+           that played its real video through, at its proper pace. */
         var nrRetries = {};
-        nrVideo.addEventListener('canplay', function () { nrRetries[nrIdx] = 0; });
+        var nrHeld = false;
+        nrVideo.addEventListener('canplay', function () { nrRetries[nrIdx] = 0; nrHeld = false; });
         nrVideo.addEventListener('error', function () {
+          if (nrVideo.readyState >= 2) return; /* data is flowing — not a failure */
           var tries = nrRetries[nrIdx] || 0;
           if (tries < 1) { nrRetries[nrIdx] = tries + 1; nrVideo.load(); return; }
-          setPair(nrIdx + 1);
+          nrHeld = true;
+          try { nrVideo.pause(); } catch (e) {}
+          document.getElementById('nr-now').textContent = 'Now showing: ' + NEWS_PAIRS[nrIdx].adTitle + ' — its video could not play on this screen, so the monitor holds on its still · tap the monitor to retry, or Next for the next story';
         }, true);
+        nrVideo.addEventListener('click', function () {
+          if (!nrHeld) return;
+          nrRetries[nrIdx] = 0; nrHeld = false;
+          document.getElementById('nr-now').textContent = 'Now showing: ' + NEWS_PAIRS[nrIdx].adTitle;
+          nrVideo.load();
+          if (!reduceMotion) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
+        });
         document.getElementById('nr-prev').addEventListener('click', function () { setPair(nrIdx - 1); });
         document.getElementById('nr-next').addEventListener('click', function () { setPair(nrIdx + 1); });
         var nrSoundBtn = document.getElementById('nr-sound');
@@ -1936,11 +2381,14 @@
           if (nrSound && !reduceMotion) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
         });
         nrVideo.loop = false; /* the rotation advances pair to pair; loop is only the no-JS fallback */
+        setPair(0); /* stand the first pair by the same hand as every other pair — poster, labels, play state */
         if (reduceMotion) { nrVideo.removeAttribute('autoplay'); nrVideo.loop = true; nrVideo.pause(); }
         else {
-          /* Playback keeper: a paused or starved ad is restarted, the house pattern. */
+          /* Playback keeper: a paused or starved ad is restarted, the house pattern —
+             but never against a held pair: a monitor holding on a still stays held. */
           var nrStarved = 0;
           setInterval(function () {
+            if (nrHeld) return;
             if (nrVideo.paused && !nrVideo.ended) { var pr = nrVideo.play(); if (pr) pr.catch(function () {}); }
             if (nrVideo.readyState < 2) { nrStarved++; if (nrStarved === 4) { nrVideo.load(); nrStarved = 0; } } else nrStarved = 0;
           }, 1500);
@@ -1961,7 +2409,7 @@
           vSheity.hidden = p !== 'sheity';
           iEnity.hidden = p !== 'enity';
           if (p === 'sheity' && !reduceMotion) { var pr = vSheity.play(); if (pr) pr.catch(function () {}); }
-          if (p === 'enity' && !reduceMotion) { var pe = iEnity.play(); if (pe) pe.catch(function () {}); }
+          if (p === 'enity' && !reduceMotion && typeof iEnity.play === 'function') { var pe = iEnity.play(); if (pe && pe.catch) pe.catch(function () {}); }
           pName.textContent = p === 'sheity' ? 'SHEITY' : 'THE ENITY';
           pRole.textContent = p === 'sheity' ? 'President · Front Desk' : 'CEO · Runs the Floor';
           talkLabel.textContent = p === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity';
@@ -1980,13 +2428,18 @@
           talkLabel.textContent = attending ? '■ Standing by' : (pres === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity');
         });
 
-        /* ---------- Game ticker: duplicate for a seamless loop, ~45 px/s ---------- */
+        /* ---------- Game ticker: the paper game board does not run in this
+           browser copy (the Proof Page holds that seat), so the ticker is
+           gone — this stays guarded so its absence can never stop the
+           board's script. ---------- */
         var ticker = document.getElementById('game-ticker');
-        ticker.appendChild(ticker.children[0].cloneNode(true));
-        requestAnimationFrame(function () {
-          var w = ticker.scrollWidth / 2;
-          if (w > 0) ticker.style.animationDuration = Math.max(20, w / 45) + 's';
-        });
+        if (ticker && ticker.children[0]) {
+          ticker.appendChild(ticker.children[0].cloneNode(true));
+          requestAnimationFrame(function () {
+            var w = ticker.scrollWidth / 2;
+            if (w > 0) ticker.style.animationDuration = Math.max(20, w / 45) + 's';
+          });
+        }
 
         /* ---------- New York clock ---------- */
         var clockEl = document.getElementById('nyc-clock');
@@ -2026,9 +2479,11 @@
           while (fpFeed.children.length > 6) fpFeed.removeChild(fpFeed.lastChild);
           updateReads();
           refreshSierra();
+          refreshSable();
           refreshLiveFrames();
           refreshOwnerWindows();
           refreshTessa();
+          refreshTemps();
         }
         document.getElementById('btn-refresh').addEventListener('click', runRefresh);
         setInterval(function () {
@@ -2070,19 +2525,29 @@
            A coin that cannot be fetched, or whose candle reads indecisive,
            shows HELD — never a stale or invented figure. Nothing is cached:
            every re-check derives every figure fresh off that pass's candles. */
-        /* Feed hosts, in the order they are tried. Binance.US stands FIRST:
-           the Warlord reads this board in the United States (Arizona), and
-           the two Binance global hosts that used to lead this list refuse
-           US connections (HTTP 451, restricted location) — on his tablet
-           every live pass died on that refusal and the rooms never rose
-           off the standing tape. Binance.US is the US exchange on the same
-           public API shape and answers where he is; the global hosts stay
-           behind it for readers outside the US, and two more US sources
-           (Coinbase, Kraken) stand behind them in the feed layer below. */
-        var SIERRA_BASES = ['https://api.binance.us', 'https://data-api.binance.vision', 'https://api.binance.com'];
+        /* Feed hosts, in the order they are tried. The master's door
+           stands FIRST: data-api.binance.vision — Binance's US-open
+           public data host, the door the master board drinks from,
+           live with real candles and real volume. The old US-exchange
+           host used to lead this list and served dead data (flat
+           repeated candles, zero volume, zero trades), so every
+           reader correctly held; it is off the list entirely and no
+           window names it as a source again. The Binance global host
+           stands SECOND: if a fetch off the master's door drops, it
+           picks the read up,
+           and Coinbase, Kraken and MEXC stand behind both in the feed
+           layer below. A read that still cannot land shows HELD —
+           never a stale figure. */
+        var SIERRA_BASES = ['https://data-api.binance.vision', 'https://api.binance.com'];
         var SIERRA_BIG = { LTC: 1.0, BTC: 1000.0, ETH: 30.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var SIERRA_CYCLE = { LTC: 0.30, BTC: 300.0, ETH: 9.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var sierraBusy = false;
+        /* The HELD standard's clock: the moment her last LIVE pass
+           landed, and whether any pass has completed at all. Her
+           window's freshness is judged off this stamp — see the
+           one-second tick under refreshSierra. */
+        var sierraLastLiveAt = 0;
+        var sierraPassDone = false;
         function sierraBand(coin, spread) {
           var a = Math.abs(spread), word;
           if (coin === 'LTC') word = a < 0.30 ? 'a weak move' : a < 1.0 ? 'a cycle' : 'a big move';
@@ -2151,13 +2616,25 @@
           var armyWord = wantGreen ? 'Green' : 'Red';
           var call, big = false;
           if (progressing && travel >= SIERRA_BIG[coin] && !latestLittler) { big = true; }
+          /* The combined state, on the Warlord's word (Nov 16): an army can
+             hold the push — fresh ground standing — while its candles show
+             the slowing signs (both latest candles littler, price pulling
+             back). Her gate computed those signs either way, but the call
+             fell through to plain pushing and the signs never displayed —
+             his live example: LTC read Red Army pushing when the true read
+             was Red Army pushing, showing signs of slowing. Now the call
+             says both. Her gates do not move: the slowing call still needs
+             all three, and the big-move tier still never fires on a littler
+             latest candle — a littler latest candle is one of the signs,
+             so the combined state and the big-move line can never collide. */
           if (big) call = armyWord + ' Army pushing \u2014 big move to the ' + (wantGreen ? 'upside' : 'downside');
           else if (!progressing && bothLittler && pullingBack) call = armyWord + ' army pushing but showing signs of slowing';
+          else if (progressing && bothLittler && pullingBack) call = armyWord + ' Army pushing \u2014 showing signs of slowing';
           else call = armyWord + ' army pushing';
           /* Agreement rule: at cycle strength the spread's direction is the
              house direction — a contradicting call is held, never published. */
           var contradiction = Math.abs(spread) >= SIERRA_CYCLE[coin] && ((spread > 0 && !wantGreen) || (spread < 0 && wantGreen));
-          return { held: false, contradiction: contradiction, call: call, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
+          return { held: false, contradiction: contradiction, call: call, pushing: progressing, signs: bothLittler && pullingBack, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
         }
         function sierraWinEl(coin) {
           return document.querySelector('.coin-win[data-office="sierra"][data-coin="' + coin + '"]');
@@ -2218,8 +2695,9 @@
              · At most FOUR requests on the wire at once; the rest queue.
                A tablet connection is never flooded again.
              · Sources tried in order, each on the same candle shape:
-               Binance.US (answers in the US) → Binance public data →
-               Binance global → Coinbase (US) → Kraken (US). Coinbase and
+               Binance public data (data-api.binance.vision — the
+               master's door) → Binance global → Coinbase (US) →
+               Kraken (US). Coinbase and
                Kraken frames are aggregated from their own granularities
                (Coinbase has no 3-minute bar: three 1-minute bars are
                folded into it, epoch-aligned, forming bar last).
@@ -2268,7 +2746,7 @@
               return fetchJSONQ(base + '/api/v3/klines?symbol=' + sym + '&interval=' + interval + '&limit=60').then(function (rows) {
                 var raw = bnRaw(rows);
                 if (raw.length < 3) throw new Error('shape');
-                return { raw: raw, src: base.indexOf('binance.us') > -1 ? 'Binance.US' : 'Binance public feed' };
+                return { raw: raw, src: 'Binance public feed' };
               });
             });
           });
@@ -2332,12 +2810,28 @@
           var exp = FRAME_MS[interval];
           return exp && Math.abs(med - exp) <= exp * 0.02;
         }
+        /* MEXC stands LAST in every chain — the pickup when every other
+           source has dropped. Its public klines and ticker answer in the
+           same shapes Binance's do (bnRaw reads them unchanged), it
+           carries all six coins including BNB — which neither Coinbase
+           nor Kraken lists, so BNB's road used to end at the Binance
+           hosts — and it answers US readers. A failure here changes
+           nothing: the office stands on the tape, labeled standing,
+           exactly as before it was added. */
+        function mxKlines(coin, interval) {
+          return fetchJSONQ('https://api.mexc.com/api/v3/klines?symbol=' + coin + 'USDT&interval=' + interval + '&limit=60').then(function (rows) {
+            var raw = bnRaw(rows);
+            if (raw.length < 3) throw new Error('shape');
+            return { raw: raw, src: 'MEXC' };
+          });
+        }
         function getKlines(coin, interval) {
           return feedCached('k|' + coin + '|' + interval, function () {
             function inFrame(r) { if (!frameSpacingOk(r.raw, interval)) throw new Error('frame'); return r; }
             return bnKlines(coin, interval).then(inFrame)
               .catch(function () { return cbKlines(coin, interval).then(inFrame); })
               .catch(function () { return krKlines(coin, interval).then(inFrame); })
+              .catch(function () { return mxKlines(coin, interval).then(inFrame); })
               .then(function (r) { feedNoteSource(r.src); return r; });
           });
         }
@@ -2355,6 +2849,12 @@
               });
             });
             return chain.catch(function () {
+              return fetchJSONQ('https://api.mexc.com/api/v3/ticker/price?symbol=' + sym).then(function (j) {
+                var v = parseFloat(j.price);
+                if (!isFinite(v)) throw new Error('shape');
+                return v;
+              });
+            }).catch(function () {
               return getKlines(coin, '1m').then(function (r) { return r.raw[r.raw.length - 1].close; });
             });
           });
@@ -2372,6 +2872,15 @@
             return rd;
           });
         }
+        /* Per-coin freshness stamps — the lane fix (Nov 17): her old
+           pass judged freshness off ONE stamp for all six coins, so a
+           coin whose read stopped landing kept its old army line
+           standing at full brightness, dressed as live, as long as any
+           sister coin kept landing. Each coin now carries its own
+           landing time; a coin that cannot land a fresh read shows
+           HELD in plain words instead of the old line. Delivery only —
+           her doctrine, scales and wording do not move. */
+        var sierraCoinLiveAt = {};
         function refreshSierra() {
           if (sierraBusy) return;
           if (!document.querySelector('.coin-win[data-office="sierra"]')) return;
@@ -2381,6 +2890,7 @@
           var jobs = SIX_COINS.map(function (coin) {
             return sierraFetchWithFallback(coin).then(function (rd) {
               anyLive = true;
+              sierraCoinLiveAt[coin] = Date.now();
               var win = sierraWinEl(coin); if (!win) return;
               var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
               if (rd.held) {
@@ -2398,17 +2908,153 @@
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
-              sierraStanding(coin);
+              /* A coin the feed misses shows HELD in plain words —
+                 never its old army line dressed as live. The next
+                 five-second pass tries the lane again. */
+              sierraHeld(coin, 'Live read did not land this pass · re-checking every 5 seconds · no figure stands in its place');
             });
           });
           Promise.all(jobs).then(function () {
             sierraBusy = false;
+            if (anyLive) sierraLastLiveAt = Date.now();
+            sierraPassDone = true;
             setStampState('sierra', anyLive
               ? 'SIERRA · THE THREE MINUTE · LIVE — LIVE MARKET FEED'
               : 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE');
-          }, function () { sierraBusy = false; });
+          }, function () { sierraBusy = false; sierraPassDone = true; });
         }
         refreshSierra();
+        /* Her own fast re-check — the delivery fix the Warlord locked
+           on the Day Brief: one shared pass feeds every coin (the feed
+           layer's cache coalesces the sisters), and it lands well
+           inside her window's ten-second HELD line, so her line flips
+           with the candle instead of sitting held. */
+        setInterval(refreshSierra, 5000);
+
+        /* ---------- THE HELD STANDARD — Sierra's freshness banner ----------
+           The locked board's rule, carried onto this copy: freshness is
+           judged off her last LIVE pass's own landing time, re-judged
+           every second. Within ten seconds of that stamp her window
+           renders live, exactly as it always has. Past ten seconds the
+           window goes HELD: her last lines stay standing but muted
+           under amber, and the banner names the last read's NYC time
+           and the data's age — "HELD — last read 12:50 AM ET · 1m 05s
+           old". If no read has ever landed, the held state says so
+           plainly. A fresh pass landing clears HELD on its own. */
+        function sierraAgeText(ms) {
+          var s = Math.max(0, Math.floor(ms / 1000));
+          if (s < 60) return s + 's old';
+          return Math.floor(s / 60) + 'm ' + String(s % 60).padStart(2, '0') + 's old';
+        }
+        setInterval(function () {
+          var banner = document.querySelector('[data-sierra-banner]');
+          var grid = document.querySelector('.coin-grid.army-grid');
+          if (!banner || !grid) return;
+          /* Per-coin sweep, same tick: any coin whose own last live
+             landing is three cadences old (15s against her 5s pass) —
+             or that has never landed since the first pass completed —
+             goes HELD in plain words, even if a wedged pass never
+             fired its catch. A fresh landing repaints it live. */
+          if (sierraPassDone) {
+            SIX_COINS.forEach(function (coin) {
+              var at = sierraCoinLiveAt[coin] || 0;
+              if (Date.now() - at <= 15000) return;
+              var win = sierraWinEl(coin); if (!win) return;
+              var big = win.querySelector('.cw-big');
+              if (big && big.textContent !== 'HELD') {
+                sierraHeld(coin, 'Live read has not landed · re-checking every 5 seconds · no figure stands in its place');
+              }
+            });
+          }
+          var age = sierraLastLiveAt ? Date.now() - sierraLastLiveAt : Infinity;
+          if (!sierraPassDone || age <= 10000) {
+            banner.hidden = true;
+            grid.classList.remove('held');
+            return;
+          }
+          banner.hidden = false;
+          banner.textContent = sierraLastLiveAt
+            ? 'HELD — last read ' + shortFmt.format(new Date(sierraLastLiveAt)) + ' ET · ' + sierraAgeText(age)
+            : 'HELD — no read has landed yet';
+          grid.classList.add('held');
+        }, 1000);
+
+        /* ---------- Sable LIVE — the six hour spread, on an engine ----------
+           The gap this closes: every other reader office on this floor
+           had a live engine, and Sable never did — her six windows only
+           ever carried the standing tape's words, never a figure. Now
+           she reads the way the locked board reads her: per coin, off
+           the same shared feed layer (the Binance public feed first —
+           data-api.binance.vision, the master's door — Coinbase,
+           Kraken, MEXC behind it — one request per
+           coin + frame per pass, shared with Juno's 6H candles), the
+           SPREAD = live price − the forming 6H Heikin-Ashi candle's own
+           price, painted as the figure with its band word on its side,
+           both in the spread's own colour — green up, red down — off
+           the locked per-coin scales (sierraBand). A coin the feed
+           misses reads HELD in its window until a live figure has
+           landed in it; after that, a missed pass leaves the last
+           figure standing and her stamp carries the held pass. */
+        var sableBusy = false;
+        var sablePainted = {};
+        function sableWinEl(coin) {
+          return document.querySelector('.coin-win[data-office="sable"][data-coin="' + coin + '"]');
+        }
+        function sableFetch(coin) {
+          return Promise.all([getTickerPrice(coin), getKlines(coin, '6h')]).then(function (res) {
+            var live = res[0], k = res[1];
+            if (!isFinite(live) || !k || k.raw.length < 10) throw new Error('shape');
+            /* Her engine closes the forming candle out by the live
+               price and mutates it — she gets her own copy of the
+               shared candles, never the cache's. */
+            var raw = k.raw.map(function (c) { return { time: c.time, open: c.open, high: c.high, low: c.low, close: c.close }; });
+            var last = raw[raw.length - 1];
+            last.high = Math.max(last.high, live); last.low = Math.min(last.low, live); last.close = live;
+            var ha = sierraHA(raw);
+            var f = ha[ha.length - 1];
+            var spread = live - f.close;
+            return { live: live, spread: spread, band: sierraBand(coin, spread), src: k.src };
+          });
+        }
+        function refreshSable() {
+          if (sableBusy) return;
+          if (!document.querySelector('.coin-win[data-office="sable"]')) return;
+          sableBusy = true;
+          var anyLive = false;
+          var jobs = SIX_COINS.map(function (coin) {
+            return sableFetch(coin).then(function (rd) {
+              anyLive = true;
+              sablePainted[coin] = true;
+              var win = sableWinEl(coin); if (!win) return;
+              var big = win.querySelector('.cw-big'), band = win.querySelector('.cw-band');
+              big.textContent = sierraSpreadText(coin, rd.spread);
+              big.classList.remove('held');
+              big.classList.toggle('up', rd.spread > 0);
+              big.classList.toggle('down', rd.spread < 0);
+              band.textContent = rd.band;
+              band.classList.toggle('up', rd.spread > 0);
+              band.classList.toggle('down', rd.spread < 0);
+              win.classList.add('flash');
+              setTimeout(function () { win.classList.remove('flash'); }, 700);
+            }).catch(function () {
+              if (sablePainted[coin]) return;
+              var win = sableWinEl(coin); if (!win) return;
+              var big = win.querySelector('.cw-big'), band = win.querySelector('.cw-band');
+              big.textContent = 'HELD';
+              big.classList.add('held');
+              big.classList.remove('up', 'down');
+              band.textContent = '';
+            });
+          });
+          Promise.all(jobs).then(function () {
+            sableBusy = false;
+            setStampState('sable', anyLive
+              ? 'SABLE · THE SIX HOUR SPREAD · LIVE — LIVE MARKET FEED'
+              : 'SABLE · THE SIX HOUR SPREAD · HELD — THE LIVE FEED DID NOT ANSWER THIS PASS');
+          }, function () { sableBusy = false; });
+        }
+        refreshSable();
+        setInterval(refreshSable, 5000);
 
         /* ---------- Reader offices LIVE — every frame off the Binance feed ----------
            Mina's one minute and the six frame readers (Hera 1H · Cora 4H ·
@@ -2424,7 +3070,13 @@
              · THE PUSH, by their stated doctrine: the forming candle
                pushing PAST the previous candle (a higher high on a green
                candle / a lower low on a red one) is PUSHING; a candle
-               that does not go past is SLOWING.
+               that does not go past is SLOWING. The slowing SIGNS stand
+               beside the push as their own fact, on Sierra's definitions
+               (both latest candles littler + price pulling back): a
+               pushing army carrying them reads PUSHING — showing signs
+               of slowing, a slowing candle carrying them reads pushing
+               but showing signs of slowing, and a slowing candle without
+               them reads plain slowing.
              · THE SPREAD = live price − the forming candle's own price
                (its HA close), with its band word off the same locked
                per-coin scales Sierra reads by (sierraBand above).
@@ -2451,7 +3103,21 @@
           if (!prev || f.close === f.open) return { held: true, live: live, spread: spread };
           var wantGreen = f.close > f.open;
           var progressing = wantGreen ? f.high > prev.high : f.low < prev.low;
-          return { held: false, pushing: progressing, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
+          /* The slowing SIGNS, on the same definitions Sierra reads the
+             three-minute by — these offices stand under her doctrine:
+             both of the latest candles littler than the ones before them
+             AND price pulling back against the run. The push and the
+             signs are two separate facts, and the window says both when
+             both stand: a pushing army carrying the signs reads PUSHING
+             — showing signs of slowing, never plain pushing; a candle
+             past no fresh ground carrying them reads pushing but showing
+             signs of slowing; one without them reads plain slowing,
+             never dressed in signs it does not carry. */
+          var bodies = ha.map(function (c) { return Math.abs(c.close - c.open); });
+          var nb = bodies.length;
+          var bothLittler = nb >= 3 && bodies[nb - 1] < bodies[nb - 2] && bodies[nb - 2] < bodies[nb - 3];
+          var pullingBack = raw.length >= 2 && (wantGreen ? live < raw[raw.length - 2].close : live > raw[raw.length - 2].close);
+          return { held: false, pushing: progressing, signs: bothLittler && pullingBack, dir: wantGreen ? 'up' : 'down', live: live, spread: spread, band: sierraBand(coin, spread) };
         }
         function liveFetchWithFallback(coin, interval) {
           return getKlines(coin, interval).then(function (k) {
@@ -2501,15 +3167,24 @@
               }
               var armyWord = rd.dir === 'up' ? 'Green' : 'Red';
               big.textContent = rd.pushing
-                ? 'PUSHING — ' + armyWord + ' army pushing'
-                : 'SLOWING — ' + armyWord + ' army pushing but showing signs of slowing';
+                ? (rd.signs
+                  ? 'PUSHING — ' + armyWord + ' Army pushing — showing signs of slowing'
+                  : 'PUSHING — ' + armyWord + ' army pushing')
+                : (rd.signs
+                  ? 'SLOWING — ' + armyWord + ' army pushing but showing signs of slowing'
+                  : 'SLOWING — ' + armyWord + ' army slowing');
               big.classList.toggle('up', rd.dir === 'up');
               big.classList.toggle('down', rd.dir === 'down');
               sub.textContent = 'Live ' + sierraPriceText(rd.live) + ' · Spread ' + sierraSpreadText(coin, rd.spread) + ' — ' + rd.band + ' · live price versus the forming ' + fr.candle + ' candle · ' + (rd.src || 'live market feed');
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
-              liveStanding(fr, coin);
+              /* Lane fix (Nov 17), the same check as Sierra's: a coin
+                 whose fresh read cannot land shows HELD in plain words
+                 — never the standing tape's army line dressed as live
+                 (its standing label rode the sub-line, which no longer
+                 renders on reader windows). */
+              liveHeld(fr.office, coin, 'Live read did not land this pass · re-checking on the board cycle · no figure stands in its place');
             });
           });
           Promise.all(jobs).then(function () {
@@ -2521,6 +3196,131 @@
         }
         function refreshLiveFrames() { LIVE_FRAMES.forEach(refreshLiveFrame); }
         refreshLiveFrames();
+
+        /* ---------- Terra & Vega LIVE — the temp levels, at last on an engine ----------
+           The fault this fixes, named plain: every other reader office on
+           this floor got a live engine — Sierra, Mina, the six frame
+           readers, Tessa — and Terra and Vega never did. Their windows
+           stood on the house tape alone: no live figure ever landed in
+           them, no actual standing low or high ever stood in a window
+           (for SOL, BCH and BNB the tape carries no temp figure at all),
+           all five frames shared one selector per coin so no code could
+           address, verify or restore a single frame's window, and the
+           board's only restore guard watched Sable's windows, not
+           theirs. On the Warlord's tablet the rooms read as gone —
+           again — while the hour readers beside them, engines and all,
+           stood working.
+           Now both watchers run the same kind of engine as the readers,
+           off the same shared feed layer (one request per coin + frame
+           per pass, cache-shared with the frame readers and Tessa, who
+           ask for these very candles — no new flood on the wire), with
+           the layer's sources standing behind each other: the Binance
+           public feed (data-api.binance.vision, the master's door),
+           Coinbase, Kraken, then MEXC — when
+           one drops, the next picks it up, and Wren's stamp names the
+           source that answered. Per window, per frame, per coin:
+             · TERRA paints the forming candle's standing LOW as the
+               window's figure, with the live price and how far price
+               sits above that low.
+             · VEGA paints the forming candle's standing HIGH, with the
+               live price and how far price sits under that high.
+           A frame or coin the feed misses leaves that window on its
+           standing house-tape read — the Sable way, labeled standing on
+           her stamp — and the next cycle tries again. Her windows are
+           counted on load and on every board cycle: if either office
+           stands short of her thirty, the floor re-renders and her
+           engine re-runs, so a lost window set re-stands itself instead
+           of staying gone. The locked light law and the dual bell stand
+           untouched — the bell's hit watch in updateReads still runs on
+           every temp window; it simply no longer overwrites a live
+           figure the engine has painted. */
+        var TEMP_FRAMES = [
+          { label: 'MONTH', interval: '1M' },
+          { label: 'WEEK', interval: '1w' },
+          { label: 'DAY', interval: '1d' },
+          { label: '4H', interval: '4h' },
+          { label: '6H', interval: '6h' }
+        ];
+        var tempBusy = false;
+        var tempLevelKeys = {};
+        function tempWinEl(office, frame, coin) {
+          return document.querySelector('.coin-win[data-office="' + office + '"][data-frame="' + frame + '"][data-coin="' + coin + '"]');
+        }
+        function tempWindowsMissing() {
+          return document.querySelectorAll('.coin-win[data-office="temp-bottom"]').length < 30 ||
+            document.querySelectorAll('.coin-win[data-office="temp-top"]').length < 30;
+        }
+        function paintTemp(office, frameLabel, coin, level, live, dirUp, src, bottom) {
+          var win = tempWinEl(office, frameLabel, coin);
+          if (!win) return false;
+          var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
+          if (!big || !sub) return false;
+          var key = office + '|' + frameLabel + '|' + coin;
+          var changed = tempLevelKeys[key] !== level;
+          tempLevelKeys[key] = level;
+          big.textContent = (bottom ? 'Standing low ' : 'Standing high ') + sierraPriceText(level);
+          big.classList.toggle('up', dirUp);
+          big.classList.toggle('down', !dirUp);
+          var dist = bottom ? live - level : level - live;
+          sub.textContent = 'Live ' + sierraPriceText(live) + ' · price ' + sierraPriceText(Math.abs(dist)) +
+            (bottom ? ' above' : ' under') + ' this ' + (bottom ? 'low' : 'high') +
+            ' · the forming ' + frameLabel + ' candle · ' + src;
+          win.setAttribute('data-temp-live', '1');
+          if (changed) { win.classList.add('flash'); setTimeout(function () { win.classList.remove('flash'); }, 700); }
+          return true;
+        }
+        function refreshTemps() {
+          if (tempBusy) return;
+          if (tempWindowsMissing()) {
+            /* Her windows are gone — re-stand the floor, then read live.
+               If they still do not stand, this pass ends and the next
+               cycle's guard tries again; nothing is dressed as live. */
+            renderFloor();
+            kickMotion();
+            if (tempWindowsMissing()) return;
+          }
+          tempBusy = true;
+          var liveB = false, liveT = false, srcB = '', srcT = '';
+          var jobs = [];
+          TEMP_FRAMES.forEach(function (fr) {
+            SIX_COINS.forEach(function (coin) {
+              jobs.push(getKlines(coin, fr.interval).then(function (k) {
+                if (!k || !k.raw || !k.raw.length) throw new Error('shape');
+                var f = k.raw[k.raw.length - 1];
+                var live = f.close;
+                if (!isFinite(live) || !isFinite(f.low) || !isFinite(f.high)) throw new Error('shape');
+                var dirUp = f.close >= f.open;
+                if (paintTemp('temp-bottom', fr.label, coin, f.low, live, dirUp, k.src, true)) { liveB = true; srcB = k.src; }
+                if (paintTemp('temp-top', fr.label, coin, f.high, live, dirUp, k.src, false)) { liveT = true; srcT = k.src; }
+              }).catch(function () {
+                /* The feed missed this coin + frame: clear the live mark
+                   so the board's tape rotation repaints the standing
+                   read on the next cycle — no stale live figure ever
+                   stands in a temp window. */
+                ['temp-bottom', 'temp-top'].forEach(function (off) {
+                  var w = tempWinEl(off, fr.label, coin);
+                  if (w) w.removeAttribute('data-temp-live');
+                });
+              }));
+            });
+          });
+          Promise.all(jobs).then(function () {
+            tempBusy = false;
+            setStampState('temp-bottom', liveB
+              ? 'TERRA · TEMP BOTTOMS · LIVE — ' + srcB.toUpperCase()
+              : 'TERRA · TEMP BOTTOMS · STANDING — HOUSE TAPE');
+            setStampState('temp-top', liveT
+              ? 'VEGA · TEMP TOPS · LIVE — ' + srcT.toUpperCase()
+              : 'VEGA · TEMP TOPS · STANDING — HOUSE TAPE');
+          }, function () { tempBusy = false; });
+        }
+        refreshTemps();
+        /* Load guard, the Sable pattern extended to the watchers: after
+           any refresh, if either temp office stands short of her thirty
+           windows, the floor re-renders and her engine re-runs. */
+        window.addEventListener('load', function () {
+          if (tempWindowsMissing()) { renderFloor(); kickMotion(); refreshTemps(); }
+        });
 
         /* ---------- Tessa LIVE — trade alerts, with her alarm ----------
            The fault this fixes: her office stood as a still description of
@@ -2808,12 +3608,15 @@
               priceEl.classList.add('held');
               if (srcEl) srcEl.textContent = 'Live read held — the live market feed did not answer this check · re-checking every 20 seconds. No figure stands in its place.';
             }
-            if (!rd.held && !rd.contradiction && rd.call.indexOf('slowing') === -1) {
+            if (!rd.held && !rd.contradiction && rd.signs && rd.pushing) {
+              dirSet('owner', rd.dir === 'up' ? 'push-up' : 'push-down',
+                'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN' : 'RED') + ' ARMY PUSHING — SHOWING SIGNS OF SLOWING');
+            } else if (!rd.held && !rd.contradiction && rd.call.indexOf('slowing') === -1) {
               dirSet('owner', rd.dir === 'up' ? 'push-up' : 'push-down',
                 'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN ARMY PUSHING' : 'RED ARMY PUSHING'));
             } else if (!rd.held && !rd.contradiction) {
               dirSet('owner', rd.dir === 'up' ? 'hold-up' : 'hold-down',
-                'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN' : 'RED') + ' ARMY HOLDS DIRECTION — SLOWING');
+                'LTC DIRECTION · ' + (rd.dir === 'up' ? 'GREEN' : 'RED') + ' ARMY HOLDS DIRECTION — SHOWING SIGNS OF SLOWING');
             } else {
               dirSet('owner', '', 'LTC DIRECTION · NO CLEAR DIRECTION');
             }
@@ -3015,6 +3818,11 @@
               var sig = call.push + '|' + call.dir;
               if (tempHitBase && tempHitKeys[hk] !== undefined && tempHitKeys[hk] !== sig) freshTempHit = true;
               tempHitKeys[hk] = sig;
+              /* A window the live temp engine has painted keeps its live
+                 figure — the tape rotation must not overwrite the
+                 standing low/high it carries. The hit watch above has
+                 already run for this window, so the bell law is whole. */
+              if (win.getAttribute('data-temp-live') === '1') return;
             }
             if (office === 'temp-bottom') big.textContent = 'Standing low — ' + call.push.toLowerCase();
             else if (office === 'temp-top') big.textContent = 'Standing high — ' + call.push.toLowerCase();
@@ -3027,6 +3835,25 @@
           if (!tempHitBase) tempHitBase = true;
           else if (freshTempHit) tempBellRing();
         }
+
+        /* ---------- Kick player: deferred until the board stands ----------
+           The board paints and runs first; only then does the stream
+           player's src get set, so a slow or blocked player can never
+           blank the page around it. If it still has not arrived a few
+           seconds later, the standing note in its frame says where to
+           watch instead. */
+        function armKickPlayer() {
+          var kp = document.getElementById('kick-player');
+          if (!kp || kp.getAttribute('src')) return;
+          kp.addEventListener('load', function () {
+            var wait = document.getElementById('kick-player-wait');
+            if (wait && wait.parentNode) wait.parentNode.removeChild(wait);
+          });
+          kp.setAttribute('src', kp.getAttribute('data-src'));
+        }
+        if (document.readyState === 'complete') setTimeout(armKickPlayer, 1200);
+        else window.addEventListener('load', function () { setTimeout(armKickPlayer, 1200); });
+        setTimeout(armKickPlayer, 5000); /* fallback if load already fired */
 
         /* ---------- Board sits still: no auto-scroll, no auto-rotate ----------
            The page stays exactly where the viewer leaves it. Scrolling and
