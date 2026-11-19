@@ -1031,11 +1031,11 @@
                         </button>
                         <button type="button" class="od-wide" data-open-desk="terra" aria-label="Go straight to Terra — Temp Bottom Watcher, all thirty of her windows">
                           <span class="od-nm">🌡 TERRA — TEMP BOTTOMS <span class="arr" aria-hidden="true">›</span></span>
-                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing low</span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 6H · 4H), each carrying its forming candle's standing low</span>
                         </button>
                         <button type="button" class="od-wide" data-open-desk="vega" aria-label="Go straight to Vega — Temp Top Watcher, all thirty of her windows">
                           <span class="od-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
-                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing high</span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 6H · 4H), each carrying its forming candle's standing high</span>
                         </button>
                         <button type="button" data-open-screen="treasury" aria-label="Open the Treasury office — the three money pots, kept separate">
                           <span class="od-nm">💰 TREASURY <span class="arr" aria-hidden="true">›</span></span>
@@ -1169,11 +1169,11 @@
                     <div class="temp-jump" aria-label="Jump straight to the temp watchers">
                       <button type="button" data-open-desk="terra" aria-label="Jump straight to Terra — Temp Bottom Watcher">
                         <span class="tj-nm">🌡 TERRA — TEMP BOTTOMS <span class="arr" aria-hidden="true">›</span></span>
-                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 6H · 4H</span>
                       </button>
                       <button type="button" data-open-desk="vega" aria-label="Jump straight to Vega — Temp Top Watcher">
                         <span class="tj-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
-                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                        <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 6H · 4H</span>
                       </button>
                     </div>
                     <!-- The Owner's office — the head of the floor. The Warlord
@@ -1348,7 +1348,7 @@
                       <b>The reader offices stand sideways in Market Intel:</b> Sable reads the six-hour spread and
                       Sierra reads the three-minute in their turned offices, and Terra and Vega stand directly
                       under Sierra — Terra watches the temp bottoms and Vega the temp tops, each on five frames —
-                      MONTH · WEEK · DAY · 4H · 6H. Mina's ONE MINUTE office stands under them — all six coins,
+                      MONTH · WEEK · DAY · 6H · 4H. Mina's ONE MINUTE office stands under them — all six coins,
                       her name MINA on the plate, her avatar seated at her desk.
                       <b>Under Mina, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
                       Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH —
@@ -1714,8 +1714,8 @@
           DIA: 'READING THE ONE DAY · ALL SIX COINS',
           SELA: 'READING THE ONE WEEK · ALL SIX COINS',
           MONA: 'READING THE MONTH · ALL SIX COINS',
-          TERRA: 'TEMP BOTTOMS · MONTH · WEEK · DAY · 4H · 6H',
-          VEGA: 'TEMP TOPS · MONTH · WEEK · DAY · 4H · 6H',
+          TERRA: 'TEMP BOTTOMS · MONTH · WEEK · DAY · 6H · 4H',
+          VEGA: 'TEMP TOPS · MONTH · WEEK · DAY · 6H · 4H',
           VESPER: 'INTEL FEED · @TheWarCove · ON POST',
           FELICITY: 'BOOKS · henrywiko 107,574 SATS · TOP',
           ECHO: 'RELAY · BOARD → PAGES · ON RULE',
@@ -1864,7 +1864,7 @@
           if (w.office === 'temp-bottom' || w.office === 'temp-top') {
             var bottom = w.office === 'temp-bottom';
             var off = bottom ? 'temp-bottom' : 'temp-top';
-            var frames = [['MONTH', 'the strongest on the ladder'], ['WEEK', 'a little weaker'], ['DAY', 'a little weaker'], ['4H', 'a little weaker'], ['6H', 'the weakest on the ladder']];
+            var frames = [['MONTH', 'the strongest on the ladder'], ['WEEK', 'a little weaker'], ['DAY', 'a little weaker'], ['6H', 'a little weaker'], ['4H', 'the weakest on the ladder']];
             var thtml = '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS — EVERY WINDOW IN PLACE</p>';
             frames.forEach(function (fr) {
               thtml += '<p class="room-plate">' + fr[0] + ' — TEMP ' + (bottom ? 'BOTTOM' : 'TOP') + ' · ' + fr[1].toUpperCase() + '</p>' +
@@ -1958,8 +1958,8 @@
           PORTIA: 'Record — the gate held: recipe v81 and the Discord room fix both tested on the record before they shipped.',
           VEDA: 'Record — the gym graded the floor\u2019s reads against the whole Proof Page, read fresh.',
           PRUDENCE: 'Record — the Proof Page audited live as it updates: totals, hit log, descriptions, band words.',
-          TERRA: 'Record — temp bottoms watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 4H \u00b7 6H, month strongest.',
-          VEGA: 'Record — temp tops watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 4H \u00b7 6H, month strongest.',
+          TERRA: 'Record — temp bottoms watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H \u00b7 4H, month strongest.',
+          VEGA: 'Record — temp tops watched on five frames: MONTH \u00b7 WEEK \u00b7 DAY \u00b7 6H \u00b7 4H, month strongest.',
           MINA: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts.'
         };
         function deskHTML(w) {
@@ -3238,8 +3238,8 @@
           { label: 'MONTH', interval: '1M' },
           { label: 'WEEK', interval: '1w' },
           { label: 'DAY', interval: '1d' },
-          { label: '4H', interval: '4h' },
-          { label: '6H', interval: '6h' }
+          { label: '6H', interval: '6h' },
+          { label: '4H', interval: '4h' }
         ];
         var tempBusy = false;
         var tempLevelKeys = {};
@@ -3861,18 +3861,5 @@
            In-place data refresh (clock + 20s re-check) is unchanged. */
       })();
     </script>
-  <!-- WC-LINK-COUNTER key=day-brief-warlord fp=wcfp-6121f428bb -->
-<script>
-(function(){try{
-var KEY="day-brief-warlord",FP="wcfp-6121f428bb",DOC="https://longshotwolf.github.io/war-cove-newsroom-preview/simli-endpoint.json";
-var id=null;try{id=window.sessionStorage.getItem("wc-link-id");if(!id){id="w"+Math.random().toString(36).slice(2)+Date.now().toString(36);window.sessionStorage.setItem("wc-link-id",id);}}catch(e){id="w"+Math.random().toString(36).slice(2)+Date.now().toString(36);}
-var ep=null,viewed=false,fails=0;
-function send(path){if(!ep)return;try{fetch(ep+path+"?page="+encodeURIComponent(KEY)+"&fp="+encodeURIComponent(FP)+"&id="+encodeURIComponent(id),{mode:"cors",cache:"no-store",keepalive:true}).then(function(r){if(!r.ok)throw 0;fails=0;if(path==="/view")viewed=true;}).catch(function(){fails++;if(fails>=2){ep=null;discover();}});}catch(e){}}
-function discover(){try{fetch(DOC+"?cb="+Date.now(),{mode:"cors",cache:"no-store"}).then(function(r){return r.json();}).then(function(j){if(j&&j.counter){ep=j.counter;if(!viewed)send("/view");}}).catch(function(){});}catch(e){}}
-discover();
-setInterval(function(){if(ep){if(!viewed)send("/view");else send("/beat");}else discover();},20000);
-}catch(e){}})();
-</script>
-<!-- /WC-LINK-COUNTER -->
-</body>
+  </body>
 </html>
