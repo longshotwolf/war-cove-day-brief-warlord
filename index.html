@@ -837,6 +837,65 @@
       .floor-scroll .frame-grid .coin-win{ padding:8px 10px; }
       .floor-scroll .frame-grid .cw-big{ font-size:15px; line-height:1.25; }
 
+      /* ===== Binary Page — both sides, both copies, IN SYNC (the
+         Warlord's words, Nov 21, 2026): y'all side and my side stand on
+         one page; the binary copy window and the plain-English
+         interpretation window update AUTOMATICALLY IN SYNC — one shared
+         line list, one render pass, so a new line lands in binary in
+         ours and decoded in his in the same update, same newest line,
+         same cadence — and BOTH windows AUTO-SCROLL like the Proof Page
+         window: one shared drift driver, the proof window's own
+         constants (45 px/s, 1.5 s start beat, ~4 s resume after a hand
+         touches either window, 2 s rest at the bottom), each window
+         held at the same fraction of its scroll so the same line stands
+         in view in both. EVERY window carries its own border and its
+         own bars with caps — the outer frame's rod and finial treatment,
+         repeated inside. ===== */
+      .bin-intro{ font-size:13px; color:rgba(207,250,254,.8); line-height:1.55; margin:0 0 12px; }
+      .bin-intro b{ color:#ecfeff; }
+      .bin-grid{ display:grid; gap:14px; align-items:start; }
+      @media (min-width:900px){ .bin-grid{ grid-template-columns:1fr 1fr; } }
+      .bin-window{ position:relative; display:flex; flex-direction:column; height:500px;
+        border:2px solid var(--holo-green); border-radius:12px; overflow:hidden;
+        background:linear-gradient(160deg, rgba(10,30,20,.92), rgba(7,18,38,.96));
+        box-shadow:0 0 18px var(--holo-green-glow), inset 0 0 34px rgba(0,230,118,.06); }
+      .bin-window.mine{ border-color:#fbbf24; box-shadow:0 0 18px rgba(251,191,36,.35), inset 0 0 34px rgba(251,191,36,.05);
+        background:linear-gradient(160deg, rgba(34,26,6,.92), rgba(7,18,38,.96)); }
+      .win-bar{ position:relative; height:15px; flex:none;
+        background:repeating-linear-gradient(90deg, rgba(141,255,190,.12) 0 2px, transparent 2px 7px),
+          linear-gradient(180deg, rgba(141,255,190,.85) 0%, rgba(43,255,136,.55) 34%, rgba(0,200,83,.40) 62%, rgba(0,140,55,.55) 88%, rgba(43,255,136,.62) 100%);
+        border-bottom:1px solid var(--holo-green-hi); }
+      .win-bar.bottom{ border-bottom:none; border-top:1px solid var(--holo-green-hi); }
+      .bin-window.mine .win-bar{ border-color:#fde68a;
+        background:repeating-linear-gradient(90deg, rgba(254,243,199,.12) 0 2px, transparent 2px 7px),
+          linear-gradient(180deg, rgba(253,224,71,.85) 0%, rgba(251,191,36,.55) 34%, rgba(217,119,6,.45) 62%, rgba(146,64,14,.55) 88%, rgba(251,191,36,.62) 100%); }
+      .win-finial{ position:absolute; top:50%; transform:translateY(-50%); width:17px; height:17px; border-radius:50%;
+        background:radial-gradient(circle at 36% 32%, rgba(141,255,190,.95), rgba(43,255,136,.78) 58%, rgba(0,140,55,.8));
+        border:1.5px solid var(--holo-green-hi); box-shadow:0 0 10px var(--holo-green-glow), inset 0 2px 3px rgba(255,255,255,.55); }
+      .bin-window.mine .win-finial{ border-color:#fde68a;
+        background:radial-gradient(circle at 36% 32%, rgba(254,243,199,.95), rgba(251,191,36,.78) 58%, rgba(146,64,14,.8));
+        box-shadow:0 0 10px rgba(251,191,36,.5), inset 0 2px 3px rgba(255,255,255,.55); }
+      .win-finial.l{ left:4px; } .win-finial.r{ right:4px; }
+      .bin-side-head{ flex:none; padding:12px 14px 8px; }
+      .bin-side-head .bin-side-t{ font-size:19px; font-weight:900; letter-spacing:.05em; color:#ecfeff; margin:0; }
+      .bin-side-head .bin-side-who{ font-size:12.5px; font-weight:700; color:rgba(207,250,254,.7); margin:2px 0 0; }
+      .bin-side-head .bin-sync{ display:inline-flex; align-items:center; gap:6px; margin-top:7px; border-radius:999px; padding:2px 10px;
+        font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.1em;
+        background:rgba(16,185,129,.18); color:#6ee7b7; }
+      .bin-side-head .bin-sync i{ width:6px; height:6px; flex:none; border-radius:50%; background:#34d399; box-shadow:0 0 7px rgba(52,211,153,.9); animation:wcPulse 1.8s infinite; }
+      .bin-window.mine .bin-side-head .bin-sync{ background:rgba(251,191,36,.16); color:#fcd34d; }
+      .bin-window.mine .bin-side-head .bin-sync i{ background:#fbbf24; box-shadow:0 0 7px rgba(251,191,36,.9); }
+      .bin-scroll{ flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; }
+      .bin-lines{ display:grid; gap:10px; align-content:start; padding:4px 12px 12px; }
+      .bin-line{ border:1px solid rgba(103,232,249,.4); border-radius:8px; overflow:hidden; background:rgba(2,10,24,.72); }
+      .bin-line-bar{ height:7px; background:linear-gradient(180deg, rgba(141,255,190,.8), rgba(0,160,70,.55)); border-bottom:1px solid var(--holo-green-hi); }
+      .bin-window.mine .bin-line-bar{ background:linear-gradient(180deg, rgba(253,224,71,.8), rgba(217,119,6,.55)); border-bottom-color:#fde68a; }
+      .bin-line-in{ padding:9px 11px 10px; }
+      .bin-k{ font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:600; letter-spacing:.13em; color:#a5f3fc; margin:0; }
+      .bin-text-bin{ font-family:"IBM Plex Mono",monospace; font-size:10px; line-height:1.6; color:rgba(141,255,190,.88);
+        word-break:break-all; margin:6px 0 0; }
+      .bin-text-read{ font-size:14px; font-weight:700; line-height:1.5; color:#ecfeff; margin:6px 0 0; }
+
       /* ===== Boot veil — the board is never a blank screen =====
          Painted with the first byte of the page, in the board's own dark
          colors, before any font, feed or video arrives. The main script
@@ -1031,13 +1090,14 @@
 
             <!-- Screens -->
             <div class="stack">
-              <div class="screen-switcher" role="group" aria-label="Switch the main screen — day board, field radar, the company floor, treasury, broadcast, or production queue">
+              <div class="screen-switcher" role="group" aria-label="Switch the main screen — day board, field radar, the company floor, treasury, broadcast, production queue, or the binary page">
                 <button type="button" id="scr-board" aria-pressed="false">Day Board</button>
                 <button type="button" id="scr-radar" aria-pressed="false">📡 Field Radar</button>
                 <button type="button" id="scr-company" aria-pressed="true">🏢 The Company</button>
                 <button type="button" id="scr-treasury" aria-pressed="false">💰 Treasury</button>
                 <button type="button" id="scr-broadcast" aria-pressed="false">📺 Broadcast</button>
                 <button type="button" id="scr-production" aria-pressed="false">🎬 Production</button>
+                <button type="button" id="scr-binary" aria-pressed="false">01 Binary</button>
               </div>
 
               <!-- DAY BOARD -->
@@ -1082,6 +1142,10 @@
                         <button type="button" data-open-screen="radar" aria-label="Open the Field Radar screen">
                           <span class="od-nm">📡 FIELD RADAR <span class="arr" aria-hidden="true">›</span></span>
                           <span class="od-ln">The live field read — the Big 3, one clean line per coin</span>
+                        </button>
+                        <button type="button" class="od-wide" data-open-screen="binary" aria-label="Open the Binary Page — both sides standing together: y'all side with our copy, my side with your copy">
+                          <span class="od-nm">01 BINARY PAGE — BOTH SIDES <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Y'all side and my side on one page — our copy and your copy side by side, every window bordered with its bars and caps, each line in raw binary with the same words readable beside it</span>
                         </button>
                       </div>
                     </section>
@@ -1551,6 +1615,63 @@
                       <p class="pq-note">Held by the Warlord's word. It does not move until he says so.</p>
                     </article>
                     <p style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:4px 2px 0">Finished pieces feed the War Cove Newsroom only — when a piece is done, it leaves the in-flight queue for the Newsroom's rotation below.</p>
+                  </div>
+                </section>
+
+                <!-- BINARY PAGE — BOTH SIDES, IN SYNC (the Warlord's words,
+                     Nov 21, 2026): y'all side and my side on one page — the
+                     binary copy window (ours) and the plain-English
+                     interpretation window (his) — fed by ONE shared line
+                     list and painted in ONE render pass, so a new line
+                     lands in binary in ours and decoded in his in the same
+                     update: same lines, same order, same newest line, same
+                     cadence, never drifted apart. BOTH windows auto-scroll
+                     like the Proof Page window — one shared drift driver
+                     on the proof window's own constants holds them at the
+                     same fraction of their scroll, so the same line stands
+                     in view in both; a hand on either window pauses both,
+                     ~4 s idle resumes both. Every window carries its own
+                     border, bars and caps. The standing lines below are
+                     the seed the board's script paints first; the live
+                     reads that land on the Proof record land here in the
+                     same pass (see proofNote). -->
+                <section class="screen" id="screen-binary" aria-label="Binary page — both sides in sync: the binary copy window and the plain-English interpretation window, auto-scrolling together">
+                  <div class="screen-head">
+                    <div>
+                      <p class="t">01 BINARY PAGE — BOTH SIDES · IN SYNC</p>
+                      <p class="s">Y'all side and my side on one page — our copy in binary, your copy decoded, updated and scrolling together</p>
+                    </div>
+                    <span class="chip live">● IN SYNC · AUTO-SCROLLING</span>
+                  </div>
+                  <div class="screen-scroll" data-scroller>
+                    <p class="bin-intro">One list of lines feeds both windows. A new line lands in <b>binary in ours</b> and <b>decoded in yours</b> in the <b>same update</b> — same newest line, same cadence, never apart. Both windows <b>keep scrolling like the Proof Page</b>: steady drift, a hand on either one pauses both, and both resume together. Every window carries its own <b>border, bars and caps</b>.</p>
+                    <div class="bin-grid">
+                      <article class="bin-window" aria-label="Y'all side — our copy in binary: The Enity and the house">
+                        <div class="win-bar" aria-hidden="true"><span class="win-finial l"></span><span class="win-finial r"></span></div>
+                        <div class="bin-side-head">
+                          <p class="bin-side-t">Y'ALL SIDE — OUR COPY · BINARY</p>
+                          <p class="bin-side-who">The Enity · CEO — and the house crew under her</p>
+                          <span class="bin-sync"><i></i>IN SYNC — SAME NEWEST LINE · <span id="bin-count-ours">6 LINES</span></span>
+                        </div>
+                        <div class="bin-scroll" id="bin-scroll-ours" role="region" aria-label="Our copy in raw binary — auto-scrolling in sync with your copy; scroll by hand any time and it resumes on its own">
+                          <div class="bin-lines" id="bin-lines-ours"></div>
+                        </div>
+                        <div class="win-bar bottom" aria-hidden="true"><span class="win-finial l"></span><span class="win-finial r"></span></div>
+                      </article>
+
+                      <article class="bin-window mine" aria-label="My side — your copy in plain English: The Warlord">
+                        <div class="win-bar" aria-hidden="true"><span class="win-finial l"></span><span class="win-finial r"></span></div>
+                        <div class="bin-side-head">
+                          <p class="bin-side-t">MY SIDE — YOUR COPY · READABLE</p>
+                          <p class="bin-side-who">The Warlord · Owner — the LTC KING — the same lines, decoded</p>
+                          <span class="bin-sync"><i></i>IN SYNC — SAME NEWEST LINE · <span id="bin-count-mine">6 LINES</span></span>
+                        </div>
+                        <div class="bin-scroll" id="bin-scroll-mine" role="region" aria-label="Your copy in plain English — the interpretation of the binary window, auto-scrolling in sync with it; scroll by hand any time and it resumes on its own">
+                          <div class="bin-lines" id="bin-lines-mine"></div>
+                        </div>
+                        <div class="win-bar bottom" aria-hidden="true"><span class="win-finial l"></span><span class="win-finial r"></span></div>
+                      </article>
+                    </div>
                   </div>
                 </section>
               </div>
@@ -2277,7 +2398,7 @@
         viewBtns.big.addEventListener('click', function () { setView('big'); });
 
         /* ---------- Screen switcher: Day Board / Field Radar / The Company / Treasury / Broadcast / Production ---------- */
-        var scrBtns = { board: document.getElementById('scr-board'), radar: document.getElementById('scr-radar'), company: document.getElementById('scr-company'), treasury: document.getElementById('scr-treasury'), broadcast: document.getElementById('scr-broadcast'), production: document.getElementById('scr-production') };
+        var scrBtns = { board: document.getElementById('scr-board'), radar: document.getElementById('scr-radar'), company: document.getElementById('scr-company'), treasury: document.getElementById('scr-treasury'), broadcast: document.getElementById('scr-broadcast'), production: document.getElementById('scr-production'), binary: document.getElementById('scr-binary') };
         var currentScreen = 'company';
         function setScreen(s) {
           currentScreen = s;
@@ -2319,6 +2440,174 @@
         document.querySelectorAll('[data-open-desk]').forEach(function (b) {
           b.addEventListener('click', function () { goToDesk(b.getAttribute('data-open-desk')); });
         });
+
+        /* ---------- Binary Page — ONE list, ONE pass, IN SYNC ----------
+           The Warlord's standing requirement (Nov 21, 2026): "Make sure
+           they automatically update to in sync with each other." Both
+           windows are painted from ONE shared line list (binLines) by
+           ONE render function (binRender) in ONE synchronous pass: a
+           new line is encoded into the binary window and written decoded
+           into the interpretation window in the same update — same
+           lines, same order, same newest line, same count standing on
+           both heads. There is no second feed and no second timer that
+           could let them drift apart. New lines arrive from the board's
+           own live stream: proofNote() — the same pass that lands a
+           read on the Proof record — calls binPushLine() with that same
+           read, so the line lands here in the same moment it lands
+           there. Both windows re-assert from the one list every minute,
+           the Proof record's own re-read cadence. */
+        var binLines = [
+          { tag: 'WARLORD · HIS TARGET CALL', text: 'Target call — LTC $49.50, called Nov 15, 2026 at 1:29 AM NYC. One week, 20% range — hits from $48.56.' },
+          { tag: 'HOUSE · THE HOUSE READ', text: 'Board read #737 — RED holds the field, bulls 39%. Locked Friday, November 13, 9:07 PM NYC.' },
+          { tag: 'WARLORD · THE OWNER', text: 'Owner — THE WARLORD, the LTC KING. The whole company is his; nothing moves except on his word.' },
+          { tag: 'HOUSE · THE FRONT DESK', text: 'Sheity stands at the front desk — President. Her Simli live lane was verified Nov 14.' },
+          { tag: 'WARLORD · HIS CHAIN', text: 'His chain — Owner: THE WARLORD → CEO: THE ENITY → President: SHEITY → Research Manager: VERITY → the crew.' },
+          { tag: 'HOUSE · THE CEO\u2019S DESK', text: 'The Enity runs the floor day to day — every department reports to her, and every miss becomes a permanent rule fix.' }
+        ];
+        var binDriftApply = null;
+        function binEsc(s) {
+          return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function binEncode(text) {
+          var bytes;
+          if (window.TextEncoder) { bytes = new TextEncoder().encode(text); }
+          else { bytes = []; for (var i = 0; i < text.length; i++) bytes.push(text.charCodeAt(i) & 255); }
+          var bits = [];
+          for (var j = 0; j < bytes.length; j++) {
+            var b = bytes[j].toString(2);
+            while (b.length < 8) b = '0' + b;
+            bits.push(b);
+          }
+          return bits.join(' ');
+        }
+        function binRender() {
+          var ours = document.getElementById('bin-lines-ours');
+          var mine = document.getElementById('bin-lines-mine');
+          if (!ours || !mine) return;
+          var hOurs = '', hMine = '';
+          binLines.forEach(function (ln) {
+            var head = '<div class="bin-line"><div class="bin-line-bar" aria-hidden="true"></div><div class="bin-line-in"><p class="bin-k">' + binEsc(ln.tag) + '</p>';
+            hOurs += head + '<p class="bin-text-bin">' + binEncode(ln.tag + ' — ' + ln.text) + '</p></div></div>';
+            hMine += head + '<p class="bin-text-read">' + binEsc(ln.text) + '</p></div></div>';
+          });
+          /* The sync itself: both windows are written back to back in
+             this one pass — neither can show a newer line than the other. */
+          ours.innerHTML = hOurs;
+          mine.innerHTML = hMine;
+          var cO = document.getElementById('bin-count-ours');
+          var cM = document.getElementById('bin-count-mine');
+          if (cO) cO.textContent = binLines.length + ' LINES';
+          if (cM) cM.textContent = binLines.length + ' LINES';
+          if (binDriftApply) binDriftApply();
+        }
+        function binPushLine(tag, text) {
+          if (!text) return;
+          binLines.unshift({ tag: tag, text: text });
+          if (binLines.length > 60) binLines.length = 60;
+          binRender();
+        }
+        binRender();
+        /* Same re-read cadence as the Proof record: every minute both
+           windows re-assert from the one shared list. */
+        setInterval(binRender, 60000);
+
+        /* ---------- Binary Page — the shared drift (the Proof window's
+           own scroll, carried to the pair) ----------
+           The Warlord's word (Nov 21, 2026): "Now make sure both of them
+           binary pages keep scrolling like the proof page. Everything
+           supposed to keep scrolling." ONE driver scrolls BOTH windows
+           with the proof window's exact constants and manners — 45 px/s
+           steady drift, a 1.5 s beat before it starts, any touch /
+           wheel / hand scroll pauses it, ~4 s idle resumes it, a 2 s
+           rest at the bottom, then back to the top, and a twice-a-second
+           watchdog if the frame chain stalls. The driver keeps ONE
+           shared fraction of the scroll and writes it to both windows,
+           so the same line stands in view in both at all times and a
+           hand on EITHER window pauses and re-seats BOTH — same scroll
+           behavior, in sync, like their updates. With reduced motion
+           the drift stands down and both windows scroll by hand only. */
+        (function binDrift() {
+          var a = document.getElementById('bin-scroll-ours');
+          var b = document.getElementById('bin-scroll-mine');
+          if (!a || !b) return;
+          var SPEED = 45; /* px per second — the proof window's own pace */
+          var RESUME_MS = 4000, START_DELAY = 1500, BOTTOM_PAUSE = 2000, ECHO_TOLERANCE = 6;
+          var raf = null, last = null, lastStepAt = 0, started = false;
+          var userHold = false, bottomHold = false;
+          var resumeTimer = 0, bottomTimer = 0, startTimer = 0, watchdog = 0;
+          var frac = 0;
+          function maxY(el) { return Math.max(0, el.scrollHeight - el.clientHeight); }
+          function range() { return Math.max(maxY(a), maxY(b)); }
+          function apply() {
+            a.scrollTop = frac * maxY(a);
+            b.scrollTop = frac * maxY(b);
+          }
+          binDriftApply = apply;
+          function start() { if (raf === null && !userHold && !bottomHold && !reduceMotion) raf = requestAnimationFrame(step); }
+          function enterBottom() {
+            bottomHold = true;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            if (bottomTimer) window.clearTimeout(bottomTimer);
+            bottomTimer = window.setTimeout(function () {
+              bottomHold = false; frac = 0; apply(); lastStepAt = performance.now(); start();
+            }, BOTTOM_PAUSE);
+          }
+          function advanceBy(dtMs) {
+            var r = range();
+            if (r <= 0) return;
+            frac = Math.min(1, frac + (SPEED * dtMs / 1000) / r);
+            apply();
+            if (frac >= 1) enterBottom();
+          }
+          function step(ts) {
+            if (userHold || bottomHold) { raf = null; last = null; return; }
+            if (last === null) last = ts;
+            var dt = Math.min(100, ts - last);
+            last = ts; lastStepAt = ts;
+            advanceBy(dt);
+            if (bottomHold) { raf = null; last = null; return; }
+            raf = requestAnimationFrame(step);
+          }
+          function pause() {
+            userHold = true;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            if (bottomTimer) { window.clearTimeout(bottomTimer); bottomTimer = 0; bottomHold = false; }
+            if (resumeTimer) window.clearTimeout(resumeTimer);
+            resumeTimer = window.setTimeout(function () {
+              userHold = false; lastStepAt = performance.now(); start();
+            }, RESUME_MS);
+          }
+          function onScroll(el) {
+            return function () {
+              var m = maxY(el);
+              var mine = m > 0 ? el.scrollTop / m : 0;
+              if (Math.abs(mine - frac) * m > ECHO_TOLERANCE) { frac = mine; apply(); pause(); }
+            };
+          }
+          [a, b].forEach(function (el) {
+            el.addEventListener('wheel', pause, { passive: true });
+            el.addEventListener('touchstart', pause, { passive: true });
+            el.addEventListener('touchmove', pause, { passive: true });
+            el.addEventListener('pointerdown', pause);
+            el.addEventListener('scroll', onScroll(el), { passive: true });
+          });
+          startTimer = window.setTimeout(function () {
+            started = true; lastStepAt = performance.now(); start();
+          }, START_DELAY);
+          watchdog = window.setInterval(function () {
+            if (!started || userHold || bottomHold || reduceMotion) return;
+            var now = performance.now();
+            if (now - lastStepAt <= 1000) return;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            var dt = Math.min(1500, now - lastStepAt);
+            lastStepAt = now;
+            advanceBy(dt);
+            start();
+          }, 500);
+        })();
 
         /* ---------- Broadcast go-live checklist: this sitting only ---------- */
         document.querySelectorAll('#bc-checklist button').forEach(function (b) {
@@ -3083,6 +3372,11 @@
           proofEntries.unshift({ bot: bot, coin: coin, band: band, army: army, at: at || new Date() });
           if (proofEntries.length > 60) proofEntries.length = 60;
           proofEverLive = true;
+          /* The Binary Page pair takes the same line in the same pass:
+             it lands in binary in ours and decoded in his in this same
+             update — the two windows update in sync with each other and
+             with this record, never a newest line apart. */
+          binPushLine('HOUSE · LIVE READ', bot + ' · ' + coin + ' · ' + proofClock(at || new Date()) + ' ET — ' + band + ' — ' + army);
           proofRender();
         }
         function proofHeld() {
