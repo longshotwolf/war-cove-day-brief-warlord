@@ -1006,7 +1006,13 @@
          Tessa's windows carry no data-office: her live P1–P4 price line
          is a read, not an explainer, and keeps standing. */
       .coin-win[data-office] .cw-sub{ display:none !important; }
-    </style>
+    
+        /* ---------- THE CANDLE COUNTDOWN WINDOW (the Warlord's order, Nov 22, 2026 — carried onto this browser-link copy Nov 22, 2026): every candle office carries one small window beside its plate, counting down live to ITS OWN next candle on the tape's UTC grid — Mina 1M · Sierra 3M · Hera 1H · Sable + Juno 6H · Cora 4H · Dia DAY · Sela WEEK · Mona MONTH. The temp rooms and Liquidations read no single candle of their own and carry none. It is a clock, not a read: it claims nothing about the tape and never goes HELD. ---------- */
+        .cd-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(103,232,249,.35); background: rgba(0,0,0,.4); border-radius: 6px; padding: 6px 10px; margin: 8px 0 4px; }
+        .cd-chip .cd-ico { font-size: 13px; line-height: 1; }
+        .cd-chip .cd-lab { font-size: 9.5px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; color: rgba(165,243,252,.6); }
+        .cd-chip .cd-num { font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; color: #ecfeff; }
+      </style>
   </head>
   <body class="view-tablet">
     <!-- Boot veil: stands from the first paint until the board's script
@@ -2406,6 +2412,48 @@
             return coinWin(office, c, 'HELD', 'Live read held — waiting on the live market feed · no figure stands in its place', '');
           }).join('') + '</div>';
         }
+        /* ---------- THE CANDLE COUNTDOWN WINDOW (the Warlord's order, Nov 22, 2026): the next candle-open instant for a frame on the tape's UTC candle grid — minute frames on their minute marks, hour frames on their hour marks (4H and 6H divide the UTC day evenly), DAY at the next UTC midnight, WEEK at the next Monday UTC midnight, MONTH at the first of the next month UTC. The count: under an hour minutes:seconds, under a day hours:minutes:seconds, past a day days and hours. Re-ticked twice a second off the wall clock. ---------- */
+        function cdNextOpenMs(frame, nowMs) {
+          var d = new Date(nowMs);
+          if (frame === 'MONTH') return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+          if (frame === 'WEEK') {
+            var midnight = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+            var daysSinceMonday = (d.getUTCDay() + 6) % 7;
+            return midnight - daysSinceMonday * 86400000 + 7 * 86400000;
+          }
+          if (frame === 'DAY') return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) + 86400000;
+          var periodMin = frame === '1M' ? 1 : frame === '3M' ? 3 : frame === '1H' ? 60 : frame === '4H' ? 240 : 360;
+          var periodMs = periodMin * 60000;
+          return Math.floor(nowMs / periodMs) * periodMs + periodMs;
+        }
+        function cdFmt(msLeft) {
+          var totalSecs = Math.max(0, Math.floor(msLeft / 1000));
+          var days = Math.floor(totalSecs / 86400);
+          var hours = Math.floor((totalSecs % 86400) / 3600);
+          var mins = Math.floor((totalSecs % 3600) / 60);
+          var secs = totalSecs % 60;
+          var ss = String(secs).padStart(2, '0');
+          if (days > 0) return days + 'd ' + hours + 'h ' + String(mins).padStart(2, '0') + 'm';
+          if (hours > 0) return hours + ':' + String(mins).padStart(2, '0') + ':' + ss;
+          return mins + ':' + ss;
+        }
+        function cdChip(frame) {
+          return '<div class="cd-chip" data-cd-frame="' + frame + '"><span aria-hidden="true" class="cd-ico">\u23F3</span>' +
+            '<span class="cd-lab">Next ' + frame + ' candle</span>' +
+            '<span class="cd-num" data-cd-num>--:--</span>' +
+            '<span class="cd-lab">to go</span></div>';
+        }
+        function cdTick() {
+          var now = Date.now();
+          var nums = document.querySelectorAll('[data-cd-num]');
+          for (var i = 0; i < nums.length; i++) {
+            var chip = nums[i].parentNode;
+            var frame = chip && chip.getAttribute ? chip.getAttribute('data-cd-frame') : null;
+            if (frame) nums[i].textContent = cdFmt(Math.max(0, cdNextOpenMs(frame, now) - now));
+          }
+        }
+        setInterval(cdTick, 500);
+
         function officeScreen(w) {
           if (w.office === 'sable') {
             /* Her windows stand in the locked board's own shape: the
@@ -2415,7 +2463,7 @@
                colour. Before the first live pass lands they read …,
                and a pass the feed misses reads HELD — no figure is
                ever dressed as live that is not. */
-            return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' +
+            return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' + cdChip('6H') +
               '<div class="coin-grid spread-grid">' + SIX_COINS.map(function (c) {
                 var mark = c === 'LTC' ? '<span class="ltc-mark" aria-hidden="true">Ł</span>' : '';
                 return '<div class="coin-win spread-win" data-office="sable" data-coin="' + c + '"><div class="sw-main"><p class="cw-name">' + c + mark + '</p>' +
@@ -2423,18 +2471,18 @@
               }).join('') + '</div>' + readStamp('sable', 'SABLE · THE SIX HOUR SPREAD');
           }
           if (w.office === 'sierra') {
-            return '<p class="room-plate">READING THE THREE MINUTE</p>' +
+            return '<p class="room-plate">READING THE THREE MINUTE</p>' + cdChip('3M') +
               '<p class="feed-banner" data-sierra-banner role="status" hidden></p>' +
               coinGrid('sierra', '3M', 'standing on the house tape — read #737 · her live 3-minute read lands over this the moment the feed answers', 'army-grid') +
               readStamp('sierra', 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'mina') {
-            return '<p class="room-plate">THE ONE MINUTE</p>' +
+            return '<p class="room-plate">THE ONE MINUTE</p>' + cdChip('1M') +
               coinGrid('mina-1M', '1M', 'standing on the house tape — read #737 · her live 1-minute read lands over this the moment the feed answers', 'frame-grid') +
               readStamp('mina', 'MINA · THE ONE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'tf') {
-            return '<p class="room-plate">' + w.plate + '</p>' +
+            return '<p class="room-plate">' + w.plate + '</p>' + cdChip(w.frame) +
               coinGrid('tf-' + w.frame, w.frame, 'standing on the house tape — read #737 · her live ' + w.frameLabel + ' read lands over this the moment the feed answers', 'frame-grid') +
               readStamp('tf-' + w.frame, w.name + ' · ' + w.plate + ' · STANDING — HOUSE TAPE');
           }
