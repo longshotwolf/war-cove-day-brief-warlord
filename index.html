@@ -610,6 +610,14 @@
         background:rgba(0,0,0,.55); border:1px solid rgba(251,191,36,.55); border-radius:999px; padding:2px 8px;
         box-shadow:0 0 10px rgba(251,191,36,.18); white-space:nowrap; }
       .office, .owner-office, .desk-card, .pot-card, .bc-card, .pq-card, .pedestal, .fourpoints, .newsroom, .off-card, .holo-card{ position:relative; }
+      /* ===== Timeframe countdown boxes — every room carries one: the time
+         left until that room's next candle comes out, ticking live. ===== */
+      .cd-box{ display:flex; align-items:center; justify-content:space-between; gap:10px;
+        border:1px solid rgba(103,232,249,.5); background:rgba(8,47,73,.6); border-radius:8px;
+        padding:5px 10px; margin:0 0 10px; }
+      .cd-box .cd-l{ font-size:10.5px; font-weight:900; letter-spacing:.14em; color:#a5f3fc; white-space:nowrap; }
+      .cd-box .cd-t{ font-family:"IBM Plex Mono",monospace; font-size:15px; font-weight:700; color:#ecfeff; font-variant-numeric:tabular-nums; }
+      .fourpoints .cd-box{ margin:10px 14px 0; }
       .desk-card .side-flex{ display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; }
       .desk-card .side-id{ flex:0 1 300px; min-width:min(260px,100%); }
       .desk-card .side-room{ flex:1 1 320px; min-width:min(300px,100%); border-left:1px solid rgba(103,232,249,.18); padding-left:14px; }
@@ -1619,6 +1627,7 @@
                     <span class="chip cert">READ-ONLY ON THIS COPY</span>
                   </div>
                   <div class="office-scroll" data-scroller>
+                    <div class="cd-box" data-cd="AUTO:1M,3M,1H,6H" role="timer" aria-label="Countdown — time left until the next candle comes out on this board"><span class="cd-l">⏳ NEXT CANDLE</span><span class="cd-t">—</span></div>
                     <div class="pot-grid">
                       <article class="pot-card" aria-label="Replicate pot">
                         <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
@@ -1662,6 +1671,7 @@
                     <span class="chip live">● STREAM-DAY OFFICE</span>
                   </div>
                   <div class="office-scroll" data-scroller>
+                    <div class="cd-box" data-cd="AUTO:1M,3M,1H,6H" role="timer" aria-label="Countdown — time left until the next candle comes out on this board"><span class="cd-l">⏳ NEXT CANDLE</span><span class="cd-t">—</span></div>
                     <div class="bc-grid">
                       <section class="bc-card" aria-label="Go-live checklist">
                         <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
@@ -1733,6 +1743,7 @@
                     <span class="chip cert">3 IN FLIGHT</span>
                   </div>
                   <div class="office-scroll" data-scroller>
+                    <div class="cd-box" data-cd="AUTO:1M,3M,1H,6H" role="timer" aria-label="Countdown — time left until the next candle comes out on this board"><span class="cd-l">⏳ NEXT CANDLE</span><span class="cd-t">—</span></div>
                     <article class="pq-card" aria-label="Production piece: Group ad — remaining crew desk loops">
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="pq-top"><p class="pq-t">Group ad — remaining crew desk loops</p><span class="pq-tag">LANE: REPLICATE</span><span class="pq-tag parked">PARKED</span></div>
@@ -2178,6 +2189,7 @@
                   <span class="fp-live"><i></i>LIVE</span>
                   <p class="s">Entries &amp; exits as they hit — the same hits as the Proof Page, with the full description. On watch: Nova.</p>
                 </div>
+                <div class="cd-box" data-cd="AUTO:MONTH,WEEK,DAY,6H" role="timer" aria-label="Countdown — time left until the next candle comes out on the Four Points frames"><span class="cd-l">⏳ NEXT CANDLE</span><span class="cd-t">—</span></div>
                 <div class="fp-alarmbar">
                   <span class="tessa-alarm held" data-tessa-alarm><i></i><span class="ta-txt">TESSA ALARM · TAP ANYWHERE TO ARM THE SOUND</span></span>
                   <button type="button" id="tessa-alarm-test">🔔 Test her alarm</button>
@@ -5287,6 +5299,103 @@
         if (document.readyState === 'complete') setTimeout(armKickPlayer, 1200);
         else window.addEventListener('load', function () { setTimeout(armKickPlayer, 1200); });
         setTimeout(armKickPlayer, 5000); /* fallback if load already fired */
+
+        /* ---------- Timeframe countdown boxes — one on every room ----------
+           His standing order: every room/office carries a small countdown
+           window showing the time left until THAT room's next candle comes
+           out. Reader rooms count down their own frame — Sable the 6H
+           spread, Mina the 1M, Sierra the 3M, Hera 1H, Cora 4H, Juno 6H,
+           Dia DAY, Sela WEEK, Mona MONTH. Terra, Vega and Tessa watch
+           several frames, so their box counts to the next candle among
+           theirs and names it. Every other room counts to the next candle
+           of the board's four-office run (1M · 3M · 1H · 6H) and names it.
+           Candles turn on their UTC boundaries — the house tape's clock.
+           The boxes are ADDITIVE ONLY: the tick below stands a box on any
+           room that lacks one (so a floor re-render can never take them
+           off) and updates the time on every box, once a second. Nothing
+           else on the board is touched. */
+        var TFCD_SECS = { '1M': 60, '3M': 180, '1H': 3600, '4H': 14400, '6H': 21600, 'DAY': 86400 };
+        var TFCD_DESK = {
+          SABLE: '6H', MINA: '1M', SIERRA: '3M', HERA: '1H', CORA: '4H', JUNO: '6H',
+          DIA: 'DAY', SELA: 'WEEK', MONA: 'MONTH',
+          TERRA: 'AUTO:MONTH,WEEK,DAY,4H,6H', VEGA: 'AUTO:MONTH,WEEK,DAY,4H,6H',
+          TESSA: 'AUTO:MONTH,WEEK,DAY,6H'
+        };
+        var TFCD_BOARD = 'AUTO:1M,3M,1H,6H';
+        function tfcdNext(frame, now) {
+          if (frame === 'WEEK') {
+            var d = new Date(now);
+            var add = (8 - d.getUTCDay()) % 7;
+            var t = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + add);
+            if (t <= now) t += 7 * 86400000;
+            return t;
+          }
+          if (frame === 'MONTH') {
+            var dm = new Date(now);
+            return Date.UTC(dm.getUTCFullYear(), dm.getUTCMonth() + 1, 1);
+          }
+          var s = TFCD_SECS[frame];
+          if (!s) return now;
+          return (Math.floor(now / (s * 1000)) + 1) * s * 1000;
+        }
+        function tfcdFmt(ms) {
+          var s = Math.max(0, Math.round(ms / 1000));
+          var d = Math.floor(s / 86400); s -= d * 86400;
+          var h = Math.floor(s / 3600); s -= h * 3600;
+          var m = Math.floor(s / 60); var ss = s - m * 60;
+          function p(n) { return (n < 10 ? '0' : '') + n; }
+          return (d > 0 ? d + 'd ' : '') + p(h) + ':' + p(m) + ':' + p(ss);
+        }
+        function tfcdSpecFor(el) {
+          var desk = el.getAttribute('data-desk');
+          if (desk && TFCD_DESK[desk.toUpperCase()]) return TFCD_DESK[desk.toUpperCase()];
+          return TFCD_BOARD;
+        }
+        function tfcdLabel(spec) {
+          return spec.indexOf('AUTO:') === 0 ? '⏳ NEXT CANDLE' : '⏳ NEXT ' + spec + ' CANDLE';
+        }
+        function tfcdStand() {
+          var rooms = document.querySelectorAll('.desk-card, .office, .owner-office, .fourpoints');
+          rooms.forEach(function (el) {
+            var has = false;
+            for (var i = 0; i < el.children.length; i++) {
+              if (el.children[i].classList && el.children[i].classList.contains('cd-box')) { has = true; break; }
+            }
+            if (has) return;
+            var spec = tfcdSpecFor(el);
+            var box = document.createElement('div');
+            box.className = 'cd-box';
+            box.setAttribute('data-cd', spec);
+            box.setAttribute('role', 'timer');
+            box.setAttribute('aria-label', 'Countdown — time left until this room\u2019s next candle comes out');
+            box.innerHTML = '<span class="cd-l">' + tfcdLabel(spec) + '</span><span class="cd-t">—</span>';
+            el.insertBefore(box, el.firstChild);
+          });
+        }
+        function tfcdTick() {
+          tfcdStand();
+          var now = Date.now();
+          document.querySelectorAll('.cd-box').forEach(function (box) {
+            var spec = box.getAttribute('data-cd') || TFCD_BOARD;
+            var tEl = box.querySelector('.cd-t');
+            if (!tEl) return;
+            if (spec.indexOf('AUTO:') === 0) {
+              var frames = spec.slice(5).split(',');
+              var best = null, bestT = Infinity;
+              frames.forEach(function (f) {
+                var t = tfcdNext(f, now);
+                if (t < bestT) { bestT = t; best = f; }
+              });
+              var lEl = box.querySelector('.cd-l');
+              if (lEl) lEl.textContent = '⏳ NEXT CANDLE · ' + best;
+              tEl.textContent = tfcdFmt(bestT - now);
+            } else {
+              tEl.textContent = tfcdFmt(tfcdNext(spec, now) - now);
+            }
+          });
+        }
+        tfcdTick();
+        setInterval(tfcdTick, 1000);
 
         /* ---------- Board sits still: no auto-scroll, no auto-rotate ----------
            The page stays exactly where the viewer leaves it. Scrolling and
