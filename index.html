@@ -1114,13 +1114,29 @@
       .fpc-wchip.long{ background:rgba(16,185,129,.18); border:1px solid #34d399; color:#a7f3d0; }
       .fpc-wchip.short{ background:rgba(244,63,94,.16); border:1px solid #f43f5e; color:#fecdd3; }
       .fpc-wchip.none{ background:rgba(100,116,139,.18); border:1px solid rgba(148,163,184,.4); color:rgba(207,250,254,.6); white-space:normal; }
-      .fpc-panes{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(min(430px,100%), 1fr)); margin-top:12px; }
-      .fpc-pane{ border:1px solid rgba(103,232,249,.35); border-radius:10px; padding:10px; background:rgba(2,10,24,.55); min-width:0; }
+      .fpc-panes{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(min(640px,100%), 1fr)); margin-top:12px; }
+      .fpc-pane{ border:1px solid rgba(103,232,249,.35); border-radius:10px; padding:12px; background:rgba(2,10,24,.55); min-width:0; }
       .fpc-pane .cd-box{ margin:0 0 8px; }
+      /* The countdown row: the pane's time countdown with the WINNER
+         window standing right next to it (the Warlord's order, Nov 24,
+         2026) — GREEN blinking when the green army's whale weight is
+         winning the push on the candle, RED when the red army's is,
+         FLATLINE when the weight stands even or no whale stands yet. */
+      .fpc-cdrow{ display:flex; gap:8px; align-items:stretch; margin:0 0 8px; }
+      .fpc-cdrow .cd-box{ flex:1 1 auto; margin:0; min-width:0; }
+      .fpc-win{ flex:0 0 auto; display:flex; align-items:center; font-family:"IBM Plex Mono",monospace; font-size:10.5px;
+        font-weight:900; letter-spacing:.06em; border-radius:6px; padding:2px 10px; margin:0; white-space:nowrap;
+        background:rgba(100,116,139,.16); border:1px solid rgba(148,163,184,.45); color:rgba(226,232,240,.75); }
+      .fpc-win.long{ background:rgba(16,185,129,.22); border-color:#34d399; color:#a7f3d0; animation:fpcWinBlink 1.1s ease-in-out infinite; }
+      .fpc-win.short{ background:rgba(244,63,94,.20); border-color:#f43f5e; color:#fecdd3; }
+      @keyframes fpcWinBlink{ 0%,100%{ opacity:1; } 50%{ opacity:.4; } }
       .fpc-phead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
       .fpc-frame{ font-size:15px; font-weight:900; letter-spacing:.08em; color:#ecfeff; margin:0; }
       .fpc-ohlc{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:rgba(207,250,254,.75); margin:0; }
-      .fpc-cluster{ position:relative; margin-top:8px; max-height:380px; overflow-y:auto; overflow-x:hidden;
+      /* OPENED UP (the Warlord's order, Nov 24, 2026): no height cap and
+         no inside scroll — the WHOLE candle stands in the pane, the full
+         price range on the ruler and the full center line, nothing cut. */
+      .fpc-cluster{ position:relative; margin-top:8px; overflow-x:hidden;
         border:1px solid rgba(103,232,249,.18); border-radius:6px; background:rgba(4,16,31,.6); padding:4px 0; }
       .fpc-rows{ position:relative; }
       .fpc-rows::after{ content:""; position:absolute; top:0; bottom:0; left:50%; width:2px; margin-left:-1px;
@@ -1129,16 +1145,16 @@
       .fpc-row + .fpc-row{ border-top:1px solid rgba(103,232,249,.05); }
       .fpc-pins{ flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:2px; justify-content:center; }
       .fpc-pins.l{ align-items:flex-end; } .fpc-pins.r{ align-items:flex-start; }
-      .fpc-pin{ font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:700; line-height:1.3; border-radius:4px;
-        padding:1px 5px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+      .fpc-pin{ font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; line-height:1.35; border-radius:4px;
+        padding:1px 5px; white-space:nowrap; }
       .fpc-pin.long{ background:rgba(16,185,129,.20); border:1px solid #34d399; color:#a7f3d0; }
       .fpc-pin.short{ background:rgba(244,63,94,.18); border:1px solid #f43f5e; color:#fecdd3; }
-      .fpc-cell{ flex:0 0 196px; width:196px; position:relative; text-align:center; border-radius:4px; padding:1px 4px;
+      .fpc-cell{ flex:0 0 228px; width:228px; position:relative; text-align:center; border-radius:4px; padding:1px 4px;
         background:rgba(148,163,184,.07); }
       .fpc-cell .bar{ position:absolute; top:0; bottom:0; left:0; background:rgba(226,232,240,.13); border-radius:4px; }
-      .fpc-cell .ba{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; color:#e2e8f0; white-space:nowrap; }
-      .fpc-cell .pr{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:10px; color:rgba(226,232,240,.62); white-space:nowrap; margin-left:6px; }
-      .fpc-cell .dl{ position:relative; display:block; font-family:"IBM Plex Mono",monospace; font-size:9px; color:rgba(226,232,240,.5); }
+      .fpc-cell .ba{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:700; color:#e2e8f0; white-space:nowrap; }
+      .fpc-cell .pr{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:11px; color:rgba(226,232,240,.62); white-space:nowrap; margin-left:6px; }
+      .fpc-cell .dl{ position:relative; display:block; font-family:"IBM Plex Mono",monospace; font-size:10px; color:rgba(226,232,240,.5); }
       .fpc-row.poc .fpc-cell{ outline:2px solid rgba(236,254,255,.85); background:rgba(226,232,240,.10); }
       .fpc-row.poc .ba{ color:#ffffff; }
       .fpc-poc{ font-size:8.5px; font-weight:900; letter-spacing:.1em; color:#04101f; background:#e2e8f0; border-radius:3px; padding:0 4px; margin-left:5px; vertical-align:1px; }
@@ -1146,7 +1162,7 @@
       .fpc-stats, .fpc-reward{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:rgba(165,243,252,.85); margin:7px 0 0; line-height:1.5; }
       .fpc-reward{ color:rgba(207,250,254,.65); }
       .fpc-note{ font-size:12px; color:rgba(207,250,254,.55); margin:10px 0 0; line-height:1.5; }
-      @media (max-width:560px){ .fpc-cell{ flex-basis:158px; width:158px; } .fpc-cell .ba{ font-size:10px; } .fpc-pin{ font-size:8.5px; } }
+      @media (max-width:560px){ .fpc-cell{ flex-basis:170px; width:170px; } .fpc-cell .ba{ font-size:11px; } .fpc-pin{ font-size:9.5px; } .fpc-win{ font-size:9.5px; padding:2px 7px; } }
     </style>
   </head>
   <body class="view-tablet">
@@ -1681,31 +1697,31 @@
                       </div>
                       <div class="fpc-panes">
                         <article class="fpc-pane" data-fpc-frame="3M" aria-label="Footprint pane — the forming 3-minute candle">
-                          <div class="cd-box" data-cd="3M" role="timer" aria-label="Countdown — time left until the next 3-minute candle comes out"><span class="cd-l">⏳ NEXT 3M CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-cdrow"><div class="cd-box" data-cd="3M" role="timer" aria-label="Countdown — time left until the next 3-minute candle comes out"><span class="cd-l">⏳ NEXT 3M CANDLE</span><span class="cd-t">—</span></div><p class="fpc-win flat" role="status" aria-label="Winner window — who is winning the push on this candle by whale weight">FLATLINE · NO WHALES YET</p></div>
                           <div class="fpc-phead"><p class="fpc-frame">3-MINUTE</p><p class="fpc-ohlc">STANDING BY</p></div>
                           <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads first, in its turn.</p></div>
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
                         </article>
                         <article class="fpc-pane" data-fpc-frame="6H" aria-label="Footprint pane — the forming six-hour candle">
-                          <div class="cd-box" data-cd="6H" role="timer" aria-label="Countdown — time left until the next six-hour candle comes out"><span class="cd-l">⏳ NEXT 6H CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-cdrow"><div class="cd-box" data-cd="6H" role="timer" aria-label="Countdown — time left until the next six-hour candle comes out"><span class="cd-l">⏳ NEXT 6H CANDLE</span><span class="cd-t">—</span></div><p class="fpc-win flat" role="status" aria-label="Winner window — who is winning the push on this candle by whale weight">FLATLINE · NO WHALES YET</p></div>
                           <div class="fpc-phead"><p class="fpc-frame">SIX-HOUR</p><p class="fpc-ohlc">STANDING BY</p></div>
                           <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
                         </article>
                         <article class="fpc-pane" data-fpc-frame="DAY" aria-label="Footprint pane — the forming day candle">
-                          <div class="cd-box" data-cd="DAY" role="timer" aria-label="Countdown — time left until the next day candle comes out"><span class="cd-l">⏳ NEXT DAY CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-cdrow"><div class="cd-box" data-cd="DAY" role="timer" aria-label="Countdown — time left until the next day candle comes out"><span class="cd-l">⏳ NEXT DAY CANDLE</span><span class="cd-t">—</span></div><p class="fpc-win flat" role="status" aria-label="Winner window — who is winning the push on this candle by whale weight">FLATLINE · NO WHALES YET</p></div>
                           <div class="fpc-phead"><p class="fpc-frame">DAY</p><p class="fpc-ohlc">STANDING BY</p></div>
                           <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
                         </article>
                         <article class="fpc-pane" data-fpc-frame="WEEK" aria-label="Footprint pane — the forming week candle">
-                          <div class="cd-box" data-cd="WEEK" role="timer" aria-label="Countdown — time left until the next week candle comes out"><span class="cd-l">⏳ NEXT WEEK CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-cdrow"><div class="cd-box" data-cd="WEEK" role="timer" aria-label="Countdown — time left until the next week candle comes out"><span class="cd-l">⏳ NEXT WEEK CANDLE</span><span class="cd-t">—</span></div><p class="fpc-win flat" role="status" aria-label="Winner window — who is winning the push on this candle by whale weight">FLATLINE · NO WHALES YET</p></div>
                           <div class="fpc-phead"><p class="fpc-frame">WEEK</p><p class="fpc-ohlc">STANDING BY</p></div>
                           <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
                         </article>
                         <article class="fpc-pane" data-fpc-frame="MONTH" aria-label="Footprint pane — the forming month candle">
-                          <div class="cd-box" data-cd="MONTH" role="timer" aria-label="Countdown — time left until the next month candle comes out"><span class="cd-l">⏳ NEXT MONTH CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-cdrow"><div class="cd-box" data-cd="MONTH" role="timer" aria-label="Countdown — time left until the next month candle comes out"><span class="cd-l">⏳ NEXT MONTH CANDLE</span><span class="cd-t">—</span></div><p class="fpc-win flat" role="status" aria-label="Winner window — who is winning the push on this candle by whale weight">FLATLINE · NO WHALES YET</p></div>
                           <div class="fpc-phead"><p class="fpc-frame">MONTH</p><p class="fpc-ohlc">STANDING BY</p></div>
                           <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
@@ -5637,11 +5653,13 @@
           st.trades.forEach(function (t) { if (t.t >= win.start && t.t < win.end) trades.push(t); });
           trades.sort(function (a, b) { return a.t - b.t; });
           var clusterEl = pane.querySelector('.fpc-cluster'), ohlcEl = pane.querySelector('.fpc-ohlc'),
-            statsEl = pane.querySelector('.fpc-stats'), rewardEl = pane.querySelector('.fpc-reward');
+            statsEl = pane.querySelector('.fpc-stats'), rewardEl = pane.querySelector('.fpc-reward'),
+            winEl = pane.querySelector('.fpc-win');
           if (!trades.length) {
             ohlcEl.textContent = 'HELD';
             clusterEl.innerHTML = '<p class="fpc-held">HELD — no executed trades for this candle could be fetched on any public door this pass. The office keeps standing and re-checks on the board\u2019s cycle — no candle is invented in its place.</p>';
             statsEl.textContent = ''; rewardEl.textContent = '';
+            if (winEl) { winEl.className = 'fpc-win flat'; winEl.textContent = 'FLATLINE · HELD'; }
             return;
           }
           /* Aggregate the candle into ruler rows: Bid × Ask per row. */
@@ -5675,6 +5693,20 @@
           var whales = trades.filter(function (t) { return t.q >= meta.whale; });
           whales.sort(function (a, b) { return b.q - a.q; });
           whales = whales.slice(0, 60);
+          /* The WINNER window (the Warlord's order, Nov 24, 2026): who is
+             winning the push on this candle, judged by the summed SIZE of
+             the whale prints pinned on it — long weight against short
+             weight. Green blinks when the longs carry more, red stands
+             when the shorts carry more, FLATLINE when the weight is even
+             or no whale stands on the candle yet. */
+          if (winEl) {
+            var wLong = 0, wShort = 0;
+            whales.forEach(function (w) { if (w.sell) wShort += w.q; else wLong += w.q; });
+            if (wLong > wShort) { winEl.className = 'fpc-win long'; winEl.textContent = 'GREEN WINNING · ' + fpcQty(wLong) + ' × ' + fpcQty(wShort) + ' ' + coin; }
+            else if (wShort > wLong) { winEl.className = 'fpc-win short'; winEl.textContent = 'RED WINNING · ' + fpcQty(wShort) + ' × ' + fpcQty(wLong) + ' ' + coin; }
+            else if (wLong > 0) { winEl.className = 'fpc-win flat'; winEl.textContent = 'FLATLINE · ' + fpcQty(wLong) + ' × ' + fpcQty(wShort) + ' ' + coin; }
+            else { winEl.className = 'fpc-win flat'; winEl.textContent = 'FLATLINE · NO WHALES YET'; }
+          }
           var pinsByKey = {};
           whales.forEach(function (w) {
             var key = Math.round(Math.floor(w.p / meta.step) * meta.step * 100) / 100;
@@ -5854,6 +5886,8 @@
               pane.querySelector('.fpc-cluster').innerHTML = '<p class="fpc-held">Reading the new coin\u2019s tape \u2014 this pane loads in its turn, one at a time.</p>';
               pane.querySelector('.fpc-stats').textContent = '';
               pane.querySelector('.fpc-reward').textContent = '';
+              var wEl = pane.querySelector('.fpc-win');
+              if (wEl) { wEl.className = 'fpc-win flat'; wEl.textContent = 'FLATLINE · READING\u2026'; }
             });
             var tl = document.getElementById('fpc-tape-line');
             if (tl) tl.textContent = 'TAPE \u2014 READING THE NEW COIN\u2019S DOORS, ONE PANE AT A TIME\u2026';
