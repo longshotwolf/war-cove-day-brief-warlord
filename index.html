@@ -1131,7 +1131,7 @@
          WINNER SWITCH standing RIGHT NEXT TO it (his placement
          ruling, Nov 24, 2026 — mirrored from the master Day Brief). */
       .fpc-cdrow{ display:flex; flex-wrap:wrap; align-items:stretch; gap:8px; margin:0 0 8px; }
-      .fpc-cdrow .cd-box{ flex:1 1 190px; }
+      .fpc-cdrow .cd-box{ flex:1 1 130px; }
       /* Scoped to the cluster countdown row ONLY (the board-wide
          .cd-box / .cd-l rules stand untouched): a cluster countdown
          label can never spill over the winner chip beside it. */
@@ -1145,12 +1145,12 @@
          army color — when the two sides stand even or no whale
          print stands on the candle yet. */
       @keyframes fpcWinnerBlink{ 0%,100%{ background:rgba(16,185,129,.42); } 50%{ background:rgba(16,185,129,.07); } }
-      .fpc-winner{ display:flex; align-items:center; gap:7px; flex:0 1 auto; min-width:0; white-space:normal; overflow-wrap:anywhere;
+      .fpc-winner{ display:flex; align-items:center; gap:5px; flex:0 1 auto; min-width:0; white-space:normal; overflow-wrap:anywhere;
         border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06);
-        border-radius:8px; padding:5px 10px; }
-      .fpc-winner .fw-l{ font-size:9.5px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.6); }
-      .fpc-winner .fw-v{ font-size:13px; font-weight:900; letter-spacing:.04em; line-height:1; color:rgba(255,255,255,.75); }
-      .fpc-winner .fw-n{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:700; color:rgba(255,255,255,.65); white-space:normal; overflow-wrap:anywhere; }
+        border-radius:7px; padding:3px 7px; }
+      .fpc-winner .fw-l{ font-size:8px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+      .fpc-winner .fw-v{ font-size:11px; font-weight:900; letter-spacing:.04em; line-height:1; color:rgba(255,255,255,.75); }
+      .fpc-winner .fw-n{ font-family:"IBM Plex Mono",monospace; font-size:9px; font-weight:700; color:rgba(255,255,255,.65); white-space:normal; overflow-wrap:anywhere; }
       .fpc-winner .fw-n .l{ color:#6ee7b7; } .fpc-winner .fw-n .s{ color:#fda4af; }
       .fpc-winner.long{ border-color:rgba(52,211,153,.6); animation:fpcWinnerBlink 1.1s ease-in-out infinite; }
       .fpc-winner.long .fw-v{ color:#6ee7b7; }
