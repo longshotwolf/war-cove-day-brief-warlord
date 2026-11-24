@@ -316,6 +316,77 @@
          mark the desk the moment the jump lands on it. */
       .desk-card{ scroll-margin-top:10px; }
       .desk-card.desk-flash{ border-color:#34d399; box-shadow:0 0 0 2px rgba(52,211,153,.75), 0 0 34px rgba(16,185,129,.45); }
+      /* ===== Temp HIT lights — the Warlord's fault report (Nov 23, 2026):
+         "them lights don't flash when temp tops and temp bottoms hit."
+         The old hit signal was the .flash class alone — a faint border
+         tint for 700 ms, easy to miss and gone before eyes land on it.
+         Now a real hit (live price on the forming candle's standing low
+         or high, within the house 0.3% tolerance) lights the coin's own
+         window in its army colour — GREEN flashing for a temp bottom
+         (good long), RED flashing for a temp top (good short) — lights
+         the whole office card the same way, lights that office's jump
+         doors, and stands a flashing banner at the head of the office
+         naming the hit with its strength rank. The light holds while
+         price sits on the level and for 60 seconds after the hit lands,
+         per the house light law, then goes out. ===== */
+      .coin-win{ position:relative; }
+      @keyframes tempHitBottom{ 0%,100%{ background:rgba(52,211,153,.38); box-shadow:0 0 0 2px #34d399, 0 0 26px rgba(52,211,153,.75); } 50%{ background:rgba(52,211,153,.05); box-shadow:0 0 0 1px rgba(52,211,153,.35), 0 0 6px rgba(52,211,153,.18); } }
+      @keyframes tempHitTop{ 0%,100%{ background:rgba(244,63,94,.38); box-shadow:0 0 0 2px #f43f5e, 0 0 26px rgba(244,63,94,.75); } 50%{ background:rgba(244,63,94,.05); box-shadow:0 0 0 1px rgba(244,63,94,.35), 0 0 6px rgba(244,63,94,.18); } }
+      .coin-win.temp-hit-bottom{ border-color:#34d399; animation:tempHitBottom .9s ease-in-out infinite; }
+      .coin-win.temp-hit-bottom .cw-big{ color:#a7f3d0; }
+      .coin-win.temp-hit-top{ border-color:#f43f5e; animation:tempHitTop .9s ease-in-out infinite; }
+      .coin-win.temp-hit-top .cw-big{ color:#fecdd3; }
+      .coin-win.temp-hit-bottom::after, .coin-win.temp-hit-top::after{ content:"● HIT"; position:absolute; top:3px; right:5px;
+        font-size:9px; font-weight:900; letter-spacing:.08em; }
+      .coin-win.temp-hit-bottom::after{ color:#34d399; text-shadow:0 0 8px rgba(52,211,153,.9); }
+      .coin-win.temp-hit-top::after{ color:#fb7185; text-shadow:0 0 8px rgba(244,63,94,.9); }
+      @keyframes officeHitBottom{ 0%,100%{ box-shadow:0 0 0 3px rgba(52,211,153,.95), 0 0 40px rgba(16,185,129,.55); } 50%{ box-shadow:0 0 0 2px rgba(52,211,153,.25), 0 0 10px rgba(16,185,129,.15); } }
+      @keyframes officeHitTop{ 0%,100%{ box-shadow:0 0 0 3px rgba(244,63,94,.95), 0 0 40px rgba(244,63,94,.55); } 50%{ box-shadow:0 0 0 2px rgba(244,63,94,.25), 0 0 10px rgba(244,63,94,.15); } }
+      .desk-card.office-hit-bottom{ border-color:#34d399; animation:officeHitBottom 1s ease-in-out infinite; }
+      .desk-card.office-hit-top{ border-color:#f43f5e; animation:officeHitTop 1s ease-in-out infinite; }
+      .temp-jump button.jump-hit-bottom, .offices-dir button.jump-hit-bottom{ border-color:#34d399; animation:officeHitBottom 1s ease-in-out infinite; }
+      .temp-jump button.jump-hit-top, .offices-dir button.jump-hit-top{ border-color:#f43f5e; animation:officeHitTop 1s ease-in-out infinite; }
+      .temp-hit-banner{ margin:0 0 8px; border-radius:8px; padding:8px 12px; font-size:13.5px; font-weight:900; letter-spacing:.03em; line-height:1.45; }
+      .temp-hit-banner[hidden]{ display:none; }
+      .temp-hit-banner.bottom{ background:rgba(16,185,129,.20); border:1px solid #34d399; color:#a7f3d0; animation:officeHitBottom 1s ease-in-out infinite; }
+      .temp-hit-banner.top{ background:rgba(244,63,94,.20); border:1px solid #f43f5e; color:#fecdd3; animation:officeHitTop 1s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce){
+        .coin-win.temp-hit-bottom, .coin-win.temp-hit-top,
+        .desk-card.office-hit-bottom, .desk-card.office-hit-top,
+        .temp-hit-banner.bottom, .temp-hit-banner.top{ animation:none; }
+        .coin-win.temp-hit-bottom{ background:rgba(52,211,153,.30); box-shadow:0 0 0 2px #34d399; }
+        .coin-win.temp-hit-top{ background:rgba(244,63,94,.30); box-shadow:0 0 0 2px #f43f5e; }
+      }
+      /* ===== Liquidation Office — the EKG face (added Nov 23, 2026:
+         this browser copy never carried the office; the master board's
+         office drinks Newhedge's highlights feed, and this one polls
+         the master's own published feed file, the address written in
+         the house record). The trace beats while the office stands
+         open; a NEW print flatlines it for five seconds with the print
+         standing in the center. Headline writing stands in the feather
+         manuscript hand, per his ruling; the print's data keeps the
+         board's readable type. ===== */
+      .liq-manuscript{ font-family:"Great Vibes","Segoe Script",cursive; letter-spacing:.02em; }
+      .liq-face{ position:relative; border:1px solid rgba(251,113,133,.45); border-radius:8px; overflow:hidden;
+        background:radial-gradient(ellipse 90% 80% at 50% 40%, rgba(80,10,30,.35), rgba(5,4,12,.96) 70%);
+        box-shadow:inset 0 0 26px rgba(251,113,133,.08); }
+      .liq-ekg{ display:block; width:100%; height:92px; }
+      .liq-beat{ fill:none; stroke:#fb7185; stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round;
+        filter:drop-shadow(0 0 6px rgba(251,113,133,.85)); stroke-dasharray:340 1700; animation:liqTrace 2.8s linear infinite; }
+      @keyframes liqTrace{ from{ stroke-dashoffset:2040; } to{ stroke-dashoffset:0; } }
+      .liq-flatline{ stroke:#fb7185; stroke-width:2; opacity:0; filter:drop-shadow(0 0 6px rgba(251,113,133,.85)); }
+      .liq-face.flat .liq-beat{ display:none; }
+      .liq-face.flat .liq-flatline{ opacity:1; }
+      .liq-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
+        padding:10px 14px; font-size:15px; font-weight:900; letter-spacing:.12em; color:#fecdd3;
+        text-shadow:0 0 12px rgba(251,113,133,.65); pointer-events:none; line-height:1.5; }
+      .liq-face.flat .liq-center{ font-size:16.5px; color:#fff1f2; letter-spacing:.05em; }
+      .liq-rows{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+      .liq-cell{ flex:1 1 128px; border:1px solid rgba(251,113,133,.3); background:rgba(251,113,133,.05); border-radius:6px; padding:7px 10px; }
+      .liq-cell .lc-l{ display:block; font-size:10px; font-weight:900; letter-spacing:.2em; color:#fda4af; }
+      .liq-cell .lc-v{ display:block; font-size:16px; font-weight:900; color:#fff1f2; margin-top:2px; line-height:1.3; }
+      .desk-card.liq-hit{ border-color:#fb7185; animation:officeHitTop 1s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce){ .liq-beat{ animation:none; } .desk-card.liq-hit{ animation:none; box-shadow:0 0 0 2px #fb7185; } }
       .temp-jump{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
       .temp-jump button{ flex:1 1 200px; font:inherit; text-align:left; border:1px solid rgba(110,231,183,.5); background:rgba(4,20,11,.85);
         border-radius:10px; padding:10px 12px; cursor:pointer; color:var(--text); min-height:48px; }
@@ -1006,13 +1077,7 @@
          Tessa's windows carry no data-office: her live P1–P4 price line
          is a read, not an explainer, and keeps standing. */
       .coin-win[data-office] .cw-sub{ display:none !important; }
-    
-        /* ---------- THE CANDLE COUNTDOWN WINDOW (the Warlord's order, Nov 22, 2026 — carried onto this browser-link copy Nov 22, 2026): every candle office carries one small window beside its plate, counting down live to ITS OWN next candle on the tape's UTC grid — Mina 1M · Sierra 3M · Hera 1H · Sable + Juno 6H · Cora 4H · Dia DAY · Sela WEEK · Mona MONTH. The temp rooms and Liquidations read no single candle of their own and carry none. It is a clock, not a read: it claims nothing about the tape and never goes HELD. ---------- */
-        .cd-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(103,232,249,.35); background: rgba(0,0,0,.4); border-radius: 6px; padding: 6px 10px; margin: 8px 0 4px; }
-        .cd-chip .cd-ico { font-size: 13px; line-height: 1; }
-        .cd-chip .cd-lab { font-size: 9.5px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; color: rgba(165,243,252,.6); }
-        .cd-chip .cd-num { font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; color: #ecfeff; }
-      </style>
+    </style>
   </head>
   <body class="view-tablet">
     <!-- Boot veil: stands from the first paint until the board's script
@@ -1192,6 +1257,10 @@
                           <span class="od-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
                           <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing high</span>
                         </button>
+                        <button type="button" data-open-desk="liquidation" aria-label="Go straight to the Liquidation Office — the big liquidation prints, live from Newhedge">
+                          <span class="od-nm">💀 LIQUIDATION OFFICE <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — the EKG face standing, the big liquidation prints landing live from Newhedge's highlights feed</span>
+                        </button>
                         <button type="button" data-open-screen="treasury" aria-label="Open the Treasury office — the three money pots, kept separate">
                           <span class="od-nm">💰 TREASURY <span class="arr" aria-hidden="true">›</span></span>
                           <span class="od-ln">The three money pots, kept separate — Replicate · Simli · Luma</span>
@@ -1346,6 +1415,10 @@
                       <button type="button" data-open-desk="vega" aria-label="Jump straight to Vega — Temp Top Watcher">
                         <span class="tj-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
                         <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                      </button>
+                      <button type="button" data-open-desk="liquidation" aria-label="Jump straight to the Liquidation Office">
+                        <span class="tj-nm">💀 LIQUIDATION OFFICE <span class="arr" aria-hidden="true">›</span></span>
+                        <span class="tj-ln">Jump straight to the EKG face — the big liquidation prints, live from Newhedge</span>
                       </button>
                     </div>
                     <!-- The Owner's office — the head of the floor. The Warlord
@@ -2412,48 +2485,6 @@
             return coinWin(office, c, 'HELD', 'Live read held — waiting on the live market feed · no figure stands in its place', '');
           }).join('') + '</div>';
         }
-        /* ---------- THE CANDLE COUNTDOWN WINDOW (the Warlord's order, Nov 22, 2026): the next candle-open instant for a frame on the tape's UTC candle grid — minute frames on their minute marks, hour frames on their hour marks (4H and 6H divide the UTC day evenly), DAY at the next UTC midnight, WEEK at the next Monday UTC midnight, MONTH at the first of the next month UTC. The count: under an hour minutes:seconds, under a day hours:minutes:seconds, past a day days and hours. Re-ticked twice a second off the wall clock. ---------- */
-        function cdNextOpenMs(frame, nowMs) {
-          var d = new Date(nowMs);
-          if (frame === 'MONTH') return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
-          if (frame === 'WEEK') {
-            var midnight = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-            var daysSinceMonday = (d.getUTCDay() + 6) % 7;
-            return midnight - daysSinceMonday * 86400000 + 7 * 86400000;
-          }
-          if (frame === 'DAY') return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) + 86400000;
-          var periodMin = frame === '1M' ? 1 : frame === '3M' ? 3 : frame === '1H' ? 60 : frame === '4H' ? 240 : 360;
-          var periodMs = periodMin * 60000;
-          return Math.floor(nowMs / periodMs) * periodMs + periodMs;
-        }
-        function cdFmt(msLeft) {
-          var totalSecs = Math.max(0, Math.floor(msLeft / 1000));
-          var days = Math.floor(totalSecs / 86400);
-          var hours = Math.floor((totalSecs % 86400) / 3600);
-          var mins = Math.floor((totalSecs % 3600) / 60);
-          var secs = totalSecs % 60;
-          var ss = String(secs).padStart(2, '0');
-          if (days > 0) return days + 'd ' + hours + 'h ' + String(mins).padStart(2, '0') + 'm';
-          if (hours > 0) return hours + ':' + String(mins).padStart(2, '0') + ':' + ss;
-          return mins + ':' + ss;
-        }
-        function cdChip(frame) {
-          return '<div class="cd-chip" data-cd-frame="' + frame + '"><span aria-hidden="true" class="cd-ico">\u23F3</span>' +
-            '<span class="cd-lab">Next ' + frame + ' candle</span>' +
-            '<span class="cd-num" data-cd-num>--:--</span>' +
-            '<span class="cd-lab">to go</span></div>';
-        }
-        function cdTick() {
-          var now = Date.now();
-          var nums = document.querySelectorAll('[data-cd-num]');
-          for (var i = 0; i < nums.length; i++) {
-            var chip = nums[i].parentNode;
-            var frame = chip && chip.getAttribute ? chip.getAttribute('data-cd-frame') : null;
-            if (frame) nums[i].textContent = cdFmt(Math.max(0, cdNextOpenMs(frame, now) - now));
-          }
-        }
-        setInterval(cdTick, 500);
-
         function officeScreen(w) {
           if (w.office === 'sable') {
             /* Her windows stand in the locked board's own shape: the
@@ -2463,7 +2494,7 @@
                colour. Before the first live pass lands they read …,
                and a pass the feed misses reads HELD — no figure is
                ever dressed as live that is not. */
-            return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' + cdChip('6H') +
+            return '<p class="room-plate">READING THE SIX HOUR SPREAD</p>' +
               '<div class="coin-grid spread-grid">' + SIX_COINS.map(function (c) {
                 var mark = c === 'LTC' ? '<span class="ltc-mark" aria-hidden="true">Ł</span>' : '';
                 return '<div class="coin-win spread-win" data-office="sable" data-coin="' + c + '"><div class="sw-main"><p class="cw-name">' + c + mark + '</p>' +
@@ -2471,18 +2502,18 @@
               }).join('') + '</div>' + readStamp('sable', 'SABLE · THE SIX HOUR SPREAD');
           }
           if (w.office === 'sierra') {
-            return '<p class="room-plate">READING THE THREE MINUTE</p>' + cdChip('3M') +
+            return '<p class="room-plate">READING THE THREE MINUTE</p>' +
               '<p class="feed-banner" data-sierra-banner role="status" hidden></p>' +
               coinGrid('sierra', '3M', 'standing on the house tape — read #737 · her live 3-minute read lands over this the moment the feed answers', 'army-grid') +
               readStamp('sierra', 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'mina') {
-            return '<p class="room-plate">THE ONE MINUTE</p>' + cdChip('1M') +
+            return '<p class="room-plate">THE ONE MINUTE</p>' +
               coinGrid('mina-1M', '1M', 'standing on the house tape — read #737 · her live 1-minute read lands over this the moment the feed answers', 'frame-grid') +
               readStamp('mina', 'MINA · THE ONE MINUTE · STANDING — HOUSE TAPE');
           }
           if (w.office === 'tf') {
-            return '<p class="room-plate">' + w.plate + '</p>' + cdChip(w.frame) +
+            return '<p class="room-plate">' + w.plate + '</p>' +
               coinGrid('tf-' + w.frame, w.frame, 'standing on the house tape — read #737 · her live ' + w.frameLabel + ' read lands over this the moment the feed answers', 'frame-grid') +
               readStamp('tf-' + w.frame, w.name + ' · ' + w.plate + ' · STANDING — HOUSE TAPE');
           }
@@ -2490,7 +2521,8 @@
             var bottom = w.office === 'temp-bottom';
             var off = bottom ? 'temp-bottom' : 'temp-top';
             var frames = [['MONTH', 'the strongest on the ladder'], ['WEEK', 'a little weaker'], ['DAY', 'a little weaker'], ['4H', 'a little weaker'], ['6H', 'the weakest on the ladder']];
-            var thtml = '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS — EVERY WINDOW IN PLACE</p>';
+            var thtml = '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS — EVERY WINDOW IN PLACE</p>' +
+              '<p class="temp-hit-banner ' + (bottom ? 'bottom' : 'top') + '" data-temp-banner="' + off + '" role="alert" hidden></p>';
             frames.forEach(function (fr) {
               thtml += '<p class="room-plate">' + fr[0] + ' — TEMP ' + (bottom ? 'BOTTOM' : 'TOP') + ' · ' + fr[1].toUpperCase() + '</p>' +
                 '<div class="coin-grid">' + SIX_COINS.map(function (c) {
@@ -2666,7 +2698,9 @@
           });
           html += '</div></div>';
           });
+          html += liqDeptHTML();
           deptRoot.innerHTML = html;
+          try { if (typeof liqRepaint === 'function') liqRepaint(); } catch (e) {}
         }
         renderFloor();
         /* Fresh-load proof: after any refresh, if Sable's spread windows
@@ -4345,6 +4379,98 @@
         ];
         var tempBusy = false;
         var tempLevelKeys = {};
+        /* ---------- Temp HIT lights (Nov 23, 2026) ----------
+           A hit is price ON the level: live price sitting on the forming
+           candle's standing low (Terra) or standing high (Vega), within
+           the house 0.3% tolerance the DNA record carries for these
+           offices. The old board never tested that at all — its only
+           flash fired when a level CHANGED, in a faint border tint for
+           700 ms — so a temp top or bottom could be hit and no light on
+           the board moved, exactly the fault the Warlord reported.
+           Now a fresh hit, on the live engine's own pass:
+             · lights that coin + frame window in its army colour —
+               GREEN for a temp bottom (good long), RED for a temp top
+               (good short) — flashing until price leaves the level and
+               for 60 seconds after the hit lands (the house light law),
+             · lights the whole office card and that office's jump
+               doors the same way, so the hit shows even from the top
+               of the floor or the Day Board directory,
+             · stands the office's hit banner with the coin, the frame,
+               its strength rank (MONTH #1 STRONGEST · WEEK #2 · DAY #3
+               · 6H #4 · 4H #5 WEAKEST, his ranking of Nov 20) and the
+               level and live prices,
+             · and rings the locked temp-hit dual bell once, through
+               the same strike the tape watch uses.
+           The first live pass only seeds each window's state, the
+           board's standing baseline law — a page load never cries hit. */
+        var TEMP_RANK = { MONTH: '#1 STRONGEST', WEEK: '#2', DAY: '#3', '6H': '#4', '4H': '#5 WEAKEST' };
+        var tempHitState = {};
+        var tempHitSeeded = false;
+        function tempHitBanner(office, frameLabel, coin, level, live, bottom) {
+          var b = document.querySelector('[data-temp-banner="' + office + '"]');
+          if (!b) return;
+          b.hidden = false;
+          b.textContent = '🔔 TEMP ' + (bottom ? 'BOTTOM' : 'TOP') + ' HIT — ' + coin + ' ON THE ' + frameLabel +
+            ' · ' + (TEMP_RANK[frameLabel] || '') + ' · ' + (bottom ? 'GOOD LONG' : 'GOOD SHORT') +
+            ' · level ' + sierraPriceText(level) + ' · live ' + sierraPriceText(live) +
+            ' · ' + shortFmt.format(new Date()) + ' NYC';
+        }
+        function tempHitApply(office) {
+          var bottom = office === 'temp-bottom';
+          var winCls = bottom ? 'temp-hit-bottom' : 'temp-hit-top';
+          var offCls = bottom ? 'office-hit-bottom' : 'office-hit-top';
+          var jmpCls = bottom ? 'jump-hit-bottom' : 'jump-hit-top';
+          var nowMs = Date.now();
+          var any = false;
+          Object.keys(tempHitState).forEach(function (k) {
+            if (k.indexOf(office + '|') !== 0) return;
+            var st = tempHitState[k];
+            var parts = k.split('|');
+            var w = tempWinEl(office, parts[1], parts[2]);
+            if (st.onLevel || nowMs <= st.until) {
+              any = true;
+              if (w) w.classList.add(winCls);
+            } else {
+              if (w) w.classList.remove(winCls);
+              delete tempHitState[k];
+            }
+          });
+          var card = document.getElementById('desk-' + (bottom ? 'terra' : 'vega'));
+          if (card) card.classList.toggle(offCls, any);
+          document.querySelectorAll('[data-open-desk="' + (bottom ? 'terra' : 'vega') + '"]').forEach(function (b) {
+            b.classList.toggle(jmpCls, any);
+          });
+          if (!any) {
+            var banner = document.querySelector('[data-temp-banner="' + office + '"]');
+            if (banner) banner.hidden = true;
+          }
+        }
+        function tempHitCheck(office, frameLabel, coin, level, live, bottom) {
+          if (!isFinite(level) || !isFinite(live) || !(level > 0)) return;
+          var key = office + '|' + frameLabel + '|' + coin;
+          var dist = bottom ? live - level : level - live;
+          var onLevel = dist <= Math.abs(level) * 0.003;
+          var st = tempHitState[key];
+          if (!tempHitSeeded) {
+            if (onLevel) tempHitState[key] = { onLevel: true, until: Date.now() + 60000 };
+            return;
+          }
+          if (onLevel) {
+            var fresh = !st || !st.onLevel;
+            tempHitState[key] = { onLevel: true, until: Date.now() + 60000 };
+            if (fresh) {
+              tempHitBanner(office, frameLabel, coin, level, live, bottom);
+              tempBellRing();
+            }
+          } else if (st) {
+            st.onLevel = false;
+          }
+          tempHitApply(office);
+        }
+        /* The light goes out on its own: every few seconds the hold
+           windows are swept, so a hit's 60 seconds never lingers past
+           its time even between engine passes. */
+        setInterval(function () { tempHitApply('temp-bottom'); tempHitApply('temp-top'); }, 3000);
         function tempWinEl(office, frame, coin) {
           return document.querySelector('.coin-win[data-office="' + office + '"][data-frame="' + frame + '"][data-coin="' + coin + '"]');
         }
@@ -4369,6 +4495,7 @@
             ' · the forming ' + frameLabel + ' candle · ' + src;
           win.setAttribute('data-temp-live', '1');
           if (changed) { win.classList.add('flash'); setTimeout(function () { win.classList.remove('flash'); }, 700); }
+          tempHitCheck(office, frameLabel, coin, level, live, bottom);
           return true;
         }
         function refreshTemps() {
@@ -4408,6 +4535,14 @@
           });
           Promise.all(jobs).then(function () {
             tempBusy = false;
+            /* The first full pass is the baseline: hits standing at
+               load show lit, but no banner and no bell fire for them —
+               only a hit that lands while the board stands rings. */
+            if (!tempHitSeeded) {
+              tempHitSeeded = true;
+              tempHitApply('temp-bottom');
+              tempHitApply('temp-top');
+            }
             setStampState('temp-bottom', liveB
               ? 'TERRA · TEMP BOTTOMS · LIVE — ' + srcB.toUpperCase()
               : 'TERRA · TEMP BOTTOMS · STANDING — HOUSE TAPE');
@@ -4423,6 +4558,202 @@
         window.addEventListener('load', function () {
           if (tempWindowsMissing()) { renderFloor(); kickMotion(); refreshTemps(); }
         });
+
+        /* ---------- The Liquidation Office — LIVE (added Nov 23, 2026) ----------
+           The Warlord asked whether this browser board carries the
+           liquidation office. It did not — no desk, no directory door,
+           no feed — so the office now stands on this floor the way it
+           stands on the master board, per the house record: the EKG
+           face, drinking Newhedge's highlights feed of the big
+           liquidation prints through the master's own published feed
+           file (the absolute address the record names), cache-busted
+           with ?cb= the way the master polls it, on a 15-second poll
+           inside the board's 20-second cycle class. The face's
+           behaviour matches the master: the trace beats while the
+           office stands open; when a NEW print lands — newer than the
+           last one seen — the trace FLATLINES for five seconds with the
+           print standing in the center (coin · liquidation price ·
+           side liquidated · exchange · size · the print's own time),
+           and the office card flashes. While no print has landed, the
+           center reads NO LIQUIDATION in plain text. The feed is a
+           highlights feed, so the face renders whatever prints the file
+           carries and never invents one; if a read fails or the lane
+           goes stale past thirty seconds, the face holds flat and
+           reads HELD rather than showing an error. The first read only
+           sets the baseline — a page load never flatlines for a print
+           that was already standing. The office's headline writing
+           stands in the feather manuscript hand per his ruling; the
+           print's data keeps the board's readable type. */
+        function liqDeptHTML() {
+          return '<div class="dept"><h3>LIQUIDATIONS — THE LIQUIDATION OFFICE</h3><div class="dept-grid">' +
+            '<article class="desk-card span-all" id="desk-liquidation" data-desk="LIQUIDATION">' +
+            '<span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' +
+            '<div class="room-head"><div class="room-info">' +
+            '<p class="nm-line"><span class="nm liq-manuscript" style="font-size:30px">The Liquidation Office</span>' +
+            '<span class="statuschip st-working"><i></i>WORKING</span>' +
+            '<span class="lockchip">🔒 LOCKED</span></p>' +
+            '<p class="jb liq-manuscript" style="font-size:19px">Liquidation Watch — the big liquidation prints, live from Newhedge</p>' +
+            '<p class="kd">Market Intel — the EKG face is her instrument; she carries no portrait</p>' +
+            '</div></div>' +
+            '<div class="room-body">' +
+            '<p class="room-plate liq-manuscript" style="font-size:21px; letter-spacing:.06em">The Liquidation Office — Newhedge Highlights</p>' +
+            '<div class="liq-face" id="liq-face">' +
+            '<svg class="liq-ekg" viewBox="0 0 600 92" preserveAspectRatio="none" aria-hidden="true">' +
+            '<path class="liq-beat" d="M0 46 H52 L58 38 L62 46 L68 14 L74 72 L78 46 H172 L178 38 L182 46 L188 14 L194 72 L198 46 H292 L298 38 L302 46 L308 14 L314 72 L318 46 H412 L418 38 L422 46 L428 14 L434 72 L438 46 H532 L538 38 L542 46 L548 14 L554 72 L558 46 H600" />' +
+            '<line class="liq-flatline" x1="0" y1="46" x2="600" y2="46" />' +
+            '</svg>' +
+            '<div class="liq-center" id="liq-center">NO LIQUIDATION</div>' +
+            '</div>' +
+            '<div class="liq-rows" id="liq-rows" aria-label="The latest liquidation print">' +
+            '<div class="liq-cell"><span class="lc-l">COIN</span><span class="lc-v" data-liq="coin">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">SIDE LIQUIDATED</span><span class="lc-v" data-liq="side">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">LIQ PRICE</span><span class="lc-v" data-liq="price">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">SIZE</span><span class="lc-v" data-liq="size">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">EXCHANGE</span><span class="lc-v" data-liq="exchange">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">PRINT TIME</span><span class="lc-v" data-liq="time">—</span></div>' +
+            '</div>' +
+            readStamp('liq', 'LIQUIDATION OFFICE · NEWHEDGE HIGHLIGHTS FEED') +
+            '</div></article></div></div>';
+        }
+        var LIQ_FEED_URL = 'https://longshotwolf.github.io/war-cove-live-board/feed/liq.json';
+        var liqState = { print: null, key: null, seen: 0, busy: false };
+        var liqDateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
+        function liqNum(v) {
+          if (typeof v === 'number') return v;
+          if (v === undefined || v === null) return NaN;
+          var n = parseFloat(String(v).replace(/[$,]/g, ''));
+          return isFinite(n) ? n : NaN;
+        }
+        function liqNormPrint(p) {
+          if (!p || typeof p !== 'object') return null;
+          var coinRaw = p.coin || p.symbol || p.asset || p.ticker || '';
+          var coin = String(coinRaw).toUpperCase().replace(/[-_/]?PERP$/, '').replace(/USDT$/, '').replace(/USD$/, '');
+          if (!coin) return null;
+          var sideRaw = String(p.side || p.direction || p.position || '');
+          var side = /short/i.test(sideRaw) ? 'SHORT LIQUIDATED' : /long/i.test(sideRaw) ? 'LONG LIQUIDATED' : (sideRaw ? sideRaw.toUpperCase() : 'LIQUIDATED');
+          var exchange = String(p.exchange || p.venue || p.market || p.source || '—').toUpperCase();
+          var price = liqNum(p.price !== undefined ? p.price : (p.liqPrice !== undefined ? p.liqPrice : (p.liquidationPrice !== undefined ? p.liquidationPrice : p.liq_price)));
+          var size = liqNum(p.size !== undefined ? p.size : (p.usd !== undefined ? p.usd : (p.amount !== undefined ? p.amount : (p.value !== undefined ? p.value : p.notional))));
+          var tRaw = p.time !== undefined ? p.time : (p.ts !== undefined ? p.ts : (p.timestamp !== undefined ? p.timestamp : (p.at !== undefined ? p.at : p.created_at)));
+          var ts = 0;
+          if (typeof tRaw === 'number') ts = tRaw < 1e12 ? tRaw * 1000 : tRaw;
+          else if (tRaw) { var parsed = Date.parse(tRaw); ts = isFinite(parsed) ? parsed : 0; }
+          return { coin: coin, side: side, exchange: exchange, price: price, size: size, ts: ts };
+        }
+        function liqExtract(data) {
+          var arr = null;
+          if (Array.isArray(data)) arr = data;
+          else if (data && typeof data === 'object') {
+            arr = data.prints || data.liquidations || data.items || data.events || data.data || null;
+            if (!arr && data.latest) arr = [data.latest];
+            if (!arr && data.print) arr = [data.print];
+            if (!arr && (data.coin || data.symbol)) arr = [data];
+          }
+          if (!arr || !arr.length) return null;
+          var best = null;
+          arr.forEach(function (p) {
+            var n = liqNormPrint(p);
+            if (n && (!best || n.ts >= best.ts)) best = n;
+          });
+          return best;
+        }
+        function liqPaint() {
+          var face = document.getElementById('liq-face');
+          if (!face) return;
+          var center = document.getElementById('liq-center');
+          var p = liqState.print;
+          var set = function (k, v) {
+            var el = document.querySelector('[data-liq="' + k + '"]');
+            if (el) el.textContent = v;
+          };
+          if (p) {
+            set('coin', p.coin);
+            set('side', p.side);
+            set('price', isFinite(p.price) ? sierraPriceText(p.price) : '—');
+            set('size', isFinite(p.size) ? '$' + Math.round(p.size).toLocaleString('en-US') : '—');
+            set('exchange', p.exchange);
+            set('time', p.ts ? liqDateFmt.format(new Date(p.ts)) + ' · ' + shortFmt.format(new Date(p.ts)) + ' NYC' : '—');
+            if (center && !face.classList.contains('flat')) center.textContent = p.coin + ' · ' + p.side;
+          } else if (center && !face.classList.contains('flat')) {
+            center.textContent = 'NO LIQUIDATION';
+          }
+        }
+        function liqRepaint() {
+          if (typeof liqState === 'undefined' || !liqState) return;
+          liqPaint();
+        }
+        function liqFlatline(p) {
+          var face = document.getElementById('liq-face');
+          var center = document.getElementById('liq-center');
+          var card = document.getElementById('desk-liquidation');
+          if (face) face.classList.add('flat');
+          if (center) {
+            center.textContent = p.coin + ' ' + p.side + ' — ' + (isFinite(p.price) ? sierraPriceText(p.price) : '') +
+              (isFinite(p.size) ? ' · $' + Math.round(p.size).toLocaleString('en-US') : '') +
+              (p.exchange && p.exchange !== '—' ? ' · ' + p.exchange : '') +
+              (p.ts ? ' · ' + shortFmt.format(new Date(p.ts)) + ' NYC' : '');
+          }
+          if (card) card.classList.add('liq-hit');
+          liqPaint();
+          setTimeout(function () {
+            if (face) face.classList.remove('flat');
+            if (card) card.classList.remove('liq-hit');
+            liqPaint();
+          }, 5000);
+        }
+        function liqStaleCheck() {
+          var face = document.getElementById('liq-face');
+          if (!face || face.classList.contains('flat')) return;
+          var center = document.getElementById('liq-center');
+          if (!liqState.seen || Date.now() - liqState.seen > 30000) {
+            face.classList.add('flat');
+            if (center) center.textContent = 'HELD';
+            setStampState('liq', 'LIQUIDATION OFFICE · HELD — FEED STALE');
+          }
+        }
+        function refreshLiq() {
+          if (liqState.busy) return;
+          liqState.busy = true;
+          var done = function () { liqState.busy = false; };
+          var url = LIQ_FEED_URL + '?cb=' + Date.now();
+          var req;
+          if (typeof AbortController !== 'undefined') {
+            var ctl = new AbortController();
+            var to = setTimeout(function () { try { ctl.abort(); } catch (e) {} }, 7000);
+            req = fetch(url, { cache: 'no-store', signal: ctl.signal }).then(function (r) { clearTimeout(to); return r; });
+          } else {
+            req = fetch(url, { cache: 'no-store' });
+          }
+          req.then(function (r) {
+            if (!r.ok) throw new Error('feed');
+            return r.json();
+          }).then(function (data) {
+            done();
+            liqState.seen = Date.now();
+            var face = document.getElementById('liq-face');
+            var center = document.getElementById('liq-center');
+            if (face && face.classList.contains('flat') && center && center.textContent === 'HELD') {
+              face.classList.remove('flat');
+            }
+            var p = liqExtract(data);
+            if (p) {
+              var key = [p.ts, p.coin, p.price, p.size, p.side].join('|');
+              var isNew = liqState.key !== null && key !== liqState.key;
+              liqState.print = p;
+              liqState.key = key;
+              if (isNew) liqFlatline(p); else liqPaint();
+            } else {
+              liqPaint();
+            }
+            setStampState('liq', 'LIQUIDATION OFFICE · LIVE — NEWHEDGE');
+          }).catch(function () {
+            done();
+            liqStaleCheck();
+          });
+        }
+        refreshLiq();
+        setInterval(refreshLiq, 15000);
+        setInterval(liqStaleCheck, 10000);
 
         /* ---------- Tessa LIVE — trade alerts, with her alarm ----------
            The fault this fixes: her office stood as a still description of
