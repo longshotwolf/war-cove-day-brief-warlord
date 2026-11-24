@@ -5518,6 +5518,24 @@
           BTC: { step: 50, whale: 0.15, cb: 'BTC-USD', kr: 'XBTUSD' },
           ETH: { step: 1, whale: 6, cb: 'ETH-USD', kr: 'ETHUSD' }
         };
+        /* THE WHALE LINE (mirrors the Day Brief, Nov 24, 2026): the
+           line is drawn fresh off the latest 1,000 trades on the
+           tape — the bigger of 8x the average print and the 95th
+           percentile print — never a fixed number, so this copy
+           calls a whale the same way the Day Brief does and the
+           two boards judge the winner off the same line. Until
+           the tape fills, the coin's standing line carries. */
+        function fpcWhaleLine(coin) {
+          var st = fpcStore(coin), meta = FPC_COINS[coin];
+          var ts = st.trades.slice(-1000);
+          if (ts.length < 50) return meta.whale;
+          var sizes = ts.map(function (t) { return t.q; }).sort(function (a, b) { return a - b; });
+          var sum = 0; sizes.forEach(function (q) { sum += q; });
+          var mean = sum / sizes.length;
+          var p95 = sizes[Math.min(sizes.length - 1, Math.floor(sizes.length * 0.95))];
+          var line = Math.max(8 * mean, p95);
+          return isFinite(line) && line > 0 ? line : meta.whale;
+        }
         var FPC_FRAMES = [
           { key: '3M', pages: 6 },
           { key: '6H', pages: 10 },
@@ -5760,7 +5778,7 @@
         }
         function fpcRenderPane(coin, frame) {
           var pane = fpcPaneEl(frame.key); if (!pane) return;
-          var meta = FPC_COINS[coin], st = fpcStore(coin);
+          var meta = FPC_COINS[coin], st = fpcStore(coin), whaleLine = fpcWhaleLine(coin);
           var win = fpcWindow(frame.key, Date.now());
           var trades = [];
           st.trades.forEach(function (t) { if (t.t >= win.start && t.t < win.end) trades.push(t); });
@@ -5785,7 +5803,7 @@
             if (!r) { r = rowsByKey[key] = { price: key, bid: 0, ask: 0, vol: 0 }; rowList.push(r); }
             if (t.sell) { r.bid += t.q; totBid += t.q; } else { r.ask += t.q; totAsk += t.q; }
             r.vol += t.q;
-            if (t.q >= meta.whale) { if (t.sell) whaleShortQty += t.q; else whaleLongQty += t.q; }
+            if (t.q >= whaleLine) { if (t.sell) whaleShortQty += t.q; else whaleLongQty += t.q; }
             if (t.p > hi) hi = t.p; if (t.p < lo) lo = t.p;
           });
           rowList.sort(function (a, b) { return b.price - a.price; });
@@ -5806,7 +5824,7 @@
           }
           /* Whales: the biggest 60 prints of the candle pin, grouped by
              their ruler level; 3+ at one level stand as a trail. */
-          var whales = trades.filter(function (t) { return t.q >= meta.whale; });
+          var whales = trades.filter(function (t) { return t.q >= whaleLine; });
           whales.sort(function (a, b) { return b.q - a.q; });
           whales = whales.slice(0, 60);
           var pinsByKey = {};
@@ -5858,8 +5876,8 @@
         }
         function fpcRenderWhaleLine(coin) {
           var el = document.getElementById('fpc-whale-line'); if (!el) return;
-          var st = fpcStore(coin), meta = FPC_COINS[coin], whales = [];
-          st.trades.forEach(function (t) { if (t.q >= meta.whale) whales.push(t); });
+          var st = fpcStore(coin), meta = FPC_COINS[coin], whales = [], whaleLine = fpcWhaleLine(coin);
+          st.trades.forEach(function (t) { if (t.q >= whaleLine) whales.push(t); });
           whales.sort(function (a, b) { return b.t - a.t; });
           var html = '<span class="wl-t">THE WHALE LINE \u00B7 ' + coin + '</span>';
           if (!whales.length) {
@@ -5900,8 +5918,8 @@
             var prev = st.oi, dir = 'FIRST READ ON THIS COIN', verdict = '';
             if (prev && isFinite(prev.v)) {
               var chg = r.v - prev.v, pct = prev.v ? chg / prev.v * 100 : 0;
-              var meta = FPC_COINS[coin], recent = 0, now = Date.now();
-              st.trades.forEach(function (t) { if (t.q >= meta.whale && now - t.t < 900000) recent++; });
+              var recent = 0, now = Date.now(), whaleLine = fpcWhaleLine(coin);
+              st.trades.forEach(function (t) { if (t.q >= whaleLine && now - t.t < 900000) recent++; });
               if (Math.abs(pct) < 0.01) dir = 'FLAT SINCE THE LAST READ';
               else dir = (chg > 0 ? 'RISING +' : 'FALLING \u2212') + Math.abs(pct).toFixed(2) + '% SINCE THE LAST READ';
               if (chg > 0 && recent) verdict = ' \u2014 WHALE PRINTS LANDING WHILE OI RISES: SIZE GOING ON';
