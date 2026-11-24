@@ -1085,6 +1085,68 @@
          Tessa's windows carry no data-office: her live P1–P4 price line
          is a read, not an explainer, and keeps standing. */
       .coin-win[data-office] .cw-sub{ display:none !important; }
+
+      /* ===== FOOTPRINT CLUSTER OFFICE (Nov 24, 2026 — the Warlord's order:
+         the footprint stands on the live stream board and never goes down).
+         Its own office on the Company Floor. The clusters are built in the
+         visitor's browser from public executed trades only. COLOR LAW:
+         only whale / market-mover prints are colored — long GREEN, short
+         RED — every other figure stands in the board's plain ink. ===== */
+      .fpc-office{ border:1px solid rgba(103,199,235,.35); border-radius:12px; padding:12px; margin:14px 0 12px;
+        background:linear-gradient(155deg, rgba(21,52,92,.82), rgba(10,25,48,.9)); box-shadow:0 0 18px rgba(34,211,238,.10); }
+      .fpc-head{ display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; }
+      .fpc-title{ font-size:21px; font-weight:900; letter-spacing:.06em; color:#ecfeff; margin:0; }
+      .fpc-sub{ font-size:12.5px; color:rgba(207,250,254,.65); margin:3px 0 0; line-height:1.45; max-width:78ch; }
+      .fpc-sub .lg{ color:#6ee7b7; font-weight:800; } .fpc-sub .sh{ color:#fda4af; font-weight:800; }
+      .fpc-livechip{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 9px;
+        font-size:10.5px; font-weight:900; letter-spacing:.08em; background:rgba(16,185,129,.2); color:#6ee7b7; white-space:nowrap; }
+      .fpc-livechip i{ width:7px; height:7px; border-radius:50%; background:#34d399; animation:floorLamp 2.2s infinite; }
+      .fpc-switch{ display:flex; gap:4px; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5);
+        border-radius:999px; padding:4px; margin-top:10px; max-width:520px; }
+      .fpc-switch button{ flex:1; font:inherit; font-size:12px; font-weight:900; letter-spacing:.05em; border:none; border-radius:999px;
+        padding:7px 8px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:34px; }
+      .fpc-switch button[aria-pressed="true"]{ background:#a5f3fc; color:#000; box-shadow:0 0 12px rgba(34,211,238,.6); }
+      .fpc-tape, .fpc-oi{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:#a5f3fc; margin:9px 0 0; line-height:1.5; }
+      .fpc-oi b{ color:#ecfeff; }
+      .fpc-whales{ display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+      .fpc-whales .wl-t{ font-size:10.5px; font-weight:900; letter-spacing:.12em; color:rgba(165,243,252,.6); align-self:center; }
+      .fpc-wchip{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:700; border-radius:999px; padding:3px 9px; white-space:nowrap; }
+      .fpc-wchip.long{ background:rgba(16,185,129,.18); border:1px solid #34d399; color:#a7f3d0; }
+      .fpc-wchip.short{ background:rgba(244,63,94,.16); border:1px solid #f43f5e; color:#fecdd3; }
+      .fpc-wchip.none{ background:rgba(100,116,139,.18); border:1px solid rgba(148,163,184,.4); color:rgba(207,250,254,.6); white-space:normal; }
+      .fpc-panes{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit, minmax(min(430px,100%), 1fr)); margin-top:12px; }
+      .fpc-pane{ border:1px solid rgba(103,232,249,.35); border-radius:10px; padding:10px; background:rgba(2,10,24,.55); min-width:0; }
+      .fpc-pane .cd-box{ margin:0 0 8px; }
+      .fpc-phead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+      .fpc-frame{ font-size:15px; font-weight:900; letter-spacing:.08em; color:#ecfeff; margin:0; }
+      .fpc-ohlc{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:rgba(207,250,254,.75); margin:0; }
+      .fpc-cluster{ position:relative; margin-top:8px; max-height:380px; overflow-y:auto; overflow-x:hidden;
+        border:1px solid rgba(103,232,249,.18); border-radius:6px; background:rgba(4,16,31,.6); padding:4px 0; }
+      .fpc-rows{ position:relative; }
+      .fpc-rows::after{ content:""; position:absolute; top:0; bottom:0; left:50%; width:2px; margin-left:-1px;
+        background:rgba(236,254,255,.5); pointer-events:none; }
+      .fpc-row{ display:flex; align-items:stretch; gap:6px; padding:1px 6px; position:relative; z-index:1; }
+      .fpc-row + .fpc-row{ border-top:1px solid rgba(103,232,249,.05); }
+      .fpc-pins{ flex:1 1 0; min-width:0; display:flex; flex-direction:column; gap:2px; justify-content:center; }
+      .fpc-pins.l{ align-items:flex-end; } .fpc-pins.r{ align-items:flex-start; }
+      .fpc-pin{ font-family:"IBM Plex Mono",monospace; font-size:9.5px; font-weight:700; line-height:1.3; border-radius:4px;
+        padding:1px 5px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+      .fpc-pin.long{ background:rgba(16,185,129,.20); border:1px solid #34d399; color:#a7f3d0; }
+      .fpc-pin.short{ background:rgba(244,63,94,.18); border:1px solid #f43f5e; color:#fecdd3; }
+      .fpc-cell{ flex:0 0 196px; width:196px; position:relative; text-align:center; border-radius:4px; padding:1px 4px;
+        background:rgba(148,163,184,.07); }
+      .fpc-cell .bar{ position:absolute; top:0; bottom:0; left:0; background:rgba(226,232,240,.13); border-radius:4px; }
+      .fpc-cell .ba{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:700; color:#e2e8f0; white-space:nowrap; }
+      .fpc-cell .pr{ position:relative; font-family:"IBM Plex Mono",monospace; font-size:10px; color:rgba(226,232,240,.62); white-space:nowrap; margin-left:6px; }
+      .fpc-cell .dl{ position:relative; display:block; font-family:"IBM Plex Mono",monospace; font-size:9px; color:rgba(226,232,240,.5); }
+      .fpc-row.poc .fpc-cell{ outline:2px solid rgba(236,254,255,.85); background:rgba(226,232,240,.10); }
+      .fpc-row.poc .ba{ color:#ffffff; }
+      .fpc-poc{ font-size:8.5px; font-weight:900; letter-spacing:.1em; color:#04101f; background:#e2e8f0; border-radius:3px; padding:0 4px; margin-left:5px; vertical-align:1px; }
+      .fpc-held{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:rgba(207,250,254,.6); margin:0; padding:10px; line-height:1.5; }
+      .fpc-stats, .fpc-reward{ font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:rgba(165,243,252,.85); margin:7px 0 0; line-height:1.5; }
+      .fpc-reward{ color:rgba(207,250,254,.65); }
+      .fpc-note{ font-size:12px; color:rgba(207,250,254,.55); margin:10px 0 0; line-height:1.5; }
+      @media (max-width:560px){ .fpc-cell{ flex-basis:158px; width:158px; } .fpc-cell .ba{ font-size:10px; } .fpc-pin{ font-size:8.5px; } }
     </style>
   </head>
   <body class="view-tablet">
@@ -1581,6 +1643,76 @@
                     </div>
 
                     <div id="dept-root"></div>
+
+                    <!-- FOOTPRINT CLUSTER OFFICE — the Warlord's order (Nov 24,
+                         2026): the footprint stands on this live stream board
+                         too, and it never goes down. Its own office, standing
+                         in the floor's office run under the reader offices.
+                         The clusters build in the visitor's browser from
+                         PUBLIC EXECUTED TRADES only — Binance's public
+                         aggTrades door first, then MEXC, Coinbase and Kraken
+                         behind it, so no single dead door can empty the
+                         office; the door that answered is named on the
+                         office's tape line. Five panes stand at once —
+                         3-MINUTE · SIX-HOUR · DAY · WEEK · MONTH — and they
+                         load ONE AT A TIME, in that order. Only whale prints
+                         are colored (long green · short red); a whale, once
+                         it hits, pins on the center line of EVERY pane whose
+                         candle holds it and stays stuck until that candle
+                         closes. -->
+                    <section class="fpc-office" id="footprint-office" aria-label="Footprint Cluster office — each forming candle split into price rows off the public executed-trades tape, whale prints pinned on the center line">
+                      <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
+                      <div class="fpc-head">
+                        <div>
+                          <p class="fpc-title">🦶 FOOTPRINT CLUSTER</p>
+                          <p class="fpc-sub">Each forming candle split into price rows on the coin's ruler — every row shows Bid × Ask volume off executed trades, its delta and its volume, the candle's POC marked. A line runs down the middle of every cluster: whale prints pin onto it at the exact price they took — <span class="sh">shorts on the left, in red</span> · <span class="lg">longs on the right, in green</span> — and once a whale hits, it stays stuck to that candle until the candle closes. The same whale prints on every pane whose candle holds it. Only the whale prints are colored; everything else stands plain.</p>
+                        </div>
+                        <span class="fpc-livechip"><i></i>LIVE</span>
+                      </div>
+                      <div class="fpc-switch" role="group" aria-label="Footprint coin switch — flips the whole office: every pane, the whale line and the stuck prints">
+                        <button type="button" data-fpc-coin="LTC" aria-pressed="true">LITECOIN</button>
+                        <button type="button" data-fpc-coin="BTC" aria-pressed="false">BITCOIN</button>
+                        <button type="button" data-fpc-coin="ETH" aria-pressed="false">ETHEREUM</button>
+                      </div>
+                      <p class="fpc-tape" id="fpc-tape-line">TAPE — the office is reading the public executed-trades doors, one pane at a time…</p>
+                      <p class="fpc-oi" id="fpc-oi-line">OPEN INTEREST — reading the public doors…</p>
+                      <div class="fpc-whales" id="fpc-whale-line" aria-label="The whale line — the latest whale prints on the coin standing on the office">
+                        <span class="wl-t">THE WHALE LINE</span><span class="fpc-wchip none">No whale print standing yet on this coin — the line fills the moment one hits, and it stays up.</span>
+                      </div>
+                      <div class="fpc-panes">
+                        <article class="fpc-pane" data-fpc-frame="3M" aria-label="Footprint pane — the forming 3-minute candle">
+                          <div class="cd-box" data-cd="3M" role="timer" aria-label="Countdown — time left until the next 3-minute candle comes out"><span class="cd-l">⏳ NEXT 3M CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-phead"><p class="fpc-frame">3-MINUTE</p><p class="fpc-ohlc">STANDING BY</p></div>
+                          <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads first, in its turn.</p></div>
+                          <p class="fpc-stats"></p><p class="fpc-reward"></p>
+                        </article>
+                        <article class="fpc-pane" data-fpc-frame="6H" aria-label="Footprint pane — the forming six-hour candle">
+                          <div class="cd-box" data-cd="6H" role="timer" aria-label="Countdown — time left until the next six-hour candle comes out"><span class="cd-l">⏳ NEXT 6H CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-phead"><p class="fpc-frame">SIX-HOUR</p><p class="fpc-ohlc">STANDING BY</p></div>
+                          <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
+                          <p class="fpc-stats"></p><p class="fpc-reward"></p>
+                        </article>
+                        <article class="fpc-pane" data-fpc-frame="DAY" aria-label="Footprint pane — the forming day candle">
+                          <div class="cd-box" data-cd="DAY" role="timer" aria-label="Countdown — time left until the next day candle comes out"><span class="cd-l">⏳ NEXT DAY CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-phead"><p class="fpc-frame">DAY</p><p class="fpc-ohlc">STANDING BY</p></div>
+                          <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
+                          <p class="fpc-stats"></p><p class="fpc-reward"></p>
+                        </article>
+                        <article class="fpc-pane" data-fpc-frame="WEEK" aria-label="Footprint pane — the forming week candle">
+                          <div class="cd-box" data-cd="WEEK" role="timer" aria-label="Countdown — time left until the next week candle comes out"><span class="cd-l">⏳ NEXT WEEK CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-phead"><p class="fpc-frame">WEEK</p><p class="fpc-ohlc">STANDING BY</p></div>
+                          <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
+                          <p class="fpc-stats"></p><p class="fpc-reward"></p>
+                        </article>
+                        <article class="fpc-pane" data-fpc-frame="MONTH" aria-label="Footprint pane — the forming month candle">
+                          <div class="cd-box" data-cd="MONTH" role="timer" aria-label="Countdown — time left until the next month candle comes out"><span class="cd-l">⏳ NEXT MONTH CANDLE</span><span class="cd-t">—</span></div>
+                          <div class="fpc-phead"><p class="fpc-frame">MONTH</p><p class="fpc-ohlc">STANDING BY</p></div>
+                          <div class="fpc-cluster"><p class="fpc-held">Standing by — this pane loads in its turn, one at a time.</p></div>
+                          <p class="fpc-stats"></p><p class="fpc-reward"></p>
+                        </article>
+                      </div>
+                      <p class="fpc-note">Whale line on this office: a print of <b>250 LTC · 0.15 BTC · 6 ETH</b> or bigger in one executed trade is a whale — it pins, it sticks, and it cross-prints on every pane whose candle holds it. Three or more whale prints at one price level stand marked as a trail. Absorption is read by the reward test: aggression the price does not reward is absorption. A pane whose tape cannot be fetched on any door reads HELD — no candle is ever invented in its place — and the office re-checks on the board's own cycle.</p>
+                    </section>
 
                     <div class="floor-about">
                       <b>How to read this floor (recipe v81):</b> every room on this floor carries its
@@ -2189,7 +2321,6 @@
                   <span class="fp-live"><i></i>LIVE</span>
                   <p class="s">Entries &amp; exits as they hit — the same hits as the Proof Page, with the full description. On watch: Nova.</p>
                 </div>
-                <div class="cd-box" data-cd="AUTO:MONTH,WEEK,DAY,6H" role="timer" aria-label="Countdown — time left until the next candle comes out on the Four Points frames"><span class="cd-l">⏳ NEXT CANDLE</span><span class="cd-t">—</span></div>
                 <div class="fp-alarmbar">
                   <span class="tessa-alarm held" data-tessa-alarm><i></i><span class="ta-txt">TESSA ALARM · TAP ANYWHERE TO ARM THE SOUND</span></span>
                   <button type="button" id="tessa-alarm-test">🔔 Test her alarm</button>
@@ -3363,6 +3494,7 @@
           refreshOwnerWindows();
           refreshTessa();
           refreshTemps();
+          refreshFootprint();
         }
         document.getElementById('btn-refresh').addEventListener('click', runRefresh);
         setInterval(function () {
@@ -5300,6 +5432,439 @@
         else window.addEventListener('load', function () { setTimeout(armKickPlayer, 1200); });
         setTimeout(armKickPlayer, 5000); /* fallback if load already fired */
 
+        /* ---------- FOOTPRINT CLUSTER — the office that never goes down ----------
+           The Warlord's order (Nov 24, 2026): the Footprint Cluster office
+           stands on this live stream board too, built this copy's way —
+           the clusters are aggregated IN THE BROWSER from public EXECUTED
+           TRADES only (Bitunix publishes no public trades door, so it is
+           never waited on). The tape is a chain, the SIERRA_BASES way:
+           Binance public aggTrades first (the same door this copy's
+           readers drink from), then MEXC aggTrades, then Coinbase
+           Exchange public trades, then Kraken public trades — a single
+           dead door can never leave the office standing empty, and the
+           door that answered is named on the office's tape line. Only
+           when EVERY door fails does a pane read HELD — never an
+           invented candle, never a stale figure dressed as live.
+           The five panes load ONE AT A TIME, in order 3M · 6H · DAY ·
+           WEEK · MONTH, each backfilling from its own candle's open, so
+           whales that already hit inside a still-open DAY · WEEK ·
+           MONTH candle stand pinned on it when the office loads.
+           A whale (one executed trade at or over the coin's line) pins
+           on the center line of EVERY pane whose candle holds it —
+           shorts LEFT in red, longs RIGHT in green, labeled side · size
+           · price — and stays stuck until that candle closes; the pins
+           are rebuilt from the candle's own window on every pass, so a
+           closed candle's pins clear themselves and the new candle
+           starts clean. Everything that is not a whale print stands in
+           plain ink — the color law. Open interest rides its own public
+           chain (Binance Futures → Bybit → OKX) and reads HELD, clusters
+           standing, when no OI door answers. Trades are held in memory
+           for this session only, so the big candles keep filling in on
+           every board cycle. */
+        var FPC_COINS = {
+          LTC: { step: 0.5, whale: 250, cb: 'LTC-USD', kr: 'LTCUSD' },
+          BTC: { step: 50, whale: 0.15, cb: 'BTC-USD', kr: 'XBTUSD' },
+          ETH: { step: 1, whale: 6, cb: 'ETH-USD', kr: 'ETHUSD' }
+        };
+        var FPC_FRAMES = [
+          { key: '3M', pages: 6 },
+          { key: '6H', pages: 10 },
+          { key: 'DAY', pages: 12 },
+          { key: 'WEEK', pages: 14 },
+          { key: 'MONTH', pages: 16 }
+        ];
+        var fpcCoin = 'LTC';
+        var fpcBusy = false;
+        var fpcSeq = 0;
+        var fpcStores = {};
+        function fpcStore(coin) {
+          if (!fpcStores[coin]) fpcStores[coin] = { trades: new Map(), src: '', oi: null, cum: {}, cover: {} };
+          return fpcStores[coin];
+        }
+        function fpcWindow(frameKey, now) {
+          var end = tfcdNext(frameKey, now), start;
+          if (frameKey === 'WEEK') start = end - 7 * 86400000;
+          else if (frameKey === 'MONTH') { var d = new Date(now); start = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1); }
+          else start = end - ({ '3M': 180000, '6H': 21600000, 'DAY': 86400000 })[frameKey];
+          return { start: start, end: end };
+        }
+        function fpcQty(v) {
+          if (v >= 100) return Math.round(v).toLocaleString('en-US');
+          if (v >= 1) return v.toFixed(1);
+          return v.toFixed(3);
+        }
+        function fpcSigned(v) { return (v > 0 ? '+' : v < 0 ? '\u2212' : '') + fpcQty(Math.abs(v)); }
+        function fpcPrice(v) { return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+        function fpcMerge(coin, list) {
+          var st = fpcStore(coin);
+          list.forEach(function (t) { if (!st.trades.has(t.id)) st.trades.set(t.id, t); });
+        }
+        function fpcPrune(coin, now) {
+          var st = fpcStore(coin);
+          if (st.trades.size < 60000) return;
+          var horizon = fpcWindow('MONTH', now).start - 86400000;
+          st.trades.forEach(function (t, id) { if (t.t < horizon) st.trades.delete(id); });
+        }
+        /* One aggTrades window off a Binance-shaped door. Binance doors
+           page forward by fromId; MEXC pages by startTime. Either way the
+           walk starts at the candle's own open and stops at its end or
+           when the page budget runs out (full=false — still filling). */
+        function fpcAggWindow(base, prefix, sym, start, end, budget, useFromId) {
+          var out = [], cur = start, lastId = null;
+          function step() {
+            if (budget <= 0) return Promise.resolve({ trades: out, full: false });
+            budget--;
+            var url = (useFromId && lastId !== null)
+              ? base + '/api/v3/aggTrades?symbol=' + sym + '&fromId=' + (lastId + 1) + '&limit=1000'
+              : base + '/api/v3/aggTrades?symbol=' + sym + '&startTime=' + cur + '&endTime=' + end + '&limit=1000';
+            return fetchJSONQ(url, 9000).then(function (rows) {
+              if (!Array.isArray(rows)) throw new Error('shape');
+              if (!rows.length) return { trades: out, full: true };
+              var lastT = 0;
+              rows.forEach(function (r) {
+                lastT = +r.T; if (typeof r.a === 'number') lastId = r.a;
+                var t = { id: prefix + r.a, t: +r.T, p: parseFloat(r.p), q: parseFloat(r.q), sell: r.m === true };
+                if (isFinite(t.p) && isFinite(t.q) && t.t >= start && t.t < end) out.push(t);
+              });
+              if (rows.length < 1000 || lastT >= end) return { trades: out, full: true };
+              if (!useFromId) { var nt = lastT + 1; if (nt <= cur) return { trades: out, full: false }; cur = nt; }
+              return step();
+            });
+          }
+          return step();
+        }
+        function fpcAggLatest(base, prefix, sym) {
+          return fetchJSONQ(base + '/api/v3/aggTrades?symbol=' + sym + '&limit=1000', 9000).then(function (rows) {
+            if (!Array.isArray(rows) || !rows.length) throw new Error('shape');
+            return rows.map(function (r) {
+              return { id: prefix + r.a, t: +r.T, p: parseFloat(r.p), q: parseFloat(r.q), sell: r.m === true };
+            }).filter(function (t) { return isFinite(t.p) && isFinite(t.q); });
+          });
+        }
+        /* Coinbase's public trades door serves the latest prints only —
+           its side is the MAKER's side, so a maker buy means the taker
+           sold into the bid. */
+        function fpcCoinbaseLatest(meta) {
+          return fetchJSONQ('https://api.exchange.coinbase.com/products/' + meta.cb + '/trades', 9000).then(function (rows) {
+            if (!Array.isArray(rows) || !rows.length) throw new Error('shape');
+            return rows.map(function (r) {
+              return { id: 'cb' + r.trade_id, t: Date.parse(r.time), p: parseFloat(r.price), q: parseFloat(r.size), sell: r.side === 'buy' };
+            }).filter(function (t) { return isFinite(t.p) && isFinite(t.q) && isFinite(t.t); });
+          });
+        }
+        /* Kraken's public trades: 'b' is a taker buy, 's' a taker sell;
+           its cursor is a nanosecond string, kept as a string so no
+           precision is lost. */
+        function fpcKrakenWindow(meta, start, end, budget) {
+          var out = [], since = String(start) + '000000', endNs = String(end) + '000000';
+          function step() {
+            if (budget <= 0) return Promise.resolve({ trades: out, full: false });
+            budget--;
+            return fetchJSONQ('https://api.kraken.com/0/public/Trades?pair=' + meta.kr + '&since=' + since, 9000).then(function (j) {
+              if (!j || (j.error && j.error.length) || !j.result) throw new Error('kr');
+              var key = Object.keys(j.result).filter(function (k) { return k !== 'last'; })[0];
+              var rows = j.result[key] || [];
+              rows.forEach(function (r) {
+                var t = { id: 'kr' + (r[6] != null ? r[6] : (r[2] + '-' + r[0] + '-' + r[1])), t: Math.round(parseFloat(r[2]) * 1000), p: parseFloat(r[0]), q: parseFloat(r[1]), sell: r[3] === 's' };
+                if (isFinite(t.p) && isFinite(t.q) && t.t >= start && t.t < end) out.push(t);
+              });
+              var last = j.result.last;
+              if (!rows.length || !last || String(last) >= endNs || rows.length < 1000) return { trades: out, full: true };
+              if (String(last) === since) return { trades: out, full: false };
+              since = String(last);
+              return step();
+            });
+          }
+          return step();
+        }
+        /* A pane's backfill: the chain, in order, first door that
+           answers with trades wins the pane. */
+        function fpcFetchPane(coin, frame, win) {
+          var meta = FPC_COINS[coin], sym = coin + 'USDT';
+          var sources = [];
+          SIERRA_BASES.forEach(function (b) {
+            sources.push({ label: 'Binance public aggTrades', fn: function () { return fpcAggWindow(b, 'bn', sym, win.start, win.end, frame.pages, true); } });
+          });
+          sources.push({ label: 'MEXC public aggTrades', fn: function () { return fpcAggWindow('https://api.mexc.com', 'mx', sym, win.start, win.end, frame.pages, false); } });
+          sources.push({ label: 'Coinbase Exchange public trades', fn: function () {
+            return fpcCoinbaseLatest(meta).then(function (ts) {
+              return { trades: ts.filter(function (t) { return t.t >= win.start && t.t < win.end; }), full: false };
+            });
+          } });
+          sources.push({ label: 'Kraken public trades', fn: function () { return fpcKrakenWindow(meta, win.start, win.end, frame.pages); } });
+          var chain = Promise.reject(new Error('start'));
+          sources.forEach(function (s) {
+            chain = chain.catch(function () {
+              return s.fn().then(function (res) {
+                if (!res.trades.length) throw new Error('empty');
+                res.src = s.label;
+                return res;
+              });
+            });
+          });
+          return chain;
+        }
+        /* The latest prints, for the board-cycle re-check — same chain. */
+        function fpcFetchLatest(coin) {
+          var meta = FPC_COINS[coin], sym = coin + 'USDT';
+          var chain = Promise.reject(new Error('start'));
+          SIERRA_BASES.forEach(function (b) {
+            chain = chain.catch(function () {
+              return fpcAggLatest(b, 'bn', sym).then(function (ts) { return { trades: ts, src: 'Binance public aggTrades' }; });
+            });
+          });
+          chain = chain.catch(function () {
+            return fpcAggLatest('https://api.mexc.com', 'mx', sym).then(function (ts) { return { trades: ts, src: 'MEXC public aggTrades' }; });
+          });
+          chain = chain.catch(function () {
+            return fpcCoinbaseLatest(meta).then(function (ts) { return { trades: ts, src: 'Coinbase Exchange public trades' }; });
+          });
+          chain = chain.catch(function () {
+            var now = Date.now();
+            return fpcKrakenWindow(meta, now - 900000, now + 60000, 2).then(function (res) {
+              if (!res.trades.length) throw new Error('empty');
+              return { trades: res.trades, src: 'Kraken public trades' };
+            });
+          });
+          return chain;
+        }
+        function fpcPaneEl(frameKey) { return document.querySelector('.fpc-pane[data-fpc-frame="' + frameKey + '"]'); }
+        function fpcRenderPane(coin, frame) {
+          var pane = fpcPaneEl(frame.key); if (!pane) return;
+          var meta = FPC_COINS[coin], st = fpcStore(coin);
+          var win = fpcWindow(frame.key, Date.now());
+          var trades = [];
+          st.trades.forEach(function (t) { if (t.t >= win.start && t.t < win.end) trades.push(t); });
+          trades.sort(function (a, b) { return a.t - b.t; });
+          var clusterEl = pane.querySelector('.fpc-cluster'), ohlcEl = pane.querySelector('.fpc-ohlc'),
+            statsEl = pane.querySelector('.fpc-stats'), rewardEl = pane.querySelector('.fpc-reward');
+          if (!trades.length) {
+            ohlcEl.textContent = 'HELD';
+            clusterEl.innerHTML = '<p class="fpc-held">HELD — no executed trades for this candle could be fetched on any public door this pass. The office keeps standing and re-checks on the board\u2019s cycle — no candle is invented in its place.</p>';
+            statsEl.textContent = ''; rewardEl.textContent = '';
+            return;
+          }
+          /* Aggregate the candle into ruler rows: Bid × Ask per row. */
+          var rowsByKey = {}, rowList = [], totBid = 0, totAsk = 0, hi = -Infinity, lo = Infinity;
+          trades.forEach(function (t) {
+            var key = Math.round(Math.floor(t.p / meta.step) * meta.step * 100) / 100;
+            var r = rowsByKey[key];
+            if (!r) { r = rowsByKey[key] = { price: key, bid: 0, ask: 0, vol: 0 }; rowList.push(r); }
+            if (t.sell) { r.bid += t.q; totBid += t.q; } else { r.ask += t.q; totAsk += t.q; }
+            r.vol += t.q;
+            if (t.p > hi) hi = t.p; if (t.p < lo) lo = t.p;
+          });
+          rowList.sort(function (a, b) { return b.price - a.price; });
+          var poc = rowList[0];
+          rowList.forEach(function (r) { if (r.vol > poc.vol) poc = r; });
+          var delta = totAsk - totBid;
+          /* Cumulative delta: closed candles of this frame, finalized
+             off the store as they roll, plus this candle's own delta. */
+          var cumRec = st.cum[frame.key];
+          if (!cumRec || cumRec.start !== win.start) {
+            var base = cumRec ? cumRec.base : 0;
+            if (cumRec && cumRec.start < win.start) {
+              var prevDelta = 0;
+              st.trades.forEach(function (t) { if (t.t >= cumRec.start && t.t < win.start) prevDelta += t.sell ? -t.q : t.q; });
+              base += prevDelta;
+            }
+            cumRec = st.cum[frame.key] = { start: win.start, base: base };
+          }
+          /* Whales: the biggest 60 prints of the candle pin, grouped by
+             their ruler level; 3+ at one level stand as a trail. */
+          var whales = trades.filter(function (t) { return t.q >= meta.whale; });
+          whales.sort(function (a, b) { return b.q - a.q; });
+          whales = whales.slice(0, 60);
+          var pinsByKey = {};
+          whales.forEach(function (w) {
+            var key = Math.round(Math.floor(w.p / meta.step) * meta.step * 100) / 100;
+            var g = pinsByKey[key]; if (!g) g = pinsByKey[key] = { longs: [], shorts: [] };
+            (w.sell ? g.shorts : g.longs).push(w);
+          });
+          var html = '';
+          rowList.forEach(function (r) {
+            var g = pinsByKey[Math.round(r.price * 100) / 100] || { longs: [], shorts: [] };
+            var pinsL = '', pinsR = '', i;
+            for (i = 0; i < g.shorts.length && i < 12; i++) pinsL += '<span class="fpc-pin short">SHORT \u00B7 ' + fpcQty(g.shorts[i].q) + ' ' + coin + ' \u00B7 ' + fpcPrice(g.shorts[i].p) + '</span>';
+            for (i = 0; i < g.longs.length && i < 12; i++) pinsR += '<span class="fpc-pin long">LONG \u00B7 ' + fpcQty(g.longs[i].q) + ' ' + coin + ' \u00B7 ' + fpcPrice(g.longs[i].p) + '</span>';
+            var atLevel = g.longs.length + g.shorts.length;
+            if (atLevel >= 3) {
+              var trail = '<span class="fpc-pin ' + (g.longs.length >= g.shorts.length ? 'long' : 'short') + '">TRAIL \u00D7' + atLevel + ' AT THIS LEVEL</span>';
+              if (g.longs.length >= g.shorts.length) pinsR += trail; else pinsL += trail;
+            }
+            html += '<div class="fpc-row' + (r === poc ? ' poc' : '') + '">' +
+              '<div class="fpc-pins l">' + pinsL + '</div>' +
+              '<div class="fpc-cell"><i class="bar" style="width:' + Math.max(2, Math.round(r.vol / poc.vol * 100)) + '%"></i>' +
+              '<span class="ba">' + fpcQty(r.bid) + ' \u00D7 ' + fpcQty(r.ask) + (r === poc ? '<span class="fpc-poc">POC</span>' : '') + '</span>' +
+              '<span class="pr">' + fpcPrice(r.price) + '</span>' +
+              '<span class="dl">\u0394 ' + fpcSigned(r.ask - r.bid) + ' \u00B7 VOL ' + fpcQty(r.vol) + '</span></div>' +
+              '<div class="fpc-pins r">' + pinsR + '</div></div>';
+          });
+          clusterEl.innerHTML = '<div class="fpc-rows">' + html + '</div>';
+          clusterEl.scrollTop = 0;
+          var open = trades[0].p, last = trades[trades.length - 1].p;
+          ohlcEl.textContent = 'O ' + fpcPrice(open) + ' \u00B7 H ' + fpcPrice(hi) + ' \u00B7 L ' + fpcPrice(lo) + ' \u00B7 LAST ' + fpcPrice(last);
+          var cover = st.cover[frame.key];
+          statsEl.textContent = '\u0394 CANDLE ' + fpcSigned(delta) + ' ' + coin + ' \u00B7 CUM \u0394 ' + fpcSigned(cumRec.base + delta) + ' ' + coin +
+            ' \u00B7 BID ' + fpcQty(totBid) + ' \u00D7 ASK ' + fpcQty(totAsk) + ' \u00B7 ' + trades.length.toLocaleString('en-US') + ' TRADES \u00B7 ' + whales.length + ' WHALE' + (whales.length === 1 ? '' : 'S') + ' PINNED' +
+            (cover ? ' \u00B7 TAPE: ' + (cover.full ? 'THE FULL CANDLE STANDS' : 'STILL FILLING \u2014 RE-CHECKS KEEP PULLING IT IN') : '');
+          /* The reward test: one-sided aggression the price does not
+             reward is absorption. */
+          var total = totBid + totAsk, share = total ? Math.abs(delta) / total : 0;
+          var moveSteps = (last - open) / meta.step;
+          if (share >= 0.18) {
+            var buyAgg = delta > 0, rewarded = buyAgg ? moveSteps >= 1 : moveSteps <= -1;
+            rewardEl.textContent = rewarded
+              ? 'REWARD TEST \u2014 ' + (buyAgg ? 'BUY' : 'SELL') + ' AGGRESSION REWARDED: PRICE MOVED ' + Math.abs(moveSteps).toFixed(1) + ' ROWS WITH IT.'
+              : 'REWARD TEST \u2014 ABSORPTION: ' + (buyAgg ? 'BUY' : 'SELL') + ' AGGRESSION UNREWARDED BY PRICE \u2014 THE OTHER SIDE IS ABSORBING IT.';
+          } else {
+            rewardEl.textContent = 'REWARD TEST \u2014 NO ONE-SIDED AGGRESSION STANDING ON THIS CANDLE YET.';
+          }
+        }
+        function fpcRenderWhaleLine(coin) {
+          var el = document.getElementById('fpc-whale-line'); if (!el) return;
+          var st = fpcStore(coin), meta = FPC_COINS[coin], whales = [];
+          st.trades.forEach(function (t) { if (t.q >= meta.whale) whales.push(t); });
+          whales.sort(function (a, b) { return b.t - a.t; });
+          var html = '<span class="wl-t">THE WHALE LINE \u00B7 ' + coin + '</span>';
+          if (!whales.length) {
+            html += '<span class="fpc-wchip none">No whale print standing yet on ' + coin + ' \u2014 the line fills the moment one hits, and it stays up.</span>';
+          }
+          whales.slice(0, 6).forEach(function (w) {
+            html += '<span class="fpc-wchip ' + (w.sell ? 'short' : 'long') + '">' + (w.sell ? 'SHORT' : 'LONG') + ' \u00B7 ' + fpcQty(w.q) + ' ' + coin + ' \u00B7 ' + fpcPrice(w.p) + ' \u00B7 ' + shortFmt.format(new Date(w.t)) + ' NYC</span>';
+          });
+          el.innerHTML = html;
+        }
+        function fpcFetchOI(coin) {
+          var sym = coin + 'USDT';
+          var chain = fetchJSONQ('https://fapi.binance.com/fapi/v1/openInterest?symbol=' + sym, 7000).then(function (j) {
+            var v = parseFloat(j && j.openInterest); if (!isFinite(v)) throw new Error('shape');
+            return { v: v, src: 'Binance Futures' };
+          });
+          chain = chain.catch(function () {
+            return fetchJSONQ('https://api.bybit.com/v5/market/open-interest?category=linear&symbol=' + sym, 7000).then(function (j) {
+              var l = j && j.result && j.result.list && j.result.list[0];
+              var v = l ? parseFloat(l.openInterest) : NaN; if (!isFinite(v)) throw new Error('shape');
+              return { v: v, src: 'Bybit' };
+            });
+          });
+          chain = chain.catch(function () {
+            return fetchJSONQ('https://www.okx.com/api/v5/public/open-interest?instType=SWAP&instId=' + coin + '-USDT-SWAP', 7000).then(function (j) {
+              var d = j && j.data && j.data[0];
+              var v = d ? parseFloat(d.oiCcy) : NaN; if (!isFinite(v)) throw new Error('shape');
+              return { v: v, src: 'OKX' };
+            });
+          });
+          return chain;
+        }
+        function fpcRenderOI(coin) {
+          var el = document.getElementById('fpc-oi-line'); if (!el) return;
+          var st = fpcStore(coin);
+          fpcFetchOI(coin).then(function (r) {
+            if (coin !== fpcCoin) { st.oi = { v: r.v, src: r.src, at: Date.now() }; return; }
+            var prev = st.oi, dir = 'FIRST READ ON THIS COIN', verdict = '';
+            if (prev && isFinite(prev.v)) {
+              var chg = r.v - prev.v, pct = prev.v ? chg / prev.v * 100 : 0;
+              var meta = FPC_COINS[coin], recent = 0, now = Date.now();
+              st.trades.forEach(function (t) { if (t.q >= meta.whale && now - t.t < 900000) recent++; });
+              if (Math.abs(pct) < 0.01) dir = 'FLAT SINCE THE LAST READ';
+              else dir = (chg > 0 ? 'RISING +' : 'FALLING \u2212') + Math.abs(pct).toFixed(2) + '% SINCE THE LAST READ';
+              if (chg > 0 && recent) verdict = ' \u2014 WHALE PRINTS LANDING WHILE OI RISES: SIZE GOING ON';
+              else if (chg < 0 && recent) verdict = ' \u2014 WHALE PRINTS LANDING WHILE OI FALLS: SIZE COMING OFF';
+              else if (chg > 0) verdict = ' \u2014 SIZE GOING ON';
+              else if (chg < 0) verdict = ' \u2014 SIZE COMING OFF';
+            }
+            st.oi = { v: r.v, src: r.src, at: Date.now() };
+            el.innerHTML = 'OPEN INTEREST \u2014 ' + r.src + ' \u00B7 <b>' + fpcQty(r.v) + ' ' + coin + '</b> \u00B7 ' + dir + verdict;
+          }).catch(function () {
+            if (coin !== fpcCoin) return;
+            el.textContent = 'OPEN INTEREST \u2014 HELD \u00B7 NO PUBLIC OI DOOR ANSWERED THIS PASS \u2014 THE CLUSTERS KEEP STANDING; THE OI LINE RE-CHECKS ON THE BOARD CYCLE.';
+          });
+        }
+        function fpcTapeLine(coin, held) {
+          var tl = document.getElementById('fpc-tape-line'); if (!tl) return;
+          var st = fpcStore(coin);
+          tl.textContent = held || !st.src
+            ? 'TAPE \u2014 HELD \u00B7 EVERY PUBLIC TRADES DOOR MISSED THIS PASS \u2014 THE OFFICE KEEPS STANDING AND KEEPS RE-CHECKING; NO CANDLE IS INVENTED.'
+            : 'TAPE \u2014 ' + st.src.toUpperCase() + ' \u00B7 PUBLIC EXECUTED TRADES \u00B7 LAST ANSWER ' + shortFmt.format(new Date()).toUpperCase() + ' NYC \u00B7 RE-CHECKS ON THE BOARD\u2019S 20-SECOND CYCLE';
+        }
+        /* The sequential load: panes backfill ONE AT A TIME, in order
+           3M · 6H · DAY · WEEK · MONTH — never all at once. */
+        function fpcLoadCoin(coin) {
+          var seq = ++fpcSeq, st = fpcStore(coin), okCount = 0;
+          var chain = Promise.resolve();
+          FPC_FRAMES.forEach(function (frame) {
+            chain = chain.then(function () {
+              if (seq !== fpcSeq) return null;
+              var pane = fpcPaneEl(frame.key);
+              if (pane && coin === fpcCoin) pane.querySelector('.fpc-ohlc').textContent = 'READING THE TAPE\u2026';
+              var win = fpcWindow(frame.key, Date.now());
+              return fpcFetchPane(coin, frame, win).then(function (res) {
+                okCount++;
+                fpcMerge(coin, res.trades);
+                st.cover[frame.key] = { full: !!res.full, src: res.src };
+                st.src = res.src;
+                if (seq === fpcSeq && coin === fpcCoin) fpcRenderPane(coin, frame);
+              }).catch(function () {
+                if (seq === fpcSeq && coin === fpcCoin) fpcRenderPane(coin, frame);
+              });
+            });
+          });
+          return chain.then(function () {
+            if (seq !== fpcSeq || coin !== fpcCoin) return;
+            fpcRenderWhaleLine(coin);
+            fpcTapeLine(coin, okCount === 0);
+            fpcRenderOI(coin);
+            fpcPrune(coin, Date.now());
+          });
+        }
+        /* The board-cycle re-check (wired into runRefresh): pull the
+           latest prints, merge, and rebuild every pane from its own
+           window — a candle that closed drops its pins on its own. */
+        function refreshFootprint() {
+          if (!document.getElementById('footprint-office')) return;
+          if (fpcBusy) return;
+          fpcBusy = true;
+          var coin = fpcCoin;
+          fpcFetchLatest(coin).then(function (res) {
+            fpcMerge(coin, res.trades);
+            fpcStore(coin).src = res.src;
+            if (coin === fpcCoin) {
+              FPC_FRAMES.forEach(function (f) { fpcRenderPane(coin, f); });
+              fpcRenderWhaleLine(coin);
+              fpcTapeLine(coin, false);
+              fpcRenderOI(coin);
+            }
+          }).catch(function () {
+            if (coin === fpcCoin) FPC_FRAMES.forEach(function (f) { fpcRenderPane(coin, f); });
+          }).then(function () { fpcBusy = false; });
+        }
+        /* The coin switch flips the WHOLE office — every pane, the
+           whale line and the stuck prints ride with the coin picked,
+           each coin on its own tape and its own ruler. */
+        document.querySelectorAll('[data-fpc-coin]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var coin = btn.getAttribute('data-fpc-coin');
+            if (!FPC_COINS[coin] || coin === fpcCoin) return;
+            fpcCoin = coin;
+            document.querySelectorAll('[data-fpc-coin]').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+            FPC_FRAMES.forEach(function (f) {
+              var pane = fpcPaneEl(f.key); if (!pane) return;
+              pane.querySelector('.fpc-ohlc').textContent = 'READING THE TAPE\u2026';
+              pane.querySelector('.fpc-cluster').innerHTML = '<p class="fpc-held">Reading the new coin\u2019s tape \u2014 this pane loads in its turn, one at a time.</p>';
+              pane.querySelector('.fpc-stats').textContent = '';
+              pane.querySelector('.fpc-reward').textContent = '';
+            });
+            var tl = document.getElementById('fpc-tape-line');
+            if (tl) tl.textContent = 'TAPE \u2014 READING THE NEW COIN\u2019S DOORS, ONE PANE AT A TIME\u2026';
+            var oi = document.getElementById('fpc-oi-line');
+            if (oi) oi.textContent = 'OPEN INTEREST \u2014 READING THE PUBLIC DOORS\u2026';
+            fpcRenderWhaleLine(coin);
+            fpcLoadCoin(coin);
+          });
+        });
+        fpcLoadCoin('LTC');
+
         /* ---------- Timeframe countdown boxes — one on every room ----------
            His standing order: every room/office carries a small countdown
            window showing the time left until THAT room's next candle comes
@@ -5355,7 +5920,12 @@
           return spec.indexOf('AUTO:') === 0 ? '⏳ NEXT CANDLE' : '⏳ NEXT ' + spec + ' CANDLE';
         }
         function tfcdStand() {
-          var rooms = document.querySelectorAll('.desk-card, .office, .owner-office, .fourpoints');
+          /* The Four Points office carries NO countdowns (his standing
+             ruling for this board): its window is never given a box, and
+             any box found standing in it comes off. Every other office
+             keeps its countdown exactly as it stands. */
+          document.querySelectorAll('.fourpoints .cd-box').forEach(function (b) { if (b.parentNode) b.parentNode.removeChild(b); });
+          var rooms = document.querySelectorAll('.desk-card, .office, .owner-office');
           rooms.forEach(function (el) {
             var has = false;
             for (var i = 0; i < el.children.length; i++) {
