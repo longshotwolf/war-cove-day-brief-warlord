@@ -1182,6 +1182,18 @@
       .fpc-row.poc .fpc-cell{ outline:2px solid rgba(236,254,255,.85); background:rgba(226,232,240,.10); }
       .fpc-row.poc .ba{ color:#ffffff; }
       .fpc-poc{ font-size:9.5px; font-weight:900; letter-spacing:.1em; color:#04101f; background:#e2e8f0; border-radius:3px; padding:0 4px; margin-left:5px; vertical-align:1px; }
+      /* THE LIVE PRICE MARKER (mirrors the master Day Brief, Nov 24,
+         2026): a cyan pill with a diamond head labeled LIVE + the
+         coin's actual live price, sitting CENTERED on the pane's
+         center line at the live price's exact level on that candle's
+         own ruler scale — never offset left or right like a whale
+         pin, and carrying no side and no size, so it can never be
+         mistaken for one of the red/green pins. It is rebuilt with
+         the pane on every pass, so it floats as price moves and
+         rides the coin switch with the office. */
+      .fpc-live-marker{ position:absolute; left:50%; transform:translate(-50%,-50%); z-index:4; display:flex; align-items:center; gap:5px; pointer-events:none; }
+      .fpc-live-marker .lm-d{ flex:0 0 auto; width:9px; height:9px; background:#22d3ee; transform:rotate(45deg); box-shadow:0 0 8px rgba(34,211,238,.9); }
+      .fpc-live-marker .lm-p{ font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:900; letter-spacing:.04em; color:#04101f; background:#22d3ee; border:1px solid #a5f3fc; border-radius:999px; padding:2px 8px; white-space:nowrap; box-shadow:0 0 10px rgba(34,211,238,.55); }
       .fpc-held{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:rgba(207,250,254,.6); margin:0; padding:10px; line-height:1.5; }
       .fpc-stats, .fpc-reward{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:rgba(165,243,252,.85); margin:7px 0 0; line-height:1.5; }
       .fpc-reward{ color:rgba(207,250,254,.65); }
@@ -1725,7 +1737,7 @@
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="fpc-head">
                         <div>
-                          <p class="fpc-title">🦶 FOOTPRINT CLUSTER</p>
+                          <p class="fpc-title">🦶 FOOTPRINT CLUSTER CHART — GOD'S EYE</p>
                           <p class="fpc-sub">Each forming candle split into price rows on the coin's ruler — every row shows Bid × Ask volume off executed trades, its delta and its volume, the candle's POC marked. A line runs down the middle of every cluster: whale prints pin onto it at the exact price they took — <span class="sh">shorts on the left, in red</span> · <span class="lg">longs on the right, in green</span> — and once a whale hits, it stays stuck to that candle until the candle closes. The same whale prints on every pane whose candle holds it. Only the whale prints are colored; everything else stands plain.</p>
                         </div>
                         <span class="fpc-livechip"><i></i>LIVE</span>
@@ -5988,6 +6000,16 @@
             var g = pinsByKey[key]; if (!g) g = pinsByKey[key] = { longs: [], shorts: [] };
             (w.sell ? g.shorts : g.longs).push(w);
           });
+          /* THE LIVE PRICE MARKER: the pane's live price is the last
+             executed trade standing in this candle's window — the
+             same figure the OHLC line names as LAST. Its ruler row
+             is the row whose bucket holds it, and its exact level
+             inside that row is the fraction up the bucket, so the
+             tag sits at the price's true height on this candle's
+             own scale. No trades, no candle — and no marker: the
+             HELD path above returns before this point. */
+          var livePrice = trades[trades.length - 1].p;
+          var liveCents = Math.round(Math.floor(livePrice / meta.step) * meta.step * 100);
           var html = '';
           rowList.forEach(function (r) {
             var g = pinsByKey[Math.round(r.price * 100) / 100] || { longs: [], shorts: [] };
@@ -5999,13 +6021,19 @@
               var trail = '<span class="fpc-pin ' + (g.longs.length >= g.shorts.length ? 'long' : 'short') + '">TRAIL \u00D7' + atLevel + ' AT THIS LEVEL</span>';
               if (g.longs.length >= g.shorts.length) pinsR += trail; else pinsL += trail;
             }
+            var liveMark = '';
+            if (Math.round(r.price * 100) === liveCents) {
+              var liveFrac = (livePrice - r.price) / meta.step;
+              if (liveFrac < 0) liveFrac = 0; if (liveFrac > 1) liveFrac = 1;
+              liveMark = '<div class="fpc-live-marker" style="top:' + ((1 - liveFrac) * 100).toFixed(1) + '%" aria-hidden="true"><span class="lm-d"></span><span class="lm-p">LIVE ' + fpcPrice(livePrice) + '</span></div>';
+            }
             html += '<div class="fpc-row' + (r === poc ? ' poc' : '') + '">' +
               '<div class="fpc-pins l">' + pinsL + '</div>' +
               '<div class="fpc-cell"><i class="bar" style="width:' + Math.max(2, Math.round(r.vol / poc.vol * 100)) + '%"></i>' +
               '<span class="ba">' + fpcQty(r.bid) + ' \u00D7 ' + fpcQty(r.ask) + (r === poc ? '<span class="fpc-poc">POC</span>' : '') + '</span>' +
               '<span class="pr">' + fpcPrice(r.price) + '</span>' +
               '<span class="dl">\u0394 ' + fpcSigned(r.ask - r.bid) + ' \u00B7 VOL ' + fpcQty(r.vol) + '</span></div>' +
-              '<div class="fpc-pins r">' + pinsR + '</div></div>';
+              '<div class="fpc-pins r">' + pinsR + '</div>' + liveMark + '</div>';
           });
           clusterEl.innerHTML = '<div class="fpc-rows">' + html + '</div>';
           clusterEl.scrollTop = 0;
