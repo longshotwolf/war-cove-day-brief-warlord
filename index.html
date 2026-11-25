@@ -5548,7 +5548,7 @@
         var fpcSeq = 0;
         var fpcStores = {};
         function fpcStore(coin) {
-          if (!fpcStores[coin]) fpcStores[coin] = { trades: new Map(), src: '', oi: null, cum: {}, cover: {} };
+          if (!fpcStores[coin]) fpcStores[coin] = { trades: new Map(), feed: new Map(), src: '', oi: null, cum: {}, cover: {} };
           return fpcStores[coin];
         }
         function fpcWindow(frameKey, now) {
@@ -5567,13 +5567,90 @@
         function fpcPrice(v) { return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
         function fpcMerge(coin, list) {
           var st = fpcStore(coin);
-          list.forEach(function (t) { if (!st.trades.has(t.id)) st.trades.set(t.id, t); });
+          list.forEach(function (t) {
+            if (st.trades.has(t.id)) return;
+            var k = t.t + '|' + t.p + '|' + t.q + '|' + (t.sell ? 's' : 'l');
+            if (t.id.indexOf('rg|') === 0) {
+              /* A registry print joins the coin's standing-feed index,
+                 so the live copy of the same print can replace it. */
+              var arr = st.feed.get(k); if (!arr) { arr = []; st.feed.set(k, arr); }
+              arr.push(t.id);
+            } else {
+              /* A live print replaces the registry copy of the same
+                 print (same time · price · size · side), so a candle
+                 never counts one print twice. */
+              var ids = st.feed.get(k);
+              if (ids && ids.length) {
+                var twin = ids.shift();
+                if (!ids.length) st.feed.delete(k);
+                st.trades.delete(twin);
+              }
+            }
+            st.trades.set(t.id, t);
+          });
         }
         function fpcPrune(coin, now) {
           var st = fpcStore(coin);
           if (st.trades.size < 60000) return;
           var horizon = fpcWindow('MONTH', now).start - 86400000;
-          st.trades.forEach(function (t, id) { if (t.t < horizon) st.trades.delete(id); });
+          st.trades.forEach(function (t, id) {
+            if (t.t < horizon) {
+              st.trades.delete(id);
+              if (id.indexOf('rg|') === 0) {
+                var k = t.t + '|' + t.p + '|' + t.q + '|' + (t.sell ? 's' : 'l');
+                var arr = st.feed.get(k);
+                if (arr) {
+                  var ix = arr.indexOf(id);
+                  if (ix >= 0) arr.splice(ix, 1);
+                  if (!arr.length) st.feed.delete(k);
+                }
+              }
+            }
+          });
+        }
+        /* THE STANDING WHALE FEED (the Warlord's order, Nov 24, 2026):
+           the Day Brief's cluster office collects whale prints around
+           the clock into a standing registry; this copy is FED that
+           registry through cluster-whales.json, published beside this
+           page, so the stream board opens with the standing whales
+           already pinned on their candles — fed, not re-collected.
+           On office load the feed is fetched FIRST and merged through
+           the same trade shape and pin path the live pulls use; the
+           live tape top-up then continues unchanged. Standing prints
+           are history, so an older file still merges. If the file is
+           missing or cannot be read, the office runs on its live
+           pulls exactly as before, and the fetch is raced against a
+           short clock so it can never hold a pane up. */
+        var fpcFeedCache = null;
+        function fpcFeedPrints(coin) {
+          if (!fpcFeedCache) {
+            var give = new Promise(function (res) { setTimeout(function () { res(null); }, 6000); });
+            var load = fetch('cluster-whales.json', { cache: 'no-store' }).then(function (r) {
+              if (!r.ok) throw new Error('feed');
+              return r.json();
+            }).catch(function () { return null; });
+            fpcFeedCache = Promise.race([load, give]);
+          }
+          return fpcFeedCache.then(function (j) {
+            if (!j || !Array.isArray(j.prints)) return;
+            var st = fpcStore(coin), standing = {};
+            st.trades.forEach(function (t) {
+              var k = t.t + '|' + t.p + '|' + t.q + '|' + (t.sell ? 's' : 'l');
+              standing[k] = (standing[k] || 0) + 1;
+            });
+            var seen = {}, add = [];
+            j.prints.forEach(function (w) {
+              if (!w || w.c !== coin) return;
+              var t = { t: +w.t, p: +w.p, q: +w.q, sell: w.s === 'short' };
+              if (!isFinite(t.t) || !isFinite(t.p) || !isFinite(t.q) || t.q <= 0) return;
+              var k = t.t + '|' + t.p + '|' + t.q + '|' + (t.sell ? 's' : 'l');
+              seen[k] = (seen[k] || 0) + 1;
+              if (seen[k] <= (standing[k] || 0)) return;
+              t.id = 'rg|' + k + '|' + seen[k];
+              add.push(t);
+            });
+            if (add.length) fpcMerge(coin, add);
+          });
         }
         /* One aggTrades window off a Binance-shaped door. Binance doors
            page forward by fromId; MEXC pages by startTime. Either way the
@@ -5945,7 +6022,7 @@
            3M · 6H · DAY · WEEK · MONTH — never all at once. */
         function fpcLoadCoin(coin) {
           var seq = ++fpcSeq, st = fpcStore(coin), okCount = 0;
-          var chain = Promise.resolve();
+          var chain = fpcFeedPrints(coin);
           FPC_FRAMES.forEach(function (frame) {
             chain = chain.then(function () {
               if (seq !== fpcSeq) return null;
