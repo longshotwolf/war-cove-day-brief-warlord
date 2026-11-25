@@ -5527,7 +5527,7 @@
            the tape fills, the coin's standing line carries. */
         function fpcWhaleLine(coin) {
           var st = fpcStore(coin), meta = FPC_COINS[coin];
-          var ts = st.trades.slice(-1000);
+          var ts = Array.from(st.trades.values()).slice(-1000);
           if (ts.length < 50) return meta.whale;
           var sizes = ts.map(function (t) { return t.q; }).sort(function (a, b) { return a - b; });
           var sum = 0; sizes.forEach(function (q) { sum += q; });
