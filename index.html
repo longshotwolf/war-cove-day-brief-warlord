@@ -1095,7 +1095,7 @@
       .fpc-office{ border:1px solid rgba(103,199,235,.35); border-radius:12px; padding:12px; margin:14px 0 12px;
         background:linear-gradient(155deg, rgba(21,52,92,.82), rgba(10,25,48,.9)); box-shadow:0 0 18px rgba(34,211,238,.10); }
       .fpc-head{ display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; }
-      .fpc-title{ font-size:21px; font-weight:900; letter-spacing:.06em; color:#ecfeff; margin:0; }
+      .fpc-title{ font-family:"Great Vibes","Segoe Script","Brush Script MT",cursive; font-size:31px; font-weight:400; letter-spacing:.01em; color:#ecfeff; margin:0; }
       .fpc-sub{ font-size:12.5px; color:rgba(207,250,254,.65); margin:3px 0 0; line-height:1.45; max-width:78ch; }
       .fpc-sub .lg{ color:#6ee7b7; font-weight:800; } .fpc-sub .sh{ color:#fda4af; font-weight:800; }
       .fpc-livechip{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 9px;
@@ -1145,6 +1145,7 @@
          army color — when the two sides stand even or no whale
          print stands on the candle yet. */
       @keyframes fpcWinnerBlink{ 0%,100%{ background:rgba(16,185,129,.42); } 50%{ background:rgba(16,185,129,.07); } }
+      @keyframes fpcWinnerBlinkRed{ 0%,100%{ background:rgba(244,63,94,.42); } 50%{ background:rgba(244,63,94,.07); } }
       .fpc-winner{ display:flex; align-items:center; gap:5px; flex:0 1 auto; min-width:0; white-space:normal; overflow-wrap:anywhere;
         border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06);
         border-radius:7px; padding:3px 7px; }
@@ -1154,9 +1155,9 @@
       .fpc-winner .fw-n .l{ color:#6ee7b7; } .fpc-winner .fw-n .s{ color:#fda4af; }
       .fpc-winner.long{ border-color:rgba(52,211,153,.6); animation:fpcWinnerBlink 1.1s ease-in-out infinite; }
       .fpc-winner.long .fw-v{ color:#6ee7b7; }
-      .fpc-winner.short{ border-color:rgba(251,113,133,.6); background:rgba(244,63,94,.25); }
+      .fpc-winner.short{ border-color:rgba(251,113,133,.6); background:rgba(244,63,94,.25); animation:fpcWinnerBlinkRed 1.1s ease-in-out infinite; }
       .fpc-winner.short .fw-v{ color:#fda4af; }
-      @media (prefers-reduced-motion: reduce){ .fpc-winner.long{ animation:none; background:rgba(16,185,129,.30); } }
+      @media (prefers-reduced-motion: reduce){ .fpc-winner.long{ animation:none; background:rgba(16,185,129,.30); } .fpc-winner.short{ animation:none; background:rgba(244,63,94,.30); } }
       .fpc-phead{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
       .fpc-frame{ font-size:17px; font-weight:900; letter-spacing:.08em; color:#ecfeff; margin:0; }
       .fpc-ohlc{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:rgba(207,250,254,.75); margin:0; }
@@ -1716,7 +1717,7 @@
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="fpc-head">
                         <div>
-                          <p class="fpc-title">🦶 FOOTPRINT CLUSTER</p>
+                          <p class="fpc-title">🦶 Footprint Cluster Chart — God's Eye</p>
                           <p class="fpc-sub">Each forming candle split into price rows on the coin's ruler — every row shows Bid × Ask volume off executed trades, its delta and its volume, the candle's POC marked. A line runs down the middle of every cluster: whale prints pin onto it at the exact price they took — <span class="sh">shorts on the left, in red</span> · <span class="lg">longs on the right, in green</span> — and once a whale hits, it stays stuck to that candle until the candle closes. The same whale prints on every pane whose candle holds it. Only the whale prints are colored; everything else stands plain.</p>
                         </div>
                         <span class="fpc-livechip"><i></i>LIVE</span>
