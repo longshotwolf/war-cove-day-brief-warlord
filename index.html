@@ -5873,8 +5873,22 @@
              Binance doors (fpcAggBackward) — the 6H fix: a forward
              walk from the candle's open exhausted its pages before
              reaching the forming candle and left the pane empty.
-             The 3-minute window is short enough to walk forward. */
-          var backward = frame.key !== '3M';
+             THE 3M FIX (Nov 26, 2026): the 3-minute pane was the last
+             pane still on the forward walk, on the reasoning that its
+             window is short enough to walk forward. It was not: the
+             forward walk crawls from the candle's open through the
+             board's shared fetch queue, and inside a 3-minute candle's
+             short life it landed late or missed entirely — the pane
+             stood on READING THE TAPE / HELD, or on a sliver of the
+             candle's first seconds, while every other pane stood
+             full (the Warlord's standing 3M fault report, Nov 25–26).
+             The 3-minute pane now rides the same backward walk as
+             every other pane: anchored on the live edge, one page
+             covers its candle, and the candle's most recent trades —
+             the live stretch — land first. The MEXC forward walk and
+             the Coinbase/Kraken doors behind the Binance doors are
+             unchanged. */
+          var backward = true;
           var sources = [];
           SIERRA_BASES.forEach(function (b) {
             sources.push({ label: 'Binance public aggTrades', fn: function () { return backward ? fpcAggBackward(b, 'bn', sym, win.start, win.end, frame.pages) : fpcAggWindow(b, 'bn', sym, win.start, win.end, frame.pages, true); } });
